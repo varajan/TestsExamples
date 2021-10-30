@@ -10,9 +10,6 @@ namespace Tests
     {
         private static IWebDriver _driver;
 
-        public static int DefaultPageLoad = 30;
-        public static int DefaultImplicitWait = 10;
-
         public static IWebDriver Driver
         {
             get
@@ -21,8 +18,8 @@ namespace Tests
                 {
                     _driver = new ChromeDriver();
 
-                    PageLoad = DefaultPageLoad;
-                    ImplicitWait = DefaultImplicitWait;
+                    PageLoad = Defaults.PageLoad;
+                    ImplicitWait = Defaults.ImplicitWait;
                     _driver.Url = Defaults.BaseUrl;
                 }
 
@@ -48,14 +45,14 @@ namespace Tests
         {
             ImplicitWait = 0;
             Driver.SwitchTo().Frame(frameId);
-            ImplicitWait = DefaultImplicitWait;
+            ImplicitWait = Defaults.ImplicitWait;
         }
 
         public static void SwitchToParentFrame()
         {
             ImplicitWait = 0;
             Driver.SwitchTo().ParentFrame();
-            ImplicitWait = DefaultImplicitWait;
+            ImplicitWait = Defaults.ImplicitWait;
         }
 
         public static void Quit()

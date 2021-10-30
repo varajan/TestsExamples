@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using Tests.Extensions;
 
 namespace Tests.Pages
@@ -61,19 +62,34 @@ namespace Tests.Pages
         public string DepositAmount
         {
             get => GetInput("Deposit Amount").GetAttribute("value");
-            set => GetInput("Deposit Amount").SendKeys(value);
+            set
+            {
+                var input = GetInput("Deposit Amount");
+                input.Clear();
+                input.SendKeys(value);
+            }
         }
 
         public string RateOfInterest
         {
             get => GetInput("Rate of Interest").GetAttribute("value");
-            set => GetInput("Rate of Interest").SendKeys(value);
+            set
+            {
+                var input = GetInput("Rate of Interest");
+                input.Clear();
+                input.SendKeys(value);
+            }
         }
 
         public string InvestmentTerm
         {
             get => GetInput("Investment Term").GetAttribute("value");
-            set => GetInput("Investment Term").SendKeys(value);
+            set
+            {
+                var input = GetInput("Investment Term");
+                input.Clear();
+                input.SendKeys(value);
+            }
         }
 
         public string FinancialYear
@@ -86,13 +102,19 @@ namespace Tests.Pages
         public string Income => GetInput("Income").GetAttribute("value");
         public string EndDate => GetInput("End Date").GetAttribute("value");
 
+        public void Calculate(string amount, string interest, string term, string finYear = "365", DateTime? startDate = null)
+        {
+            Populate(amount, interest, term, finYear, startDate);
+            Calculate();
+        }
 
-        public void Populate(string amount, string interest, string term, string finYear = "365")
+        public void Populate(string amount, string interest, string term, string finYear = "365", DateTime? startDate = null)
         {
             DepositAmount = amount;
             RateOfInterest = interest;
             InvestmentTerm = term;
             FinancialYear = finYear;
+            StartDate = startDate ?? DateTime.Now;
         }
 
         public void OpenSettings() => SettingsBtn.Click();
@@ -101,7 +123,9 @@ namespace Tests.Pages
         public void Calculate()
         {
             CalculateBtn.Click();
-            // wait for enabled?
+
+            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(5))
+                .Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
     }
 }
