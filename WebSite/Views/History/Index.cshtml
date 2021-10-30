@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Login</title>
+</head>
+<body>
+	<div align="center">
+		<div style="width:500px; height:270px; border:double">
+
+			<div style="text-align: right; cursor: pointer" onclick="window.location='@Url.Action("Index","Deposit")'">Calculator</div>
+
+			<table id="history">
+                <tr class="header"> <th>Amount</th> <th>%</th> <th>Term</th> <th>Year</th> <th>From</th> <th>To</th> <th>Interest</th> <th>Income</th> </tr>
+			</table>
+			<button id="clear">Clear</button>
+		</div>
+	</div>
+</body>
+</html>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+    clear = function() {
+        var data = document.getElementsByClassName("data");
+        while (data[0])
+            data[0].parentNode.removeChild(data[0]);
+
+		$.ajax({ type: 'POST', url: '@Url.Action("Clear", "History")' });
+    }
+    document.getElementById("clear").addEventListener("click", clear);
+
+    show = function() {
+		$.ajax({
+			type: 'GET',
+			url: '@Url.Action("Get", "History")',
+			dataType: 'json',
+            success: function (response) {
+                for (ir = 0; ir < response.length; ir++) {
+                    addRow(response[ir]);
+                }
+			}
+		});
+    }
+
+    addRow = function(row) {
+        var tr = document.createElement('tr');
+        tr.className = 'data';
+
+        for (i = 0; i < row.length; i++) {
+            var td = document.createElement('td');
+            td.textContent = row[i];
+            tr.appendChild(td);
+        }
+
+        document.getElementById('history').appendChild(tr);
+    }
+
+    show();
+</script>
