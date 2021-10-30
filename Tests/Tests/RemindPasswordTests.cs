@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Tests.Extensions;
 
 namespace Tests.Tests
 {
@@ -14,7 +15,7 @@ namespace Tests.Tests
             LoginPage.RemindPassword.Close();
 
             // Assert
-            Assert.IsFalse(LoginPage.RemindPassword.IsShown, "Remind Password view should be closed.");
+            LoginPage.RemindPassword.IsShown.ShouldBeFalse("Remind Password view should be closed.");
         }
 
         [TestCase("")]
@@ -31,8 +32,8 @@ namespace Tests.Tests
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.IsFalse(remindPasswordResult.IsSuccessful);
-                Assert.AreEqual("Invalid email", remindPasswordResult.Message);
+                remindPasswordResult.IsSuccessful.ShouldBeFalse();
+                remindPasswordResult.Message.ShouldEqual("Invalid email");
             });
         }
 
@@ -48,8 +49,8 @@ namespace Tests.Tests
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.IsFalse(remindPasswordResult.IsSuccessful);
-                Assert.AreEqual("No user was found", remindPasswordResult.Message);
+                remindPasswordResult.IsSuccessful.ShouldBeFalse();
+                remindPasswordResult.Message.ShouldEqual("No user was found");
             });
         }
 
@@ -66,8 +67,8 @@ namespace Tests.Tests
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(remindPasswordResult.IsSuccessful);
-                Assert.AreEqual($"Email with instructions was sent to {email}", remindPasswordResult.Message);
+                remindPasswordResult.IsSuccessful.ShouldBeTrue();
+                remindPasswordResult.Message.ShouldEqual($"Email with instructions was sent to {email}");
             });
         }
     }

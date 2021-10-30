@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Tests.Extensions;
 
 namespace Tests.Tests
 {
@@ -8,9 +9,7 @@ namespace Tests.Tests
         public void LoginWithCorrectCredentialsTest()
         {
             LoginPage.Login("test", "newyork1");
-
-            Assert.IsTrue(DepositPage.IsOpened,
-                $"Expected '{DepositPage.PageName}' page to be opened, but '{DepositPage.CurrentPageName}' was found.");
+            DepositPage.IsOpened.ShouldBeTrue($"Expected '{DepositPage.PageName}' page to be opened, but '{DepositPage.CurrentPageName}' was found.");
         }
 
         [TestCase("test", "newyork2")]
@@ -20,8 +19,7 @@ namespace Tests.Tests
         public void LoginWithInvalidCredentialsTest(string login, string password)
         {
             LoginPage.Login(login, password);
-
-            Assert.AreEqual("Incorrect user name or password!", LoginPage.ErrorMessage);
+            LoginPage.ErrorMessage.ShouldEqual("Incorrect user name or password!");
         }
 
         [TestCase("", "")]
@@ -30,8 +28,7 @@ namespace Tests.Tests
         public void LoginWithBlankCredentialsTest(string login, string password)
         {
             LoginPage.Login(login, password);
-
-            Assert.AreEqual("User name or password cannot be empty!", LoginPage.ErrorMessage);
+            LoginPage.ErrorMessage.ShouldEqual("User name or password cannot be empty!");
         }
     }
 }
