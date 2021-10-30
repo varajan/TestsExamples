@@ -29,7 +29,7 @@ namespace Tests.Tests
         public void LoginWithBlankCredentialsTest(string login, string password)
         {
             LoginPage.Login(login, password);
-            LoginPage.ErrorMessage.ShouldEqual("User name or password cannot be empty!");
+            LoginPage.ErrorMessage.ShouldEqual("User name and password cannot be empty!");
         }
     }
 }
