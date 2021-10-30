@@ -12,9 +12,12 @@ namespace Tests.Pages
     {
         public override string PageName => "Deposit calculator";
 
-        private SelectElement DaySelect => new SelectElement(WebDriver.Driver.FindElement(By.Id("day")));
-        private SelectElement MonthSelect => new SelectElement(WebDriver.Driver.FindElement(By.Id("month")));
-        private SelectElement YearSelect => new SelectElement(WebDriver.Driver.FindElement(By.Id("year")));
+        private IWebElement GetInput(string label) => WebDriver.Driver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
+        private IWebElement CalculateBtn => WebDriver.Driver.FindElement(By.Id("calculateBtn"));
+
+        private SelectElement DaySelect => new (WebDriver.Driver.FindElement(By.Id("day")));
+        private SelectElement MonthSelect => new (WebDriver.Driver.FindElement(By.Id("month")));
+        private SelectElement YearSelect => new (WebDriver.Driver.FindElement(By.Id("year")));
 
         public List<string> StartDateDays => DaySelect.Options.Select(x => x.Text).ToList();
 
@@ -46,9 +49,52 @@ namespace Tests.Pages
             set
             {
                 YearSelect.SelectByText(value.Year.ToString());
-                StartDateMonth = value.ToString("MMMM");
+                StartDateMonth = value.ToString("MMMM", CultureInfo.InvariantCulture);
                 DaySelect.SelectByText(value.Day.ToString());
             }
+        }
+
+        public string DepositAmount
+        {
+            get => GetInput("Deposit Amount").GetAttribute("value");
+            set => GetInput("Deposit Amount").SendKeys(value);
+        }
+
+        public string RateOfInterest
+        {
+            get => GetInput("Rate of Interest").GetAttribute("value");
+            set => GetInput("Rate of Interest").SendKeys(value);
+        }
+
+        public string InvestmentTerm
+        {
+            get => GetInput("Investment Term").GetAttribute("value");
+            set => GetInput("Investment Term").SendKeys(value);
+        }
+
+        public string FinancialYear
+        {
+            get => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '365 days']/input")).Selected ? "365" : "360";
+            set => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '{value} days']/input")).Click();
+        }
+
+        public string InterestEarned => GetInput("Interest Earned").GetAttribute("value");
+        public string Income => GetInput("Income").GetAttribute("value");
+        public string EndDate => GetInput("End Date").GetAttribute("value");
+
+
+        public void Populate(string amount, string interest, string term, string finYear = "365")
+        {
+            DepositAmount = amount;
+            RateOfInterest = interest;
+            InvestmentTerm = term;
+            FinancialYear = finYear;
+        }
+
+        public void Calculate()
+        {
+            CalculateBtn.Click();
+            // wait for enabled?
         }
     }
 }
