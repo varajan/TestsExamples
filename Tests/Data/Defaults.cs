@@ -1,0 +1,14 @@
+﻿namespace Tests.Data
+{
+    public static class Defaults
+    {
+        public static readonly string BaseUrl = "http://localhost:64177";
+
+        public static readonly string Login = "test";
+        public static readonly string Password = "newyork1";
+
+        public static readonly string Currency = "$ - US dollar";
+        public static readonly string NumberFormat = "123,456,789.00";
+        public static readonly string DateFormat = "dd/MM/yyyy";
+    }
+}

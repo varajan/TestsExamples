@@ -2,8 +2,10 @@
 
 namespace Tests.Pages
 {
-    public class LoginPage
+    public class LoginPage : BasePage
     {
+        public override string PageName => "Login";
+
         private IWebElement LoginFld => WebDriver.Driver.FindElement(By.Id("login"));
         private IWebElement PasswordFld => WebDriver.Driver.FindElement(By.Id("password"));
         private IWebElement LoginBtn => WebDriver.Driver.FindElement(By.Id("loginBtn"));

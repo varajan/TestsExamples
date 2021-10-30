@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
+using Tests.Data;
 using Tests.Extensions;
 
 namespace Tests.Tests
@@ -9,7 +10,12 @@ namespace Tests.Tests
     public class DepositPageTests : BaseTest
     {
         [SetUp]
-        public void Login() => LoginPage.Login("test", "newyork1");
+        public void Login()
+        {
+            LoginPage.Login(Defaults.Login, Defaults.Password);
+            DepositPage.OpenSettings();
+            SettingsPage.ResetToDefaults();
+        }
 
         [Test]
         public void DefaultFinancialYearValueTest()

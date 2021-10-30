@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests
 {
@@ -22,7 +23,7 @@ namespace Tests
 
                     PageLoad = DefaultPageLoad;
                     ImplicitWait = DefaultImplicitWait;
-                    _driver.Url = "http://localhost:64177/Login";
+                    _driver.Url = Defaults.BaseUrl;
                 }
 
                 return _driver;

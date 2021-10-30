@@ -7,6 +7,7 @@ namespace Tests.Tests
     {
         public LoginPage LoginPage => new();
         public DepositPage DepositPage => new();
+        public SettingsPage SettingsPage => new();
 
 
         [TearDown]

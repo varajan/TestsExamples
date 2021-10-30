@@ -30,11 +30,8 @@ namespace Tests.Tests
             var remindPasswordResult = LoginPage.RemindPassword.Send(email);
 
             // Assert
-            Assert.Multiple(() =>
-            {
-                remindPasswordResult.IsSuccessful.ShouldBeFalse();
-                remindPasswordResult.Message.ShouldEqual("Invalid email");
-            });
+            remindPasswordResult.IsSuccessful.ShouldBeFalse();
+            remindPasswordResult.Message.ShouldEqual("Invalid email");
         }
 
         [Test]
@@ -47,11 +44,8 @@ namespace Tests.Tests
             var remindPasswordResult = LoginPage.RemindPassword.Send("user@email.net");
 
             // Assert
-            Assert.Multiple(() =>
-            {
-                remindPasswordResult.IsSuccessful.ShouldBeFalse();
-                remindPasswordResult.Message.ShouldEqual("No user was found");
-            });
+            remindPasswordResult.IsSuccessful.ShouldBeFalse();
+            remindPasswordResult.Message.ShouldEqual("No user was found");
         }
 
         [Test]
@@ -65,11 +59,8 @@ namespace Tests.Tests
             var remindPasswordResult = LoginPage.RemindPassword.Send(email);
 
             // Assert
-            Assert.Multiple(() =>
-            {
-                remindPasswordResult.IsSuccessful.ShouldBeTrue();
-                remindPasswordResult.Message.ShouldEqual($"Email with instructions was sent to {email}");
-            });
+            remindPasswordResult.IsSuccessful.ShouldBeTrue();
+            remindPasswordResult.Message.ShouldEqual($"Email with instructions was sent to {email}");
         }
     }
 }

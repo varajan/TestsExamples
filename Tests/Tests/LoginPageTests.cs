@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Tests.Data;
 using Tests.Extensions;
 
 namespace Tests.Tests
@@ -8,7 +9,7 @@ namespace Tests.Tests
         [Test]
         public void LoginWithCorrectCredentialsTest()
         {
-            LoginPage.Login("test", "newyork1");
+            LoginPage.Login(Defaults.Login, Defaults.Password);
             DepositPage.IsOpened.ShouldBeTrue($"Expected '{DepositPage.PageName}' page to be opened, but '{DepositPage.CurrentPageName}' was found.");
         }
 

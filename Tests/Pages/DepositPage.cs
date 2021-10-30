@@ -13,11 +13,15 @@ namespace Tests.Pages
         public override string PageName => "Deposit calculator";
 
         private IWebElement GetInput(string label) => WebDriver.Driver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
+        private IWebElement SettingsBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Settings']"));
+        private IWebElement HistoryBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'History']"));
         private IWebElement CalculateBtn => WebDriver.Driver.FindElement(By.Id("calculateBtn"));
 
         private SelectElement DaySelect => new (WebDriver.Driver.FindElement(By.Id("day")));
         private SelectElement MonthSelect => new (WebDriver.Driver.FindElement(By.Id("month")));
         private SelectElement YearSelect => new (WebDriver.Driver.FindElement(By.Id("year")));
+
+        public string Currency => WebDriver.Driver.FindElement(By.Id("currency")).Text;
 
         public List<string> StartDateDays => DaySelect.Options.Select(x => x.Text).ToList();
 
@@ -90,6 +94,9 @@ namespace Tests.Pages
             InvestmentTerm = term;
             FinancialYear = finYear;
         }
+
+        public void OpenSettings() => SettingsBtn.Click();
+        public void OpenHistory() => HistoryBtn.Click();
 
         public void Calculate()
         {
