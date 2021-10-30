@@ -1,15 +1,11 @@
 ﻿using NUnit.Framework;
-using Tests.Pages;
 
 namespace Tests.Tests
 {
-    public class LoginPageTests
+    public class LoginPageTests : BaseTest
     {
-        private LoginPage LoginPage => new();
-        private DepositPage DepositPage => new();
-
         [Test]
-        public void LoginWithCorrectCredentials()
+        public void LoginWithCorrectCredentialsTest()
         {
             LoginPage.Login("test", "newyork1");
 
@@ -17,21 +13,25 @@ namespace Tests.Tests
                 $"Expected '{DepositPage.PageName}' page to be opened, but '{DepositPage.CurrentPageName}' was found.");
         }
 
-        [TestCase("test", "newyork2", "Incorrect user name or password!")]
-        [TestCase("text", "newyork1", "Incorrect user name or password!")]
-        [TestCase("test ", "newyork1", "Incorrect user name or password!")]
-        [TestCase("test", "newyork1 ", "Incorrect user name or password!")]
-        [TestCase("test", "", "User name and password cannot be empty!")]
-        [TestCase("", "newyork1", "User name and password cannot be empty!")]
-        [TestCase("", "", "User name and password cannot be empty!")]
-        public void LoginWithInvalidCredentials(string login, string password, string error)
+        [TestCase("test", "newyork2")]
+        [TestCase("text", "newyork1")]
+        [TestCase("test ", "newyork1")]
+        [TestCase("test", "newyork1 ")]
+        public void LoginWithInvalidCredentialsTest(string login, string password)
         {
             LoginPage.Login(login, password);
 
-            Assert.AreEqual(LoginPage.ErrorMessage, error);
+            Assert.AreEqual("Incorrect user name or password!", LoginPage.ErrorMessage);
         }
 
-        [TearDown]
-        public void TearDown() => WebDriver.Quit();
+        [TestCase("", "")]
+        [TestCase("test", "")]
+        [TestCase("", "newyork1")]
+        public void LoginWithBlankCredentialsTest(string login, string password)
+        {
+            LoginPage.Login(login, password);
+
+            Assert.AreEqual("User name or password cannot be empty!", LoginPage.ErrorMessage);
+        }
     }
 }
