@@ -91,7 +91,7 @@
         var max = document.querySelector('#finYear input').checked ? 365 : 360;
         var value = Number(document.getElementById(id).value);
 
-        if (isNaN(value) || value < min || value > max) {
+        if (!Number.isInteger(value) || isNaN(value) || value < min || value > max) {
             document.getElementById(id).value = "0";
         }
 
