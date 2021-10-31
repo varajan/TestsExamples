@@ -42,7 +42,7 @@ namespace Tests.Pages
         public void Save()
         {
             SaveBtn.Click();
-            WebDriver.Alert.Accept();
+            WebDriver.Alert?.Accept();
         }
 
         public void ResetToDefaults() => Set(Defaults.Currency, Defaults.NumberFormat, Defaults.DateFormat);

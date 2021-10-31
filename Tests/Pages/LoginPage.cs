@@ -12,7 +12,7 @@ namespace Tests.Pages
         private IWebElement RemindPwdBtn => WebDriver.Driver.FindElement(By.Id("remindBtn"));
         private IWebElement ErrorMsg => WebDriver.Driver.FindElement(By.Id("errorMessage"));
 
-        public RemindPasswordView RemindPassword => new RemindPasswordView(RemindPwdBtn);
+        public RemindPasswordView RemindPassword => new (RemindPwdBtn);
 
         public void Login(string login, string password)
         {
