@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Tests.Data;
 using Tests.Extensions;
@@ -12,9 +14,6 @@ namespace Tests.Tests
         {
             LoginPage.Login(Defaults.Login, Defaults.Password);
 
-            SettingsPage.Open();
-            SettingsPage.ResetToDefaults();
-
             HistoryPage.Open();
             HistoryPage.Clear();
             HistoryPage.History.ShouldBeEmpty();
@@ -26,7 +25,6 @@ namespace Tests.Tests
         {
             // Arrange
             DepositPage.Calculate("1000", "100", "300");
-            DepositPage.Calculate("1100", "50", "200");
             DepositPage.Calculate("1500", "25", "100");
 
             // Act
@@ -43,17 +41,55 @@ namespace Tests.Tests
         public void AssertHistoryTableTest()
         {
             // Arrange
-            var startDate = new DateTime(2021, 10, 30);
-            var expectedHistory = new[]
-            {
-                new [] { "1500", "25%", "100", "365",  "30/10/2021", "07/02/2022", "102.74", "1,602.74"},
-                new [] { "1100", "50%", "200", "360",  "30/10/2021", "18/05/2022", "305.56", "1,405.56"},
-                new [] { "1000", "100%", "300", "365", "30/10/2021", "26/08/2022", "821.92", "1,821.92"}
-            };
+            var expectedHistory = new List<List<string>>();
 
-            DepositPage.Calculate("1000", "100", "300", "365", startDate);
-            DepositPage.Calculate("1100", "50", "200", "360", startDate);
-            DepositPage.Calculate("1500", "25", "100", "365", startDate);
+            DepositPage.Calculate("1000", "100", "300");
+            expectedHistory.Insert(0, DepositPage.Data);
+
+            DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
+            expectedHistory.Insert(0, DepositPage.Data);
+
+            // Act
+            HistoryPage.Open();
+
+            // Assert
+            HistoryPage.History.ShouldEqual(expectedHistory);
+        }
+
+        [Test]
+        public void HistoryShowsLast9RecordsTest()
+        {
+            // Arrange
+            var expectedHistory = new List<List<string>>();
+
+            for (var i = 1; i < 15; i++)
+            {
+                DepositPage.Calculate("1000", i.ToString(), "300");
+                expectedHistory.Insert(0, DepositPage.Data);
+            }
+
+            // Act
+            HistoryPage.Open();
+
+            // Assert
+            HistoryPage.History.ShouldEqual(expectedHistory.Take(9));
+        }
+
+        [TestCase("$ - US dollar", "123.456.789,00", "dd-MM-yyyy")]
+        [TestCase("€ - euro", "123 456 789.00", "MM/dd/yyyy")]
+        [TestCase("£ - Great Britain Pound", "123 456 789,00", "MM dd yyyy")]
+        public void HistoryRespectSettingsTest(string currency, string numberFormat, string dateFormat)
+        {
+            // Arrange
+            var expectedHistory = new List<List<string>>();
+
+            SettingsPage.Set(currency, numberFormat, dateFormat);
+            DepositPage.Calculate("100000", "99", "299");
+            expectedHistory.Insert(0, DepositPage.Data);
+
+            SettingsPage.ResetToDefaults();
+            DepositPage.Calculate("100000", "75", "299");
+            expectedHistory.Insert(0, DepositPage.Data);
 
             // Act
             HistoryPage.Open();

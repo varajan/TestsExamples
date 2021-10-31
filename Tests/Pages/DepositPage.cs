@@ -102,6 +102,22 @@ namespace Tests.Pages
         public string Income => GetInput("Income").GetAttribute("value");
         public string EndDate => GetInput("End Date").GetAttribute("value");
 
+        /// <summary>
+        /// Get history data: Amount	%	Term	Year	From	To	Interest	Income
+        /// </summary>
+        public List<string> Data =>
+            new()
+            {
+                DepositAmount,
+                RateOfInterest + "%",
+                InvestmentTerm,
+                FinancialYear,
+                StartDate.ToString(EndDate.GetDateFormat(), CultureInfo.InvariantCulture),
+                EndDate,
+                InterestEarned,
+                Income
+            };
+
         public void Calculate(string amount, string interest, string term, string finYear = "365", DateTime? startDate = null)
         {
             Populate(amount, interest, term, finYear, startDate);

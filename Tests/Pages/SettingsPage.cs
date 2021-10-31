@@ -45,11 +45,15 @@ namespace Tests.Pages
             WebDriver.Alert.Accept();
         }
 
-        public void ResetToDefaults()
+        public void ResetToDefaults() => Set(Defaults.Currency, Defaults.NumberFormat, Defaults.DateFormat);
+
+        public void Set(string currency, string numberFormat, string dateFormat)
         {
-            Currency = Defaults.Currency;
-            NumberFormat = Defaults.NumberFormat;
-            DateFormat = Defaults.DateFormat;
+            Open();
+
+            Currency = currency;
+            NumberFormat = numberFormat;
+            DateFormat = dateFormat;
 
             Save();
         }
