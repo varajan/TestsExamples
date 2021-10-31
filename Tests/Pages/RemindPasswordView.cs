@@ -14,6 +14,18 @@ namespace Tests.Pages
         private IWebElement MessageLbl => WebDriver.Driver.FindElement(By.Id("message"));
         private IWebElement EmailFld => WebDriver.Driver.FindElement(By.Id("email"));
 
+        public string Error
+        {
+            get
+            {
+                WebDriver.SwitchToFrame(_iframe);
+                var result = MessageLbl.Text;
+                WebDriver.SwitchToParentFrame();
+
+                return result;
+            }
+        }
+
         public bool IsShown => WebDriver.Driver.FindElement(By.Id(_iframe)).Displayed;
 
         public void Open()
@@ -31,20 +43,16 @@ namespace Tests.Pages
             WebDriver.SwitchToParentFrame();
         }
 
-        public (bool IsSuccessful, string Message) Send(string email)
+        public void Send(string email)
         {
             WebDriver.SwitchToFrame(_iframe);
             EmailFld.SendKeys(email);
             SendBtn.Click();
 
-            var result = WebDriver.Alert == null
-                ? (false, MessageLbl.Text)
-                : (true, WebDriver.Alert.Text);
-
-            WebDriver.Alert?.Accept();
-            WebDriver.SwitchToParentFrame();
-
-            return result;
+            if (WebDriver.Alert == null)
+            {
+                WebDriver.SwitchToParentFrame();
+            }
         }
     }
 }
