@@ -49,10 +49,13 @@ namespace Tests.Steps
         public void SetStartDate(string date) => DepositPage.StartDate = DateTime.Parse(date);
 
         [When(@"I calculate deposit for (\$|€|£)(.*) with (.*)% on (.*) days")]
-        public void Calculate(string amount, string interest, string term) => DepositPage.Calculate(amount, interest, term);
+        public void Calculate(string _, string amount, string interest, string term) => DepositPage.Calculate(amount, interest, term);
 
         [When(@"I calculate deposit for (.*) with (.*) on (.*) days with (.*) financial year")]
-        public void Calculate(string amount, string interest, string term, string finYear) => DepositPage.Calculate(amount, interest, term, finYear);
+        public void Calculate2(string amount, string interest, string term, string finYear) => DepositPage.Calculate(amount, interest, term, finYear);
+
+        [Then("(.*) currency is shown")]
+        public void AssertCurrency(string currency) => DepositPage.Currency.ShouldEqual(currency);
 
         [Then("End date is '(.*)'")]
         public void AssertEndDate(string date) => DepositPage.EndDate.ShouldEqual(date);
