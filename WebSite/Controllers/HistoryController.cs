@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace WebSite.Controllers
 {
@@ -43,7 +44,7 @@ namespace WebSite.Controllers
                 : "dd/MM/yyyy";
             var startDate = DateTime.ParseExact(endDate, format, CultureInfo.InvariantCulture).AddDays(-days).ToString(format, CultureInfo.InvariantCulture);
 
-            System.IO.File.AppendAllText(history, $"{amount}; {percent}%; {days}; {year}; {startDate}; {endDate}; {interest}; {income}{Environment.NewLine}");
+            System.IO.File.AppendAllText(history, $"{SettingsController.FormatNumber(amount.AsDecimal())}; {percent}%; {days}; {year}; {startDate}; {endDate}; {interest}; {income}{Environment.NewLine}");
             return Json("OK");
         }
     }

@@ -8,7 +8,7 @@ namespace WebSite.Controllers
 {
     public class SettingsController : Controller
     {
-        private readonly string settings = $"{Path.GetTempPath()}/settings.data";
+        private static readonly string settings = $"{Path.GetTempPath()}/settings.data";
 
         public ActionResult Index()
         {
@@ -29,6 +29,11 @@ namespace WebSite.Controllers
         [HttpGet]
         public ActionResult Number(decimal number)
         {
+            return Json(FormatNumber(number), JsonRequestBehavior.AllowGet);
+        }
+
+        public static string FormatNumber(decimal number)
+        {
             var result = Math.Round(number, 2, MidpointRounding.AwayFromZero)
                 .ToString("N", CultureInfo.InvariantCulture);
             var format = System.IO.File.Exists(settings)
@@ -38,19 +43,16 @@ namespace WebSite.Controllers
             switch (format)
             {
                 case "123.456.789,00":
-                    result = result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');
-                    break;
+                    return result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');
 
                 case "123 456 789.00":
-                    result = result.Replace(',', ' ');
-                    break;
+                    return result.Replace(',', ' ');
 
                 case "123 456 789,00":
-                    result = result.Replace(',', ' ').Replace('.', ',');
-                    break;
+                    return result.Replace(',', ' ').Replace('.', ',');
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return result;
         }
 
         [HttpGet]
