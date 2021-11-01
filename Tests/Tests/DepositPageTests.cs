@@ -80,7 +80,7 @@ namespace Tests.Tests
         {
             // Arrange
             var startDate = DateTime.Today.AddDays(10);
-            var endDate = startDate.AddDays(100).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var endDate = startDate.AddDays(100).ToString(Defaults.DateFormat, CultureInfo.InvariantCulture);
 
             // Act
             DepositPage.Populate("1000", "10", "100");
