@@ -14,6 +14,9 @@ namespace Tests.Tests
         {
             LoginPage.Login(Defaults.Login, Defaults.Password);
 
+            SettingsPage.Open();
+            SettingsPage.ResetToDefaults();
+
             HistoryPage.Open();
             HistoryPage.Clear();
             HistoryPage.History.ShouldBeEmpty();
@@ -44,10 +47,10 @@ namespace Tests.Tests
             var expectedHistory = new List<List<string>>();
 
             DepositPage.Calculate("1000", "100", "300");
-            expectedHistory.Insert(0, DepositPage.Data);
+            expectedHistory.Insert(0, DepositPage.GetData());
 
             DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
-            expectedHistory.Insert(0, DepositPage.Data);
+            expectedHistory.Insert(0, DepositPage.GetData());
 
             // Act
             HistoryPage.Open();
@@ -65,7 +68,7 @@ namespace Tests.Tests
             for (var i = 1; i < 15; i++)
             {
                 DepositPage.Calculate("1000", i.ToString(), "300");
-                expectedHistory.Insert(0, DepositPage.Data);
+                expectedHistory.Insert(0, DepositPage.GetData());
             }
 
             // Act
@@ -85,11 +88,11 @@ namespace Tests.Tests
 
             SettingsPage.Set(currency, numberFormat, dateFormat);
             DepositPage.Calculate("100000", "99", "299");
-            expectedHistory.Insert(0, DepositPage.Data);
+            expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
 
             SettingsPage.ResetToDefaults();
             DepositPage.Calculate("100000", "75", "299");
-            expectedHistory.Insert(0, DepositPage.Data);
+            expectedHistory.Insert(0, DepositPage.GetData(Defaults.NumberFormat));
 
             // Act
             HistoryPage.Open();

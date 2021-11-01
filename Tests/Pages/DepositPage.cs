@@ -5,6 +5,7 @@ using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 using Tests.Extensions;
 
 namespace Tests.Pages
@@ -105,10 +106,10 @@ namespace Tests.Pages
         /// <summary>
         /// Get history data: Amount	%	Term	Year	From	To	Interest	Income
         /// </summary>
-        public List<string> Data =>
+        public List<string> GetData(string format = null) =>
             new()
             {
-                DepositAmount,
+                DepositAmount.FormatNumber(format ?? Defaults.NumberFormat),
                 RateOfInterest + "%",
                 InvestmentTerm,
                 FinancialYear,
