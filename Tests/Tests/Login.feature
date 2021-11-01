@@ -1,4 +1,4 @@
-﻿Feature: LoginPage
+﻿Feature: Login
 
 Scenario: Login with correct credentials
 	Given I open Login page

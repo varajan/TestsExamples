@@ -149,18 +149,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 11
  testRunner.When("I open Settings page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "Format"});
-                table1.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "dd/MM/yyyy"});
-                table1.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "dd-MM-yyyy"});
-                table1.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "MM/dd/yyyy"});
-                table1.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "MM dd yyyy"});
 #line 12
- testRunner.Then("Available date formats are:", ((string)(null)), table1, "Then ");
+ testRunner.Then("Available date formats are:", ((string)(null)), table9, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -199,18 +199,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 21
  testRunner.When("I open Settings page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Format"});
-                table2.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "123,456,789.00"});
-                table2.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "123.456.789,00"});
-                table2.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "123 456 789.00"});
-                table2.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "123 456 789,00"});
 #line 22
- testRunner.Then("Available number formats are:", ((string)(null)), table2, "Then ");
+ testRunner.Then("Available number formats are:", ((string)(null)), table10, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -249,16 +249,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 31
  testRunner.When("I open Settings page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "Format"});
-                table3.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "$ - US dollar"});
-                table3.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "€ - euro"});
-                table3.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "£ - Great Britain Pound"});
 #line 32
- testRunner.Then("Available currencies are:", ((string)(null)), table3, "Then ");
+ testRunner.Then("Available currencies are:", ((string)(null)), table11, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -383,10 +383,10 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Apply dates format")]
-        [NUnit.Framework.TestCaseAttribute("dd/MM/yyyy", "08/02/2022", null)]
-        [NUnit.Framework.TestCaseAttribute("dd-MM-yyyy", "08-02-2022", null)]
-        [NUnit.Framework.TestCaseAttribute("MM/dd/yyyy", "02/08/2022", null)]
-        [NUnit.Framework.TestCaseAttribute("MM dd yyyy", "02 08 2022", null)]
+        [NUnit.Framework.TestCaseAttribute("dd/MM/yyyy", "18/08/2022", null)]
+        [NUnit.Framework.TestCaseAttribute("dd-MM-yyyy", "18-08-2022", null)]
+        [NUnit.Framework.TestCaseAttribute("MM/dd/yyyy", "08/18/2022", null)]
+        [NUnit.Framework.TestCaseAttribute("MM dd yyyy", "08 18 2022", null)]
         public virtual void ApplyDatesFormat(string format, string date, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

@@ -2,15 +2,13 @@
 using TechTalk.SpecFlow;
 using Tests.Data;
 using Tests.Extensions;
-using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class SettingsPageSteps
+    public class SettingsSteps : CommonSteps
     {
-        private SettingsPage SettingsPage => new();
-
+        [Given("Setting have default values")]
         [Given("I restore setting to default values")]
         public void RestoreDefaultSettings() => SettingsPage.ResetToDefaults();
 
@@ -62,6 +60,16 @@ namespace Tests.Steps
         {
             var currencies = table.Rows.Select(x => x[0]);
             SettingsPage.Currencies.ShouldEqual(currencies);
+        }
+
+        [Given("I update settings: '(.*)', '(.*)', '(.*)'")]
+        public void SetSettings(string numberFormat, string dateFormat, string currency)
+        {
+            SettingsPage.Open();
+            SettingsPage.NumberFormat = numberFormat;
+            SettingsPage.DateFormat = dateFormat;
+            SettingsPage.Currency = currency;
+            SettingsPage.Save();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿Feature: SettingsPage
+﻿Feature: Settings
 
 Scenario: Logout
 	Given I am logged in
@@ -56,11 +56,11 @@ Scenario: Apply number format
 		And Interest is <interest>
 
 Examples:
-| format         | income     | interest  |
-| 123,456,789.00 | 127,397.26 | 27,397.26 |
-| 123.456.789,00 | 127.397,26 | 27.397,26 |
-| 123 456 789.00 | 127 397.26 | 27 397.26 |
-| 123 456 789,00 | 127 397,26 | 27 397,26 |
+	| format         | income     | interest  |
+	| 123,456,789.00 | 127,397.26 | 27,397.26 |
+	| 123.456.789,00 | 127.397,26 | 27.397,26 |
+	| 123 456 789.00 | 127 397.26 | 27 397.26 |
+	| 123 456 789,00 | 127 397,26 | 27 397,26 |
 
 
 Scenario: Apply dates format
@@ -73,11 +73,11 @@ Scenario: Apply dates format
 	Then End date is '<date>'
 
 Examples: 
-| format     | date       |
-| dd/MM/yyyy | 08/02/2022 |
-| dd-MM-yyyy | 08-02-2022 |
-| MM/dd/yyyy | 02/08/2022 |
-| MM dd yyyy | 02 08 2022 |
+	| format     | date       |
+	| dd/MM/yyyy | 18/08/2022 |
+	| dd-MM-yyyy | 18-08-2022 |
+	| MM/dd/yyyy | 08/18/2022 |
+	| MM dd yyyy | 08 18 2022 |
 
 
 Scenario: Apply currency
@@ -88,7 +88,7 @@ Scenario: Apply currency
 	Then <code> currency is shown
 
 Examples: 
-| currency                | code |
-| $ - US dollar           | $    |
-| € - euro                | €    |
-| £ - Great Britain Pound | £    |
+	| currency                | code |
+	| $ - US dollar           | $    |
+	| € - euro                | €    |
+	| £ - Great Britain Pound | £    |

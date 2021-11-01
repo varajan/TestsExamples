@@ -1,4 +1,7 @@
-﻿Feature: DepositPage
+﻿Feature: Deposit
+
+Background:
+	Given Setting have default values
 
 Scenario: Default fiancial year is 365
 	Given I am logged in
@@ -40,7 +43,7 @@ Scenario: Calculate End Date
 	Given I am logged in
 	When I select Start Date as '05/10/2022'
 		And I calculate deposit for $1000 with 10% on 100 days
-	Then End date is '08/02/2022'
+	Then End date is '18/08/2022'
 
 Scenario: Calculate deposit
 	Given I am logged in

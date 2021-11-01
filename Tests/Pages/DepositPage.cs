@@ -11,11 +11,9 @@ namespace Tests.Pages
 {
     public class DepositPage : BasePage
     {
-        public override string PageName => "Deposit calculator";
+        public override string PageName => "Deposit";
 
         private IWebElement GetInput(string label) => WebDriver.Driver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
-        private IWebElement SettingsBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Settings']"));
-        private IWebElement HistoryBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'History']"));
         private IWebElement CalculateBtn => WebDriver.Driver.FindElement(By.Id("calculateBtn"));
 
         private SelectElement DaySelect => new (WebDriver.Driver.FindElement(By.Id("day")));
@@ -102,22 +100,6 @@ namespace Tests.Pages
         public string Income => GetInput("Income").GetAttribute("value");
         public string EndDate => GetInput("End Date").GetAttribute("value");
 
-        /// <summary>
-        /// Get history data: Amount	%	Term	Year	From	To	Interest	Income
-        /// </summary>
-        public List<string> Data =>
-            new()
-            {
-                DepositAmount,
-                RateOfInterest + "%",
-                InvestmentTerm,
-                FinancialYear,
-                StartDate.ToString(EndDate.GetDateFormat(), CultureInfo.InvariantCulture),
-                EndDate,
-                InterestEarned,
-                Income
-            };
-
         public void Calculate(string amount, string interest, string term, string finYear = "365", DateTime? startDate = null)
         {
             Populate(amount, interest, term, finYear, startDate);
@@ -130,11 +112,8 @@ namespace Tests.Pages
             RateOfInterest = interest;
             InvestmentTerm = term;
             FinancialYear = finYear;
-            StartDate = startDate ?? DateTime.Now;
+            if (startDate.HasValue) StartDate = startDate.Value;
         }
-
-        public void OpenSettings() => SettingsBtn.Click();
-        public void OpenHistory() => HistoryBtn.Click();
 
         public void Calculate()
         {

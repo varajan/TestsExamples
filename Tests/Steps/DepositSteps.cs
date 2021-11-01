@@ -2,15 +2,12 @@
 using System.Linq;
 using TechTalk.SpecFlow;
 using Tests.Extensions;
-using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class DepositPageSteps
+    public class DepositSteps : CommonSteps
     {
-        private DepositPage DepositPage => new();
-
         [When("I select (.*) and (.*) as Start Date")]
         public void SelectStartDateYearAndMonth(string year, string month)
         {

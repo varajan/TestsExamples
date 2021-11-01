@@ -7,8 +7,6 @@ namespace Tests.Pages
     {
         public string CurrentPageName => WebDriver.Driver.Title;
         public virtual string PageName => string.Empty;
-        
-        public bool IsOpened => CurrentPageName.Equals(PageName);
 
         public IAlert Alert => WebDriver.Alert;
 
