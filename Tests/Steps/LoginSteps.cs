@@ -1,12 +1,19 @@
-﻿using TechTalk.SpecFlow;
+﻿using BoDi;
+using TechTalk.SpecFlow;
 using Tests.Data;
 using Tests.Extensions;
+using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class LoginSteps : CommonSteps
+    public class LoginSteps : BaseTest
     {
+        private BasePage BasePage => new(WebDriver, string.Empty);
+        private LoginPage LoginPage => new(WebDriver);
+
+        public LoginSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
+
         [Given("I open (.*) page")]
         [When("I open (.*) page")]
         public void OpenPage(string name) => BasePage.Open(name);

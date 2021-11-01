@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Linq;
+using BoDi;
 using TechTalk.SpecFlow;
 using Tests.Extensions;
+using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class HistorySteps : CommonSteps
+    public class HistorySteps : BaseTest
     {
+        private HistoryPage HistoryPage => new(WebDriver);
+        private DepositPage DepositPage => new(WebDriver);
+
+        public HistorySteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
+
         [Given("I have history data:")]
         public void PopulateHistory(Table table)
         {

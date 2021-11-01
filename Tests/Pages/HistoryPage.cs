@@ -6,10 +6,10 @@ namespace Tests.Pages
 {
     public class HistoryPage : BasePage
     {
-        public override string PageName => "History";
+        public HistoryPage(IWebDriver webDriver) : base(webDriver, "History") { }
 
-        private IWebElement ClearBtn => WebDriver.Driver.FindElement(By.Id("clear"));
-        private IWebElement Table => WebDriver.Driver.FindElement(By.Id("history"));
+        private IWebElement ClearBtn => WebDriver.FindElement(By.Id("clear"));
+        private IWebElement Table => WebDriver.FindElement(By.Id("history"));
 
         public List<string> Headers => Table.FindElements(By.TagName("TH")).Select(x => x.Text).ToList();
         public List<List<string>> History => Table

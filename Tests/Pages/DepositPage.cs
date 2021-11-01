@@ -11,16 +11,16 @@ namespace Tests.Pages
 {
     public class DepositPage : BasePage
     {
-        public override string PageName => "Deposit";
+        public DepositPage(IWebDriver webDriver) : base(webDriver, "Deposit") { }
 
-        private IWebElement GetInput(string label) => WebDriver.Driver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
-        private IWebElement CalculateBtn => WebDriver.Driver.FindElement(By.Id("calculateBtn"));
+        private IWebElement GetInput(string label) => WebDriver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
+        private IWebElement CalculateBtn => WebDriver.FindElement(By.Id("calculateBtn"));
 
-        private SelectElement DaySelect => new (WebDriver.Driver.FindElement(By.Id("day")));
-        private SelectElement MonthSelect => new (WebDriver.Driver.FindElement(By.Id("month")));
-        private SelectElement YearSelect => new (WebDriver.Driver.FindElement(By.Id("year")));
+        private SelectElement DaySelect => new (WebDriver.FindElement(By.Id("day")));
+        private SelectElement MonthSelect => new (WebDriver.FindElement(By.Id("month")));
+        private SelectElement YearSelect => new (WebDriver.FindElement(By.Id("year")));
 
-        public string Currency => WebDriver.Driver.FindElement(By.Id("currency")).Text;
+        public string Currency => WebDriver.FindElement(By.Id("currency")).Text;
 
         public List<string> StartDateDays => DaySelect.Options.Select(x => x.Text).ToList();
 
@@ -92,8 +92,8 @@ namespace Tests.Pages
 
         public string FinancialYear
         {
-            get => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '365 days']/input")).Selected ? "365" : "360";
-            set => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '{value} days']/input")).Click();
+            get => WebDriver.FindElement(By.XPath($"//td[text() = '365 days']/input")).Selected ? "365" : "360";
+            set => WebDriver.FindElement(By.XPath($"//td[text() = '{value} days']/input")).Click();
         }
 
         public string InterestEarned => GetInput("Interest Earned").GetAttribute("value");
@@ -119,7 +119,7 @@ namespace Tests.Pages
         {
             CalculateBtn.Click();
 
-            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(5))
+            new WebDriverWait(WebDriver, TimeSpan.FromSeconds(5))
                 .Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
     }

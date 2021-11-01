@@ -1,65 +1,75 @@
 ﻿using System;
+using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumExtras.WaitHelpers;
+using TechTalk.SpecFlow;
 using Tests.Data;
 
 namespace Tests
 {
+    [Binding]
     public class WebDriver
     {
-        private static IWebDriver _driver;
+        private readonly IObjectContainer _objectContainer;
+        private readonly ScenarioContext _scenarioContext;
+        private static object Lock = new();
+
+        public WebDriver(IObjectContainer objectContainer, ScenarioContext scenarioContext)
+        {
+            _scenarioContext = scenarioContext;
+            _objectContainer = objectContainer;
+        }
 
         public static IWebDriver Driver
         {
             get
             {
-                if (_driver == null)
+                lock (Lock)
                 {
-                    _driver = new ChromeDriver();
+                    var driver = new ChromeDriver();
 
-                    PageLoad = Defaults.PageLoad;
-                    ImplicitWait = Defaults.ImplicitWait;
-                    _driver.Url = Defaults.BaseUrl;
+                    driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(Defaults.PageLoad);
+                    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
+                    driver.Url = Defaults.BaseUrl;
+
+                    return driver;
                 }
-
-                return _driver;
             }
         }
 
-        public static double PageLoad
+        [BeforeScenario]
+        public void InitializeWebDriver()
         {
-            get => _driver.Manage().Timeouts().PageLoad.TotalMilliseconds;
-            set => _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(value);
+            _objectContainer.RegisterInstanceAs(Driver, dispose: true);
         }
 
-        public static double ImplicitWait
+        [AfterScenario]
+        public void AfterWebTest()
         {
-            get => _driver.Manage().Timeouts().ImplicitWait.TotalMilliseconds;
-            set => _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(value);
+            var webDriver = _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
+
+            webDriver?.Quit();
+            webDriver?.Dispose();
+        }
+    }
+
+    public static class WebDriverExtensions
+    {
+        public static IAlert Alert(this IWebDriver driver) => ExpectedConditions.AlertIsPresent().Invoke(driver);
+
+        public static void SwitchToFrame(this IWebDriver driver, string frameId)
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+            driver.SwitchTo().Frame(frameId);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
         }
 
-        public static IAlert Alert => ExpectedConditions.AlertIsPresent().Invoke(_driver);
-
-        public static void SwitchToFrame(string frameId)
+        public static void SwitchToMainFrame(this IWebDriver driver)
         {
-            ImplicitWait = 0;
-            Driver.SwitchTo().Frame(frameId);
-            ImplicitWait = Defaults.ImplicitWait;
-        }
-
-        public static void SwitchToParentFrame()
-        {
-            ImplicitWait = 0;
-            Driver.SwitchTo().ParentFrame();
-            ImplicitWait = Defaults.ImplicitWait;
-        }
-
-        public static void Quit()
-        {
-            _driver?.Quit();
-            _driver?.Dispose();
-            _driver = null;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+            driver.SwitchTo().ParentFrame();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
         }
     }
 }

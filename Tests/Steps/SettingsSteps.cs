@@ -1,13 +1,19 @@
 ﻿using System.Linq;
+using BoDi;
 using TechTalk.SpecFlow;
 using Tests.Data;
 using Tests.Extensions;
+using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class SettingsSteps : CommonSteps
+    public class SettingsSteps : BaseTest
     {
+        private SettingsPage SettingsPage => new(WebDriver);
+
+        public SettingsSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
+
         [Given("Setting have default values")]
         [Given("I restore setting to default values")]
         public void RestoreDefaultSettings() => SettingsPage.ResetToDefaults();

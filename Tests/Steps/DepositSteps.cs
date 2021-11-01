@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Linq;
+using BoDi;
 using TechTalk.SpecFlow;
 using Tests.Extensions;
+using Tests.Pages;
 
 namespace Tests.Steps
 {
     [Binding]
-    public class DepositSteps : CommonSteps
+    public class DepositSteps : BaseTest
     {
+        private DepositPage DepositPage => new(WebDriver);
+
+        public DepositSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
+
         [When("I select (.*) and (.*) as Start Date")]
         public void SelectStartDateYearAndMonth(string year, string month)
         {

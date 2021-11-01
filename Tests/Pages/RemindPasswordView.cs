@@ -6,27 +6,28 @@ namespace Tests.Pages
     {
         private string _iframe = "remindPasswordView";
         private readonly IWebElement _openBtn;
+        private readonly IWebDriver _driver;
 
-        public RemindPasswordView(IWebElement openBtn) => _openBtn = openBtn;
+        public RemindPasswordView(IWebElement openBtn, IWebDriver driver) => (_openBtn, _driver) = (openBtn, driver);
 
-        private IWebElement CloseBtn => WebDriver.Driver.FindElement(By.XPath("//button[text() = 'x']"));
-        private IWebElement SendBtn => WebDriver.Driver.FindElement(By.XPath("//button[text() = 'Send']"));
-        private IWebElement MessageLbl => WebDriver.Driver.FindElement(By.Id("message"));
-        private IWebElement EmailFld => WebDriver.Driver.FindElement(By.Id("email"));
+        private IWebElement CloseBtn => _driver.FindElement(By.XPath("//button[text() = 'x']"));
+        private IWebElement SendBtn => _driver.FindElement(By.XPath("//button[text() = 'Send']"));
+        private IWebElement MessageLbl => _driver.FindElement(By.Id("message"));
+        private IWebElement EmailFld => _driver.FindElement(By.Id("email"));
 
         public string Error
         {
             get
             {
-                WebDriver.SwitchToFrame(_iframe);
+                _driver.SwitchToFrame(_iframe);
                 var result = MessageLbl.Text;
-                WebDriver.SwitchToParentFrame();
+                _driver.SwitchToMainFrame();
 
                 return result;
             }
         }
 
-        public bool IsShown => WebDriver.Driver.FindElement(By.Id(_iframe)).Displayed;
+        public bool IsShown => _driver.FindElement(By.Id(_iframe)).Displayed;
 
         public void Open()
         {
@@ -38,20 +39,20 @@ namespace Tests.Pages
 
         public void Close()
         {
-            WebDriver.SwitchToFrame(_iframe);
+            _driver.SwitchToFrame(_iframe);
             CloseBtn.Click();
-            WebDriver.SwitchToParentFrame();
+            _driver.SwitchToMainFrame();
         }
 
         public void Send(string email)
         {
-            WebDriver.SwitchToFrame(_iframe);
+            _driver.SwitchToFrame(_iframe);
             EmailFld.SendKeys(email);
             SendBtn.Click();
 
-            if (WebDriver.Alert == null)
+            if (_driver.Alert() == null)
             {
-                WebDriver.SwitchToParentFrame();
+                _driver.SwitchToMainFrame();
             }
         }
     }

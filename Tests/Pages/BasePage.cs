@@ -5,12 +5,16 @@ namespace Tests.Pages
 {
     public class BasePage
     {
-        public string CurrentPageName => WebDriver.Driver.Title;
-        public virtual string PageName => string.Empty;
+        protected IWebDriver WebDriver;
+        public string PageName;
 
-        public IAlert Alert => WebDriver.Alert;
+        public BasePage(IWebDriver webDriver, string pageName) => (WebDriver, PageName) = (webDriver, pageName);
+
+        public string CurrentPageName => WebDriver.Title;
+
+        public IAlert Alert => WebDriver.Alert();
 
         public void Open() => Open(PageName);
-        public void Open(string page) => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/{page}";
+        public void Open(string page) => WebDriver.Url = $"{Defaults.BaseUrl}/{page}";
     }
 }

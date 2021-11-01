@@ -8,15 +8,15 @@ namespace Tests.Pages
 {
     public class SettingsPage : BasePage
     {
-        public override string PageName => "Settings";
+        public SettingsPage(IWebDriver webDriver) : base(webDriver, "Settings") { }
 
-        private SelectElement DateFormatSelect => new(WebDriver.Driver.FindElement(By.Id("dateFormat")));
-        private SelectElement NumberFormatSelect => new(WebDriver.Driver.FindElement(By.Id("numberFormat")));
-        private SelectElement CurrencySelect => new(WebDriver.Driver.FindElement(By.Id("currency")));
+        private SelectElement DateFormatSelect => new(WebDriver.FindElement(By.Id("dateFormat")));
+        private SelectElement NumberFormatSelect => new(WebDriver.FindElement(By.Id("numberFormat")));
+        private SelectElement CurrencySelect => new(WebDriver.FindElement(By.Id("currency")));
 
-        private IWebElement SaveBtn => WebDriver.Driver.FindElement(By.Id("save"));
-        private IWebElement CancelBtn => WebDriver.Driver.FindElement(By.Id("cancel"));
-        private IWebElement LogoutBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Logout']"));
+        private IWebElement SaveBtn => WebDriver.FindElement(By.Id("save"));
+        private IWebElement CancelBtn => WebDriver.FindElement(By.Id("cancel"));
+        private IWebElement LogoutBtn => WebDriver.FindElement(By.XPath("//div[text() = 'Logout']"));
 
         public List<string> DateFormats => DateFormatSelect.Options.Select(x => x.Text).ToList();
         public string DateFormat
@@ -42,7 +42,7 @@ namespace Tests.Pages
         public void Save()
         {
             SaveBtn.Click();
-            WebDriver.Alert?.Accept();
+            Alert?.Accept();
         }
 
         public void ResetToDefaults() => Set(Defaults.Currency, Defaults.NumberFormat, Defaults.DateFormat);

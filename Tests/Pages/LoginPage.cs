@@ -4,15 +4,15 @@ namespace Tests.Pages
 {
     public class LoginPage : BasePage
     {
-        public override string PageName => "Login";
+        public LoginPage(IWebDriver webDriver) : base(webDriver, "Login") { }
 
-        private IWebElement LoginFld => WebDriver.Driver.FindElement(By.Id("login"));
-        private IWebElement PasswordFld => WebDriver.Driver.FindElement(By.Id("password"));
-        private IWebElement LoginBtn => WebDriver.Driver.FindElement(By.Id("loginBtn"));
-        private IWebElement RemindPwdBtn => WebDriver.Driver.FindElement(By.Id("remindBtn"));
-        private IWebElement ErrorMsg => WebDriver.Driver.FindElement(By.Id("errorMessage"));
+        private IWebElement LoginFld => WebDriver.FindElement(By.Id("login"));
+        private IWebElement PasswordFld => WebDriver.FindElement(By.Id("password"));
+        private IWebElement LoginBtn => WebDriver.FindElement(By.Id("loginBtn"));
+        private IWebElement RemindPwdBtn => WebDriver.FindElement(By.Id("remindBtn"));
+        private IWebElement ErrorMsg => WebDriver.FindElement(By.Id("errorMessage"));
 
-        public RemindPasswordView RemindPassword => new (RemindPwdBtn);
+        public RemindPasswordView RemindPassword => new (RemindPwdBtn, WebDriver);
 
         public void Login(string login, string password)
         {
