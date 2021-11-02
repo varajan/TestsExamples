@@ -71,5 +71,12 @@ namespace Tests.Steps
 
         [Then("I see an error: (.*)")]
         public void AssertRemindPasswordError(string error) => LoginPage.RemindPassword.Error.ShouldEqual(error);
+
+        [Then("I can login with '(.*)' login and '(.*)' password")]
+        public void AssertCanLogin(string name, string password)
+        {
+            LoginPage.Login(name, password);
+            BasePage.CurrentPageName.ShouldEqual("Deposit calculator");
+        }
     }
 }
