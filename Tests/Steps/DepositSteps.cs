@@ -48,9 +48,11 @@ namespace Tests.Steps
             DepositPage.StartDateYears.ShouldEqual(expectedYears);
         }
 
+        [Given("I select Start Date as '(.*)'")]
         [When("I select Start Date as '(.*)'")]
         public void SetStartDate(string date) => DepositPage.StartDate = DateTime.Parse(date);
 
+        [Given(@"I calculate deposit for (\$|€|£)(.*) with (.*)% on (.*) days")]
         [When(@"I calculate deposit for (\$|€|£)(.*) with (.*)% on (.*) days")]
         public void Calculate(string _, string amount, string interest, string term) => DepositPage.Calculate(amount, interest, term);
 

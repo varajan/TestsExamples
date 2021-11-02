@@ -15,6 +15,11 @@ namespace Tests.Pages
         public IAlert Alert => WebDriver.Alert();
 
         public void Open() => Open(PageName);
-        public void Open(string page) => WebDriver.Url = $"{Defaults.BaseUrl}/{page}";
+
+        public void Open(string page)
+        {
+            WebDriver.Url = $"{Defaults.BaseUrl}/{page}";
+            WebDriver.SetCookie("login", "test");
+        }
     }
 }

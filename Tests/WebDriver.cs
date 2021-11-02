@@ -71,5 +71,8 @@ namespace Tests
             driver.SwitchTo().ParentFrame();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
         }
+
+        public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
+            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value.ToString()));
     }
 }

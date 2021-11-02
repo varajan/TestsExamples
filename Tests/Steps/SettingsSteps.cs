@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using BoDi;
 using TechTalk.SpecFlow;
+using Tests.API;
+using Tests.API.Models;
 using Tests.Data;
 using Tests.Extensions;
 using Tests.Pages;
@@ -15,6 +17,14 @@ namespace Tests.Steps
         public SettingsSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
 
         [Given("Setting have default values")]
+        public void ResetSettings() => Settings.Save(new SettingsDto
+        {
+            Login = "test",
+            Currency = Defaults.Currency,
+            NumberFormat = Defaults.NumberFormat,
+            DateFormat = Defaults.DateFormat
+        });
+
         [Given("I restore setting to default values")]
         public void RestoreDefaultSettings() => SettingsPage.ResetToDefaults();
 
