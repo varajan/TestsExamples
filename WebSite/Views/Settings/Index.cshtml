@@ -6,55 +6,57 @@
 	<title>Settings</title>
 </head>
 <body>
-	<div align="center">
-		<div style="width: 500px; height: 270px; border: double">
-			<div style="text-align: right; cursor: pointer" onclick="window.location = '@Url.Action("Index","Login")'">Logout</div>
+    <div align="center">
+        <div style="width: 500px; height: 270px; border: double">
+            <div style="text-align: right; cursor: pointer" onclick="window.location = '@Url.Action("Index","Login")'">Logout</div>
 
-			<table>
-				<tr>
-					<th>Date format:</th>
-					<td>
-						<select id="dateFormat">
-							<option>dd/MM/yyyy</option>
-							<option>dd-MM-yyyy</option>
-							<option>MM/dd/yyyy</option>
-							<option>MM dd yyyy</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>Number format:</th>
-					<td>
-						<select id="numberFormat">
-							<option>123,456,789.00</option>
-							<option>123.456.789,00</option>
-							<option>123 456 789.00</option>
-							<option>123 456 789,00</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>Default currency:</th>
-					<td>
-						<select id="currency">
-							<option>$ - US dollar</option>
-							<option>&euro; - euro</option>
-							<option>&pound; - Great Britain Pound</option>
-						</select>
-					</td>
-				</tr>
-				<tr><td style="height: 50px" /></tr>
-			</table>
+            <table>
+                <tr>
+                    <th>Date format:</th>
+                    <td>
+                        <select id="dateFormat">
+                            <option>dd/MM/yyyy</option>
+                            <option>dd-MM-yyyy</option>
+                            <option>MM/dd/yyyy</option>
+                            <option>MM dd yyyy</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Number format:</th>
+                    <td>
+                        <select id="numberFormat">
+                            <option>123,456,789.00</option>
+                            <option>123.456.789,00</option>
+                            <option>123 456 789.00</option>
+                            <option>123 456 789,00</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Default currency:</th>
+                    <td>
+                        <select id="currency">
+                            <option>$ - US dollar</option>
+                            <option>&euro; - euro</option>
+                            <option>&pound; - Great Britain Pound</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><td style="height: 50px" /></tr>
+            </table>
 
-			<div align="center">
-				<button onclick="Save(); window.location = '@Url.Action("Index", "Deposit")';" title="Save" id="save">Save</button>
-				<button onclick="window.location = '@Url.Action("Index", "Deposit")'" title="Save" id="cancel">Cancel</button>
-			</div>
-		</div>
-	</div>
+            <div align="center">
+                <button onclick="Save(); window.location = '@Url.Action("Index", "Deposit")';" title="Save" id="save">Save</button>
+                <button onclick="window.location = '@Url.Action("Index", "Deposit")'" title="Save" id="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="~/Static/Cookies.js"></script>
+
+    <script>
     var dateFormat = document.getElementById('dateFormat');
     var numberFormat = document.getElementById('numberFormat');
     var currency = document.getElementById('currency');
@@ -64,6 +66,7 @@
             type: 'POST',
             url: '@Url.Action("Save", "Settings")',
             data: {
+                'login' : getCookie('login'),
 				'dateFormat' : dateFormat.options[dateFormat.selectedIndex].textContent,
 				'numberFormat' : numberFormat.options[numberFormat.selectedIndex].textContent,
 				'currency' : currency.options[currency.selectedIndex].textContent
@@ -87,9 +90,12 @@
 
     function Get () {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '@Url.Action("Get", "Settings")',
             dataType: 'json',
+            data: {
+                'login': getCookie('login')
+            },
             success: function (response) {
                 select(dateFormat, response.DateFormat);
                 select(numberFormat, response.NumberFormat);
@@ -113,6 +119,6 @@
         show('save');
         sleep(500).then(() => show('cancel'));
     });
-	</script>
+    </script>
 </body>
 </html>

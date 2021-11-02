@@ -1,50 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using WebSite.DB;
+using WebSite.Models;
 
 namespace WebSite.Controllers
 {
     public class HistoryController : Controller
     {
-        private readonly string history = $"{Path.GetTempPath()}/history.data";
-        private readonly string settings = $"{Path.GetTempPath()}/settings.data";
-
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult Get(SaveHistoryDto dto)
         {
-            var result = System.IO.File.Exists(history)
-                ? System.IO.File.ReadAllLines(history).Reverse().Take(9).Select(x => x.Split(';').ToList()).ToList()
-                : new List<List<string>>();
+            var history = History.Get(dto.Login);
+            history.Reverse();
 
+            var result = history
+                .Take(9)
+                .Select(x =>
+                new[]
+                {
+                    x.Amount.AsDecimal().FormatNumber(x.Login),
+                    x.Percent + "%",
+                    x.Days.ToString(),
+                    x.Year,
+                    x.StartDate.FormatDate(dto.Login),
+                    x.EndDate.FormatDate(dto.Login),
+                    x.Interest.AsDecimal().FormatNumber(dto.Login),
+                    x.Income.AsDecimal().FormatNumber(dto.Login)
+                });
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Clear()
+        public ActionResult Clear(SaveHistoryDto dto)
         {
-            System.IO.File.Delete(history);
-
+            History.Clear(dto.Login);
             return Json("OK");
         }
 
         [HttpPost]
-        public ActionResult Save(string amount, string percent, string interest, int days, string endDate, int year, string income)
+        public ActionResult Save(SaveHistoryDto dto)
         {
-            var format = System.IO.File.Exists(settings)
-                ? System.IO.File.ReadAllText(settings).Split(';')[0]
-                : "dd/MM/yyyy";
-            var startDate = DateTime.ParseExact(endDate, format, CultureInfo.InvariantCulture).AddDays(-days).ToString(format, CultureInfo.InvariantCulture);
-
-            System.IO.File.AppendAllText(history, $"{SettingsController.FormatNumber(amount.AsDecimal())}; {percent}%; {days}; {year}; {startDate}; {endDate}; {interest}; {income}{Environment.NewLine}");
+            History.Add(dto);
             return Json("OK");
         }
     }

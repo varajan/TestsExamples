@@ -2,71 +2,72 @@
 
 <html>
 <head>
-	<meta name="viewport" content="width=device-width" />
-	<title>Login</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
 </head>
 <body>
-	<div align="center">
-		<div style="width:500px; height:270px; border:double">
-			<table>
-				<tr>
-					<th class="user">Login:</th>
-					<td>
-						<input id="login" />
-					</td>
-				</tr>
-				<tr>
-					<th class="pass">Password:</th>
-					<td>
-						<input type="password" id="password" />
-					</td>
-					<td style="width: 100px">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="right" style="width: 100px" id="buttons">
-					</td>
-				</tr>
-				<tr>
-					<th style="color: red" id="errorMessage" colspan="3"></th>
-				</tr>
-				<tr>
-					<td colspan="3">
-						<iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+    <div align="center">
+        <div style="width: 500px; height: 270px; border: double">
+            <div style="text-align: right; cursor: pointer" onclick="window.location = '@Url.Action("Index","Register")'">Register</div>
+
+            <table>
+                <tr>
+                    <th class="user">Login:</th>
+                    <td>
+                        <input id="login" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Password:</th>
+                    <td>
+                        <input type="password" id="password" />
+                    </td>
+                    <td style="width: 100px">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right" style="width: 100px" id="buttons">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="color: red" id="errorMessage" colspan="3"></th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height: 130px"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
 
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="~/Static/Cookies.js"></script>
 <script type="text/javascript">
-	RemindPassword = function () {
-		document.getElementById('remindPasswordView').hidden = false;
+    RemindPassword = function() {
+        document.getElementById('remindPasswordView').hidden = false;
     }
 
-    Login = function () {
-        var correctPass = 'newyork1';
-        var correctUser = 'test';
+    Login = function() {
+        var login = document.getElementById('login').value;
+        var password = document.getElementById('password').value;
 
-		var login = document.getElementById('login').value;
-		var password = document.getElementById('password').value;
-
-		if (login === correctUser && password === correctPass) {
-			window.location.href = window.location = '@Url.Action("Index","Deposit")';
-		}
-
-		if (login.trim() === '' || password.trim() === '') {
-			ShowError("User name and password cannot be empty!");
-			return;
-		}
-
-		if (login !== correctUser || password !== correctPass) {
-			ShowError("Incorrect user name or password!");
-			return;
-		}
-	}
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Validate", "Login")',
+            data: { 'login': login, 'password': password },
+            dataType: 'json',
+            success: function (response) {
+                createCookie("login", login, 1);
+                window.location.href = window.location = '@Url.Action("Index", "Deposit")';
+            },
+            error: function() {
+                ShowError("Incorrect user name or password!");
+            }
+        });
+    }
 
 	ShowError = function(error) {
 		document.getElementById('errorMessage').textContent = error;

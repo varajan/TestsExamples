@@ -1,104 +1,46 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using WebSite.DB;
+using WebSite.Models;
 
 namespace WebSite.Controllers
 {
     public class SettingsController : Controller
     {
-        private static readonly string settings = $"{Path.GetTempPath()}/settings.data";
-
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        public ActionResult Date(string date)
+        public ActionResult Date(string date, string login)
         {
-            var dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var format = System.IO.File.Exists(settings)
-                ? System.IO.File.ReadAllText(settings).Split(';')[0]
-                : "dd/MM/yyyy";
-
-            return Json(dateTime.ToString(format, CultureInfo.InvariantCulture), JsonRequestBehavior.AllowGet);
+            return Json(date.FormatDate(login), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult Number(decimal number)
+        public ActionResult Number(decimal number, string login)
         {
-            return Json(FormatNumber(number), JsonRequestBehavior.AllowGet);
-        }
-
-        public static string FormatNumber(decimal number)
-        {
-            var result = Math.Round(number, 2, MidpointRounding.AwayFromZero)
-                .ToString("N", CultureInfo.InvariantCulture);
-            var format = System.IO.File.Exists(settings)
-                ? System.IO.File.ReadAllText(settings).Split(';')[1]
-                : "123,456,789.00";
-
-            switch (format)
-            {
-                case "123.456.789,00":
-                    return result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');
-
-                case "123 456 789.00":
-                    return result.Replace(',', ' ');
-
-                case "123 456 789,00":
-                    return result.Replace(',', ' ').Replace('.', ',');
-            }
-
-            return result;
+            return Json(number.FormatNumber(login), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult Currency()
+        public ActionResult Currency(string login)
         {
-            var result = System.IO.File.Exists(settings)
-                ? System.IO.File.ReadAllText(settings).Split(';')[2]
-                : "$ - US dollar";
-
-            return Json(result.Split(' ').First(), JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult Get()
-        {
-            var result = new Settings
-            {
-                DateFormat = "dd/MMM/yyyy",
-                NumberFormat = "123,456,789.00",
-                Currency = "$ - US dollar"
-            };
-
-            if (System.IO.File.Exists(settings))
-            {
-                var values = System.IO.File.ReadAllText(settings).Split(';');
-
-                result.DateFormat = values[0];
-                result.NumberFormat = values[1];
-                result.Currency = values[2];
-            }
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(Settings.Get(login).Currency.Split(' ').First(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Save(string dateFormat, string numberFormat, string currency)
+        public ActionResult Get(SettingsDto dto)
         {
-            System.IO.File.WriteAllText(settings, $"{dateFormat};{numberFormat};{currency}");
-            return Json("OK");
+            return Json(Settings.Get(dto.Login));
         }
 
-        class Settings
+        [HttpPost]
+        public ActionResult Save(SettingsDto dto)
         {
-            public string DateFormat { get; set; }
-            public string NumberFormat { get; set; }
-            public string Currency { get; set; }
+            Settings.Save(dto);
+            return Json("OK");
         }
     }
 }

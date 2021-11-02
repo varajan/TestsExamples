@@ -2,80 +2,81 @@
 
 <html>
 <head>
-	<meta name="viewport" content="width=device-width" />
-	<title>Deposit calculator</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>Deposit calculator</title>
 </head>
 <body>
-	<div align="center">
-		<div style="width:500px; height:300px; border:double">
-			<div style="text-align: right; cursor: pointer" onclick="window.location='@Url.Action("Index","Settings")'">Settings</div>
-			<div style="text-align: right; cursor: pointer" onclick="window.location='@Url.Action("Index","History")'">History</div>
+    <div align="center">
+        <div style="width:500px; height:300px; border:double">
+            <div style="text-align: right; cursor: pointer" onclick="window.location='@Url.Action("Index","Settings")'">Settings</div>
+            <div style="text-align: right; cursor: pointer" onclick="window.location='@Url.Action("Index","History")'">History</div>
 
-			<table>
-				<tr>
-					<td>Deposit Amount: *</td>
-					<td><input id="amount" oninput="VerifyNumber('amount', 0, 100000);"></input></td>
-					<td id="currency">$</td>
-				</tr>
-				<tr>
-					<td>Rate of Interest: *</td>
-					<td><input id="percent" oninput="VerifyNumber('percent', 0, 100);"></input></td>
-					<td>%</td>
-				</tr>
-				<tr>
-					<td>Investment Term: *</td>
-					<td colspan="2"><input id="term" oninput="VerifyTerm('term', 0);" /></td>
-				</tr>
-				<tr>
-					<td>Start Date:</td>
-					<td colspan="2">
-						<select id="day" onchange="CalculateDate()"></select>
-						<select id="month" onchange="ResetMonth(); CalculateDate();">
-							<option>January</option>
-							<option>February</option>
-							<option>March</option>
-							<option>April</option>
-							<option>May</option>
-							<option>June</option>
-							<option>July</option>
-							<option>August</option>
-							<option>September</option>
-							<option>October</option>
-							<option>November</option>
-							<option>December</option>
-						</select>
-						<select id="year" onchange="ResetMonth(); CalculateDate();"></select>
-					</td>
-				</tr>
+            <table>
+                <tr>
+                    <td>Deposit Amount: *</td>
+                    <td><input id="amount" oninput="VerifyNumber('amount', 0, 100000);"></input></td>
+                    <td id="currency">$</td>
+                </tr>
+                <tr>
+                    <td>Rate of Interest: *</td>
+                    <td><input id="percent" oninput="VerifyNumber('percent', 0, 100);"></input></td>
+                    <td>%</td>
+                </tr>
+                <tr>
+                    <td>Investment Term: *</td>
+                    <td colspan="2"><input id="term" oninput="VerifyTerm('term', 0);" /></td>
+                </tr>
+                <tr>
+                    <td>Start Date:</td>
+                    <td colspan="2">
+                        <select id="day" onchange="CalculateDate()"></select>
+                        <select id="month" onchange="ResetMonth(); CalculateDate();">
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>
+                        </select>
+                        <select id="year" onchange="ResetMonth(); CalculateDate();"></select>
+                    </td>
+                </tr>
                 <tr id="finYear">
                     <td>Financial Year:</td>
                     <td><input type="radio" onchange="SetYear(360)" checked="checked">365 days</input></td>
                     <td><input type="radio" onchange="SetYear(365)">360 days</input></td>
                 </tr>
                 <tr>
-					<td></td>
+                    <td></td>
                     <td><button id="calculateBtn" onclick="Calculate().then(Save)">Calculate</button></td>
                 </tr>
                 <tr>
                     <th aalign="left">Interest Earned:</th>
                     <th><input id="interest" readonly /></th>
                 </tr>
-				<tr>
-					<th align="left">Income:</th>
-					<th><input id="income" readonly /></th>
-				</tr>
-				<tr>
-					<th align="left">End Date:</th>
-					<th><input id="endDate" readonly /></th>
-				</tr>
-				<tr><td colspan="3">* - mandatory fields</td></tr>
-			</table>
-		</div>
-	</div>
+                <tr>
+                    <th align="left">Income:</th>
+                    <th><input id="income" readonly /></th>
+                </tr>
+                <tr>
+                    <th align="left">End Date:</th>
+                    <th><input id="endDate" readonly /></th>
+                </tr>
+                <tr><td colspan="3">* - mandatory fields</td></tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="~/Static/Cookies.js"></script>
 <script type="text/javascript">
     VerifyNumber = function (id, min, max) {
         var value = Number(document.getElementById(id).value);
@@ -113,7 +114,7 @@
         $.ajax({
             type: 'GET',
             url: '@Url.Action("Date", "Settings")',
-            data : {'date' : new Date(year, month, day + days).yyyymmdd()},
+            data : {'date' : new Date(year, month, day + days).yyyymmdd(), 'login': getCookie('login')},
             dataType: 'json',
             success: function (response) {
                 document.getElementById('endDate').value = response;
@@ -125,7 +126,7 @@
         $.ajax({
             type: 'GET',
             url: '@Url.Action("Number", "Settings")',
-            data: { 'number': number },
+            data: { 'number': number, 'login': getCookie('login') },
             dataType: 'json',
             success: function (response) {
                 document.getElementById(id).value = response;
@@ -196,24 +197,31 @@
     async function Save() {
         await new Promise((resolve, reject) => setTimeout(resolve, 500));
 
+        var day = document.getElementById('day').selectedIndex + 1;
+        var month = document.getElementById('month').selectedIndex;
+        var year = document.getElementById('year').value;
+
         var amount = Number(document.getElementById('amount').value);
         var days = Number(document.getElementById('term').value);
         var percent = Number(document.getElementById('percent').value);
-        var year = document.querySelector('#finYear input').checked ? 365 : 360;
+        var finYear = document.querySelector('#finYear input').checked ? 365 : 360;
         var interest = document.getElementById('interest').value;
         var income = document.getElementById('income').value;
-        var endDate = document.getElementById('endDate').value;
+        var startDate = new Date(year, month, day).yyyymmdd();
+        var endDate = new Date(year, month, day + days).yyyymmdd();
 
         $.ajax({
             type: 'POST',
             url: '@Url.Action("Save", "History")',
             data: {
+                'login': getCookie('login'),
                 'amount': amount,
                 'percent': percent,
                 'interest': interest,
                 'days': days,
+                'startDate' : startDate,
                 'endDate': endDate,
-                'year': year,
+                'year': finYear,
                 'income': income
             },
             dataType: 'json',
@@ -262,6 +270,7 @@
             type: 'GET',
             url: '@Url.Action("Currency", "Settings")',
             dataType: 'json',
+            data: { 'login': getCookie('login') },
             success: function (response) {
                 document.getElementById('currency').textContent = response;
             }
