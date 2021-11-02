@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace Tests.Pages
 {
@@ -36,6 +39,12 @@ namespace Tests.Pages
             WebDriver.SwitchToFrame(_iframe);
             EmailFld.SendKeys(email);
             SendBtn.Click();
+
+            try
+            {
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+            }
+            catch { /**/ }
 
             var result = WebDriver.Alert == null
                 ? (false, MessageLbl.Text)

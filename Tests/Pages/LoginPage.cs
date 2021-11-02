@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace Tests.Pages
 {
@@ -16,9 +19,17 @@ namespace Tests.Pages
 
         public void Login(string login, string password)
         {
+            Open();
+
             LoginFld.SendKeys(login);
             PasswordFld.SendKeys(password);
             LoginBtn.Click();
+
+            try
+            {
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+            }
+            catch { /**/ }
         }
 
         public string ErrorMessage => ErrorMsg.Text;

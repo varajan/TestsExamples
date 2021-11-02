@@ -89,10 +89,8 @@ namespace Tests.Tests
             SettingsPage.Set(currency, numberFormat, dateFormat);
             DepositPage.Calculate("100000", "99", "299");
             expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
-
-            SettingsPage.ResetToDefaults();
             DepositPage.Calculate("100000", "75", "299");
-            expectedHistory.Insert(0, DepositPage.GetData(Defaults.NumberFormat));
+            expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
 
             // Act
             HistoryPage.Open();

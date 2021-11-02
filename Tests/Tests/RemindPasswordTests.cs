@@ -5,6 +5,9 @@ namespace Tests.Tests
 {
     public class RemindPasswordTests : BaseTest
     {
+        [SetUp]
+        public void OpenLoginPage() => LoginPage.Open();
+        
         [Test]
         public void RemindPasswordCloseViewTest()
         {
@@ -19,7 +22,7 @@ namespace Tests.Tests
         }
 
         [TestCase("")]
-        [TestCase("invalid@email")]
+        [TestCase("invalid @email")]
         [TestCase("@invalid.email")]
         public void RemindPasswordInvalidEmailTest(string email)
         {
@@ -31,7 +34,7 @@ namespace Tests.Tests
 
             // Assert
             remindPasswordResult.IsSuccessful.ShouldBeFalse();
-            remindPasswordResult.Message.ShouldEqual("Invalid email");
+            remindPasswordResult.Message.ShouldEqual("Invalid email.");
         }
 
         [Test]
@@ -45,7 +48,7 @@ namespace Tests.Tests
 
             // Assert
             remindPasswordResult.IsSuccessful.ShouldBeFalse();
-            remindPasswordResult.Message.ShouldEqual("No user was found");
+            remindPasswordResult.Message.ShouldEqual("No user was found.");
         }
 
         [Test]

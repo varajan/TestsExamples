@@ -12,6 +12,7 @@ namespace Tests.Tests
         [SetUp]
         public void Login()
         {
+            LoginPage.Open();
             LoginPage.Login(Defaults.Login, Defaults.Password);
             DepositPage.OpenSettings();
             SettingsPage.ResetToDefaults();

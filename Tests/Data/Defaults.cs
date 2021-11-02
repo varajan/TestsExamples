@@ -8,6 +8,7 @@
 
 
         public static readonly string Login = "test";
+        public static readonly string Email = "test@test.com";
         public static readonly string Password = "newyork1";
 
         public static readonly string Currency = "$ - US dollar";

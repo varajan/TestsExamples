@@ -17,19 +17,13 @@ namespace Tests.Tests
         [TestCase("text", "newyork1")]
         [TestCase("test ", "newyork1")]
         [TestCase("test", "newyork1 ")]
+        [TestCase("", "")]
+        [TestCase("test", "")]
+        [TestCase("", "newyork1")]
         public void LoginWithInvalidCredentialsTest(string login, string password)
         {
             LoginPage.Login(login, password);
             LoginPage.ErrorMessage.ShouldEqual("Incorrect user name or password!");
-        }
-
-        [TestCase("", "")]
-        [TestCase("test", "")]
-        [TestCase("", "newyork1")]
-        public void LoginWithBlankCredentialsTest(string login, string password)
-        {
-            LoginPage.Login(login, password);
-            LoginPage.ErrorMessage.ShouldEqual("User name and password cannot be empty!");
         }
     }
 }
