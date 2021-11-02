@@ -7,7 +7,9 @@
 </head>
 <body>
     <div align="center">
-        <div style="width:500px; height:270px; border:double">
+        <div style="width: 500px; height: 270px; border: double">
+            <div style="text-align: right; cursor: pointer" onclick="window.location = '@Url.Action("Index","Register")'">Register</div>
+
             <table>
                 <tr>
                     <th class="user">Login:</th>
@@ -32,7 +34,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height:130px"></iframe>
+                        <iframe id="remindPasswordView" hidden src="~/Static/RemindPassword.html" style="height: 130px"></iframe>
                     </td>
                 </tr>
             </table>
@@ -65,26 +67,6 @@
                 ShowError("Incorrect user name or password!");
             }
         });
-
-        @* var correctPass = 'newyork1';
-        var correctUser = 'test';
-
-		var login = document.getElementById('login').value;
-		var password = document.getElementById('password').value;
-
-		if (login === correctUser && password === correctPass) {
-			window.location.href = window.location = '@Url.Action("Index","Deposit")';
-		}
-
-		if (login.trim() === '' || password.trim() === '') {
-			ShowError("User name and password cannot be empty!");
-			return;
-		}
-
-		if (login !== correctUser || password !== correctPass) {
-			ShowError("Incorrect user name or password!");
-			return;
-		}*@
     }
 
 	ShowError = function(error) {

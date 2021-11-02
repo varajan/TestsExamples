@@ -7,6 +7,18 @@ namespace WebSite
 {
     public static class Extensions
     {
+        public static bool IsValidEmail(this string email)
+        {
+            try
+            {
+                return new System.Net.Mail.MailAddress(email).Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static string SubString(this string line, string from, string to)
         {
             var start = line.IndexOf(from, StringComparison.OrdinalIgnoreCase) + from.Length;

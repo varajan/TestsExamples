@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebSite.Models;
 
 namespace WebSite.DB
 {
@@ -9,9 +10,10 @@ namespace WebSite.DB
             DB.GetRows($"SELECT Login FROM Users WHERE Login = '{login}' AND Password = '{password}'").Any();
 
         public static List<string> Names => DB.GetColumn($"SELECT Login FROM Users");
+        public static List<string> Emails => DB.GetColumn($"SELECT Email FROM Users");
 
-        public static void Add(string login, string password) =>
-            DB.Execute($"INSERT INTO Users (Login, Password) VALUES ('{login}', '{password}')");
+        public static void Add(UserDto dto) =>
+            DB.Execute($"INSERT INTO Users (Login, Password, Email) VALUES ('{dto.Login}', '{dto.Password}', '{dto.Email}')");
 
         public static void Delete(string user)
         {

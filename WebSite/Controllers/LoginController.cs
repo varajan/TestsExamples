@@ -21,30 +21,5 @@ namespace WebSite.Controllers
 
             return HttpNotFound("Invalid credentials");
         }
-
-
-        [HttpPost]
-        public ActionResult Save(UserDto dto)
-        {
-            Users.Add(dto.Login, dto.Password);
-
-            return Json("OK");
-        }
-
-        [HttpDelete]
-        public ActionResult Delete(UserDto dto)
-        {
-            Users.Delete(dto.Login);
-
-            return Json("OK");
-        }
-
-        [HttpDelete]
-        public ActionResult DeleteAll()
-        {
-            Users.Names.ForEach(Users.Delete);
-
-            return Json("OK");
-        }
     }
 }

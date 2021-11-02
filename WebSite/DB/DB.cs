@@ -131,7 +131,7 @@ namespace WebSite.DB
 
     public static class CreateColumns
     {
-        public static string Users = "Login TEXT, Password TEXT";
+        public static string Users = "Login TEXT, Password TEXT, Email TEXT";
         public static string Settings = "Login TEXT, DateFormat TEXT, NumberFormat TEXT, Currency TEXT";
         public static string History = "Login TEXT, Amount TEXT, Percent TEXT, Year TEXT, StartDate TEXT, EndDate TEXT, Days NUMBER, Interest TEXT, Income TEXT";
     }

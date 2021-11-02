@@ -108,6 +108,7 @@
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="DB\DB.cs" />
     <Compile Include="DB\History.cs" />
@@ -130,6 +131,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Calculator.pubxml" />
     <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
