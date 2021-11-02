@@ -100,7 +100,9 @@
     <Content Include="Static\Cookies.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Static\RemindPassword.html" />
+    <Content Include="Static\RemindPassword.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
