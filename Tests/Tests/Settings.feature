@@ -1,7 +1,7 @@
 ﻿Feature: Settings
 
 Scenario: Cancel settings changes
-	Given I am logged in
+	Given I login as 'John'
 		And I restore setting to default values
 	When I open Settings page
 		And I set currency to € - euro
@@ -12,7 +12,7 @@ Scenario: Cancel settings changes
 	Then Settings have default values
 
 Scenario: Apply number format
-	Given I am logged in
+	Given I login as 'John'
 		And I open Settings page
 		And I set number format to <format>
 		And I save changes
@@ -29,7 +29,7 @@ Examples:
 
 
 Scenario: Apply dates format
-	Given I am logged in
+	Given I login as 'John'
 		And I open Settings page
 		And I set dates format to <format>
 		And I save changes
@@ -46,14 +46,14 @@ Examples:
 
 
 Scenario: Apply currency
-	Given I am logged in
+	Given I login as '<user>'
 		And I open Settings page
 	When I set currency to <currency>
 		And I save changes
 	Then <code> currency is shown
 
 Examples: 
-	| currency                | code |
-	| $ - US dollar           | $    |
-	| € - euro                | €    |
-	| £ - Great Britain Pound | £    |
+	| user      | currency                | code |
+	| Christina | $ - US dollar           | $    |
+	| Chantelle | € - euro                | €    |
+	| Teodor    | £ - Great Britain Pound | £    |

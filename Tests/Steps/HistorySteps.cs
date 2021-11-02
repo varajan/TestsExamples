@@ -41,7 +41,7 @@ namespace Tests.Steps
                     EndDate = endDate.ToString(startDate.GetDateFormat()),
                     Income = income,
                     Interest = interest,
-                    Login = "test"
+                    Login = TestUser
                 };
 
                 History.Save(history);

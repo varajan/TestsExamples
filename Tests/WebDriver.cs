@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -72,7 +74,19 @@ namespace Tests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
         }
 
+        private static bool HasCookie(this IWebDriver webDriver, string key) =>
+            webDriver.Manage().Cookies.AllCookies.Any(x => x.Name == key);
+
+        public static string GetCookie(this IWebDriver webDriver, string key)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.Elapsed < TimeSpan.FromSeconds(5) && webDriver.HasCookie(key)) { }
+
+            return webDriver.Manage().Cookies.AllCookies.FirstOrDefault(x => x.Name == key)?.Value;
+        }
+
         public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
-            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value.ToString()));
+            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty));
     }
 }

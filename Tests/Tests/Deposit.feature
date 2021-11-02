@@ -1,16 +1,13 @@
 ﻿Feature: Deposit
 
-Background:
-	Given Setting have default values
-
 Scenario: Calculate End Date
-	Given I am logged in
+	Given I login as 'Mark'
 	When I select Start Date as '05/10/2022'
 		And I calculate deposit for $1000 with 10% on 100 days
 	Then End date is '18/08/2022'
 
 Scenario: Calculate deposit
-	Given I am logged in
+	Given I login as 'Mark'
 	When I calculate deposit for <amount> with <percent> on <term> days with <finYear> financial year
 	Then Interest is <interest>
 		And Income is <income>

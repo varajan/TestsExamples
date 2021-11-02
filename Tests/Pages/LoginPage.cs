@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace Tests.Pages
 {
@@ -19,6 +22,12 @@ namespace Tests.Pages
             LoginFld.SendKeys(login);
             PasswordFld.SendKeys(password);
             LoginBtn.Click();
+
+            try
+            {
+                new WebDriverWait(WebDriver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.TitleContains("Deposit"));
+            }
+            catch { /**/ }
         }
 
         public string ErrorMessage => ErrorMsg.Text;

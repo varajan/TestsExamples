@@ -1,5 +1,8 @@
-﻿using BoDi;
+﻿using System.Linq;
+using BoDi;
 using TechTalk.SpecFlow;
+using Tests.API;
+using Tests.API.Models;
 using Tests.Data;
 using Tests.Extensions;
 using Tests.Pages;
@@ -14,15 +17,32 @@ namespace Tests.Steps
 
         public LoginSteps(IObjectContainer objectContainer, ScenarioContext scenarioContext) : base(objectContainer, scenarioContext) { }
 
+        [Given("Existed users:")]
+        public void CreateUsers(Table table)
+        {
+            var users = table.Rows.Select(x => new UserDto { Login = x["Login"], Password = x["Password"], Email = x["Email"] }).ToList();
+
+            users.ForEach(Users.Register);
+        }
+
         [Given("I open (.*) page")]
         [When("I open (.*) page")]
         public void OpenPage(string name) => BasePage.Open(name);
 
-        [Given("I am logged in")]
-        public void Login() => LoginPage.Login(Defaults.Login, Defaults.Password);
+        [Given("I login as '(.*)'")]
+        public void Login(string login)
+        {
+            TestUser = login;
+            var user = new UserDto { Login = login, Password = Defaults.Password, Email = $"{login}@test.com" };
+
+            Users.Delete(login);
+            Users.Register(user);
+
+            LoginPage.Login(login, Defaults.Password);
+        }
 
         [When("I login with '(.*)' login and '(.*)' password")]
-        public void Login(string login, string password) => LoginPage.Login(login, password);
+        public void Login(string login, string password) => LoginPage.Login(TestUser = login, password);
 
         [Then("(.*) page is opened")]
         public void AssertPage(string name) => BasePage.CurrentPageName.ShouldEqual(name);

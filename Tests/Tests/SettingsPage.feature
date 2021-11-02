@@ -1,7 +1,7 @@
 ﻿Feature: SettingsPage
 
 Scenario: Available date formats
-	Given I am logged in
+	Given I login as 'Bill'
 	When I open Settings page
 	Then Available date formats are:
 	| Format     |
@@ -11,7 +11,7 @@ Scenario: Available date formats
 	| MM dd yyyy |
 
 Scenario: Available number formats
-	Given I am logged in
+	Given I login as 'Bill'
 	When I open Settings page
 	Then Available number formats are:
 	| Format         |
@@ -21,7 +21,7 @@ Scenario: Available number formats
 	| 123 456 789,00 |
 
 Scenario: Available currencies
-	Given I am logged in
+	Given I login as 'Bill'
 	When I open Settings page
 	Then Available currencies are:
 	| Format                  |
@@ -30,7 +30,7 @@ Scenario: Available currencies
 	| £ - Great Britain Pound |
 
 Scenario: Logout
-	Given I am logged in
+	Given I login as 'Bill'
 	When I open Settings page
 		And I click Logout button
 	Then Login page is opened

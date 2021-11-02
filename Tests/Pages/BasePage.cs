@@ -18,8 +18,10 @@ namespace Tests.Pages
 
         public void Open(string page)
         {
+            var login = WebDriver.GetCookie("login");
+
             WebDriver.Url = $"{Defaults.BaseUrl}/{page}";
-            WebDriver.SetCookie("login", "test");
+            WebDriver.SetCookie("login", login);
         }
     }
 }

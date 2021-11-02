@@ -1,12 +1,8 @@
 ﻿Feature: History
 
-Background:
-	Given I am logged in
-		And Setting have default values
-		And History is cleared
-
 Scenario: Clear history
-	Given I have history data:
+	Given I login as 'Jack'
+		And I have history data:
 		| Amount | %  | Term | Interest | Income |
 		| 1000   | 10 | 100  | 50       | 1050   |
 		| 1000   | 20 | 50   | 100      | 1100   |
@@ -16,7 +12,8 @@ Scenario: Clear history
 		| Amount | % | Term | Year | From | To | Interest | Income |
 
 Scenario: History table
-	Given I have history data:
+	Given I login as 'Jack'
+		And I have history data:
 		| Amount | %  | Term | Fin Year | Start Date | Interest | Income |
 		| 1000   | 10 | 100  | 360      | 10/01/2022 | 50       | 1050   |
 		| 1000   | 20 | 50   | 365      | 15/05/2022 | 100      | 1100   |
@@ -27,7 +24,8 @@ Scenario: History table
 		| 1,000.00 | 10% | 100  | 360  | 10/01/2022 | 20/04/2022 | 50.00    | 1,050.00 |
 
 Scenario: History shows last 9 rows
-	Given I have history data:
+	Given I login as 'Jack'
+		And I have history data:
 		| Amount | %  | Term | Fin Year | Start Date | Income | Interest |
 		| 1001   | 1  | 101  | 360      | 01/01/2022 | 10010  | 10       |
 		| 1002   | 2  | 102  | 365      | 02/05/2022 | 10020  | 20       |
@@ -55,7 +53,8 @@ Scenario: History shows last 9 rows
 		| 1,004.00 | 4%  | 104  | 365  | 04/05/2022 | 16/08/2022 | 40.00    | 10,040.00 |
 
 Scenario: History respect settings
-	Given I update settings: '<number format>', '<date format>', '<currency>'
+	Given I login as 'Jack'
+		And I update settings: '<number format>', '<date format>', '<currency>'
 		And I open Deposit page
 		And I select Start Date as '10/11/2022'
 		And I calculate deposit for $100000 with 99% on 299 days

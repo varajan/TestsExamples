@@ -7,7 +7,6 @@
         public static readonly int ImplicitWait = 3;
 
 
-        public static readonly string Login = "test";
         public static readonly string Password = "newyork1";
 
         public static readonly string Currency = "$ - US dollar";
