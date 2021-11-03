@@ -25,7 +25,7 @@ namespace WebSite.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict, "User with this email is already registered.");
             }
 
-            if (Users.Names.Contains(dto.Login.Trim()))
+            if (Users.Names.Contains(dto.Login.ToLower().Trim()))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict, "User with this login is already registered.");
             }
@@ -48,12 +48,15 @@ namespace WebSite.Controllers
             return Json("OK");
         }
 
+        [HttpGet]
+        public ActionResult DeleteAllUsers() => DeleteAll();
+
         [HttpDelete]
         public ActionResult DeleteAll()
         {
             Users.Names.ForEach(Users.Delete);
 
-            return Json("OK");
+            return Json("OK", JsonRequestBehavior.AllowGet);
         }
     }
 }
