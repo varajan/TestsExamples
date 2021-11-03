@@ -1,4 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -49,6 +52,14 @@ namespace Tests.Pages
             _driver.SwitchToFrame(_iframe);
             EmailFld.SendKeys(email);
             SendBtn.Click();
+
+            try
+            {
+                new WebDriverWait(_driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(_ => !string.IsNullOrEmpty(MessageLbl.Text) || _driver.Alert() == null);
+            }
+            catch { /**/ }
+
 
             if (_driver.Alert() == null)
             {

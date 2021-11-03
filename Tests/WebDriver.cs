@@ -29,7 +29,8 @@ namespace Tests
             {
                 lock (Lock)
                 {
-                    var driver = new ChromeDriver();
+                    var options = new ChromeOptions { UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore };
+                    var driver = new ChromeDriver(options);
 
                     driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(Defaults.PageLoad);
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);

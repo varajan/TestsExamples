@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -25,7 +25,8 @@ namespace Tests.Pages
 
             try
             {
-                new WebDriverWait(WebDriver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.TitleContains("Deposit"));
+                new WebDriverWait(WebDriver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(_ => !string.IsNullOrEmpty(ErrorMessage) || CurrentPageName == PageName);
             }
             catch { /**/ }
         }

@@ -6,6 +6,7 @@ using Tests.API;
 using Tests.API.Models;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)]
+[assembly: LevelOfParallelism(4)]
 
 namespace Tests.Steps
 {

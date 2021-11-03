@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -26,19 +26,20 @@ namespace Tests.Pages
 
             try
             {
-                new WebDriverWait(WebDriver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+                new WebDriverWait(WebDriver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                .Until(_ => Alert != null || !string.IsNullOrEmpty(Error));
             }
             catch { /**/ }
         }
 
-        public string Error => ErrorMsg.Text;
+        public string Error => ErrorMsg?.Text;
 
         public string Message
         {
             get
             {
-                var result = Alert?.Text;
-                Alert?.Accept();
+                var result = Alert.Text;
+                Alert.Accept();
 
                 return result;
             }
