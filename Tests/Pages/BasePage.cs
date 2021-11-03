@@ -1,4 +1,5 @@
-﻿using Tests.Data;
+﻿using OpenQA.Selenium;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -9,6 +10,7 @@ namespace Tests.Pages
         
         public bool IsOpened => CurrentPageName.Equals(PageName);
 
+        public IAlert Alert => WebDriver.Alert;
         public void Open() => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/{PageName}";
     }
 }

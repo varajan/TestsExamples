@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -15,6 +16,8 @@ namespace Tests.Pages
         private IWebElement ConfirmFld => WebDriver.Driver.FindElement(By.Id("password2"));
         private IWebElement ErrorMsg => WebDriver.Driver.FindElement(By.Id("errorMessage"));
         private IWebElement RegisterBtn => WebDriver.Driver.FindElement(By.Id("register"));
+
+        public void DeleteAll() => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/Register/DeleteAllUsers";
 
         public void Register(string login, string email, string password, string confirm = null)
         {
