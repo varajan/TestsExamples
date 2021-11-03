@@ -23,8 +23,9 @@ Scenario: Invalid data
 
 Examples: 
 		| login   | email              | password1 | password2 | error                                       |
-		| Milana  | some.mail@test.com | password1 | password2 | Passwords are different!                    |
 		| Milana  | some.mail@test.com | 1234      | 1234      | Password is too short.                      |
+		| Milana  | some.mail@test.com | password1 | password2 | Passwords are different!                    |
+		| Milana  | some.mail@test.com | password1 | password1 | User with this login is already registered. |
 		| Kareena | arnold@test.net    | password1 | password1 | User with this email is already registered. |
 		| Kareena | @test.net          | password1 | password1 | Invalid email.                              |
 		| Kareena | mail.test.net      | password1 | password1 | Invalid email.                              |

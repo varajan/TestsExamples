@@ -5,6 +5,7 @@ using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 using Tests.Extensions;
 
 namespace Tests.Pages
@@ -119,7 +120,7 @@ namespace Tests.Pages
         {
             CalculateBtn.Click();
 
-            new WebDriverWait(WebDriver, TimeSpan.FromSeconds(5))
+            new WebDriverWait(WebDriver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
                 .Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
     }
