@@ -141,7 +141,7 @@ namespace Tests.Pages
         {
             CalculateBtn.Click();
 
-            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(5))
+            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
                 .Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -42,13 +42,12 @@ namespace Tests.Pages
 
             try
             {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(_ => !string.IsNullOrEmpty(MessageLbl.Text) || WebDriver.Alert != null);
             }
             catch { /**/ }
 
-            var result = WebDriver.Alert == null
-                ? (false, MessageLbl.Text)
-                : (true, WebDriver.Alert.Text);
+            var result = (WebDriver.Alert is not null, WebDriver.Alert?.Text ?? MessageLbl.Text);
 
             WebDriver.Alert?.Accept();
             WebDriver.SwitchToParentFrame();

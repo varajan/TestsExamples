@@ -1,7 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using Tests.Data;
 
 namespace Tests.Pages
@@ -31,22 +30,12 @@ namespace Tests.Pages
 
             try
             {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(_ => !string.IsNullOrEmpty(Error) || Alert != null);
             }
             catch { /**/ }
         }
 
         public string Error => ErrorMsg.Text;
-
-        public string Message
-        {
-            get
-            {
-                var result = WebDriver.Alert?.Text;
-                WebDriver.Alert?.Accept();
-
-                return result;
-            }
-        }
     }
 }
