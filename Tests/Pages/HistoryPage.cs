@@ -1,9 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Atata;
 using OpenQA.Selenium;
 
 namespace Tests.Pages
 {
+    using _ = HistoryPageA;
+
+    public class HistoryPageA : Page<_>
+    {
+        [FindByXPath("//div[text() = 'Calculator']")]
+        public ClickableDelegate<DepositPage,_> ReturnToCalculator { get; private set; }
+
+        [FindById("clear")]
+        public ButtonDelegate<_> Clear { get; private set; }
+
+        //public IWebElement Table => WebDriver.Driver.FindElement(By.Id("history"));
+    }
+
     public class HistoryPage : BasePage
     {
         public override string PageName => "History";

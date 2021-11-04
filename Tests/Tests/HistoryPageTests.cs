@@ -1,21 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Atata;
 using NUnit.Framework;
-using Tests.Data;
 using Tests.Extensions;
+using Tests.Pages;
 
 namespace Tests.Tests
 {
+    public class HistoryPageTestsA : BaseTestA
+    {
+        [SetUp]
+        public void ClearHistory() =>
+            Go.To<LoginPage>()
+                .Login()
+                .OpenSettings()
+                .ResetToDefaults()
+                .OpenHistory()
+                .Clear()
+                .ReturnToCalculator();
+
+        [Test]
+        public void ClearHistoryTest() =>
+            AtataContext.Current.Go.To<DepositPage>()
+                .Populate("1000", "100", "300").Calculate()
+                .Populate("1500", "25", "100").Calculate()
+                .OpenHistory().Clear().ReturnToCalculator().OpenHistory();
+            //HistoryPage.History.ShouldBeEmpty();
+
+    }
+
     public class HistoryPageTests : BaseTest
     {
         [SetUp]
         public void SetUp()
         {
-            LoginPage.Login(Defaults.Login, Defaults.Password);
+            //LoginPage.Login(Defaults.Login, Defaults.Password);
 
-            SettingsPage.Open();
-            SettingsPage.ResetToDefaults();
+            //SettingsPage.Open();
+            //SettingsPage.ResetToDefaults();
 
             HistoryPage.Open();
             HistoryPage.Clear();
@@ -27,8 +49,8 @@ namespace Tests.Tests
         public void ClearHistoryTest()
         {
             // Arrange
-            DepositPage.Calculate("1000", "100", "300");
-            DepositPage.Calculate("1500", "25", "100");
+            //DepositPage.Calculate("1000", "100", "300");
+            //DepositPage.Calculate("1500", "25", "100");
 
             // Act
             HistoryPage.Open();
@@ -46,11 +68,11 @@ namespace Tests.Tests
             // Arrange
             var expectedHistory = new List<List<string>>();
 
-            DepositPage.Calculate("1000", "100", "300");
-            expectedHistory.Insert(0, DepositPage.GetData());
+            //DepositPage.Calculate("1000", "100", "300");
+            //expectedHistory.Insert(0, DepositPage.GetData());
 
-            DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
-            expectedHistory.Insert(0, DepositPage.GetData());
+            //DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
+            //expectedHistory.Insert(0, DepositPage.GetData());
 
             // Act
             HistoryPage.Open();
@@ -67,8 +89,8 @@ namespace Tests.Tests
 
             for (var i = 1; i < 15; i++)
             {
-                DepositPage.Calculate("1000", i.ToString(), "300");
-                expectedHistory.Insert(0, DepositPage.GetData());
+                //DepositPage.Calculate("1000", i.ToString(), "300");
+                //expectedHistory.Insert(0, DepositPage.GetData());
             }
 
             // Act
@@ -86,11 +108,11 @@ namespace Tests.Tests
             // Arrange
             var expectedHistory = new List<List<string>>();
 
-            SettingsPage.Set(currency, numberFormat, dateFormat);
-            DepositPage.Calculate("100000", "99", "299");
-            expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
-            DepositPage.Calculate("100000", "75", "299");
-            expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
+            //SettingsPage.Set(currency, numberFormat, dateFormat);
+            //DepositPage.Calculate("100000", "99", "299");
+            //expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
+            //DepositPage.Calculate("100000", "75", "299");
+            //expectedHistory.Insert(0, DepositPage.GetData(numberFormat));
 
             // Act
             HistoryPage.Open();

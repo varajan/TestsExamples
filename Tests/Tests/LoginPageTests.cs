@@ -1,17 +1,18 @@
-﻿using NUnit.Framework;
-using Tests.Data;
-using Tests.Extensions;
+﻿using Atata;
+using NUnit.Framework;
+using Tests.Pages;
 
 namespace Tests.Tests
 {
-    public class LoginPageTests : BaseTest
+    [TestFixture]
+    public class LoginPageTests : BaseTestA
     {
         [Test]
-        public void LoginWithCorrectCredentialsTest()
-        {
-            LoginPage.Login(Defaults.Login, Defaults.Password);
-            DepositPage.IsOpened.ShouldBeTrue($"Expected '{DepositPage.PageName}' page to be opened, but '{DepositPage.CurrentPageName}' was found.");
-        }
+        public void LoginWithCorrectCredentialsTest() =>
+            Go.To<LoginPage>()
+                .Login()
+                .PageTitle
+                    .Should.Equal("Deposit calculator");
 
         [TestCase("test", "newyork2")]
         [TestCase("text", "newyork1")]
@@ -20,10 +21,10 @@ namespace Tests.Tests
         [TestCase("", "")]
         [TestCase("test", "")]
         [TestCase("", "newyork1")]
-        public void LoginWithInvalidCredentialsTest(string login, string password)
-        {
-            LoginPage.Login(login, password);
-            LoginPage.ErrorMessage.ShouldEqual("Incorrect user name or password!");
-        }
+        public void LoginWithInvalidCredentialsTest(string login, string password) =>
+            Go.To<LoginPage>()
+                .Login(login, password)
+                .Error
+                .Content.ExpectTo.Equal("Incorrect user name or password!");
     }
 }

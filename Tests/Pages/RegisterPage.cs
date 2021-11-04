@@ -1,41 +1,52 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using Tests.Data;
+﻿using Atata;
+using SeleniumExtras.WaitHelpers;
 
 namespace Tests.Pages
 {
-    public class RegisterPage : BasePage
+    using _ = RegisterPage;
+
+    public class RegisterPage : Page<_>
     {
-        public override string PageName => "Register";
+        [FindById("login")]
+        private TextInput<_> Name { get; set; }
 
-        private IWebElement LoginFld => WebDriver.Driver.FindElement(By.Id("login"));
-        private IWebElement EmailFld => WebDriver.Driver.FindElement(By.Id("email"));
-        private IWebElement PasswordFld => WebDriver.Driver.FindElement(By.Id("password1"));
-        private IWebElement ConfirmFld => WebDriver.Driver.FindElement(By.Id("password2"));
-        private IWebElement ErrorMsg => WebDriver.Driver.FindElement(By.Id("errorMessage"));
-        private IWebElement RegisterBtn => WebDriver.Driver.FindElement(By.Id("register"));
+        [FindById("email")]
+        private TextInput<_> Email { get; set; }
 
-        public void DeleteAll() => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/Register/DeleteAllUsers";
+        [FindById("password1")]
+        private PasswordInput<_> Password1 { get; set; }
 
-        public void Register(string login, string email, string password, string confirm = null)
+        [FindById("password2")]
+        private PasswordInput<_> Password2 { get; set; }
+
+        [ConfirmAlertIfShow]
+        [FindById("register")]
+        private ButtonDelegate<LoginPage, _> RegisterBtn { get; set; }
+
+        [FindById("errorMessage")]
+        public Text<_> Error { get; private set; }
+
+
+        public LoginPage Register(string login, string email, string password) => this
+            .Name.Set(login)
+            .Email.Set(email)
+            .Password1.Set(password)
+            .Password2.Set(password)
+            .RegisterBtn.ClickAndGo();
+
+        public _ Register(string login, string email, string password, string confirm) => this
+            .Name.Set(login)
+            .Email.Set(email)
+            .Password1.Set(password)
+            .Password2.Set(confirm)
+            .RegisterBtn.Click();
+
+        public class ConfirmAlertIfShow : TriggerAttribute
         {
-            Open();
+            public ConfirmAlertIfShow() : base(TriggerEvents.AfterClick) { }
 
-            LoginFld.SendKeys(login);
-            EmailFld.SendKeys(email);
-            PasswordFld.SendKeys(password);
-            ConfirmFld.SendKeys(confirm ?? password);
-            RegisterBtn.Click();
-
-            try
-            {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
-                    .Until(_ => !string.IsNullOrEmpty(Error) || Alert != null);
-            }
-            catch { /**/ }
+            protected override void Execute<TOwner>(TriggerContext<TOwner> context) =>
+                ExpectedConditions.AlertIsPresent().Invoke(context.Driver)?.Accept();
         }
-
-        public string Error => ErrorMsg.Text;
     }
 }

@@ -1,38 +1,40 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+﻿using Atata;
 using Tests.Data;
 
 namespace Tests.Pages
 {
-    public class LoginPage : BasePage
+    using _ = LoginPage;
+
+    [Url("login")]
+    [VerifyTitle]
+    public class LoginPage : Page<_>
     {
-        public override string PageName => "Login";
+        [FindById("login")]
+        public TextInput<_> Name { get; private set; }
 
-        private IWebElement LoginFld => WebDriver.Driver.FindElement(By.Id("login"));
-        private IWebElement PasswordFld => WebDriver.Driver.FindElement(By.Id("password"));
-        private IWebElement LoginBtn => WebDriver.Driver.FindElement(By.Id("loginBtn"));
-        private IWebElement RemindPwdBtn => WebDriver.Driver.FindElement(By.Id("remindBtn"));
-        private IWebElement ErrorMsg => WebDriver.Driver.FindElement(By.Id("errorMessage"));
+        [FindById("password")]
+        public PasswordInput<_> Password { get; private set; }
 
-        public RemindPasswordView RemindPassword => new (RemindPwdBtn);
+        [FindById("loginBtn")]
+        public Button<DepositPage, _> LoginBtn { get; private set; }
 
-        public void Login(string login, string password)
-        {
-            Open();
+        [FindById("remindBtn")]
+        public Button<_> RemindPassword { get; private set; }
 
-            LoginFld.SendKeys(login);
-            PasswordFld.SendKeys(password);
-            LoginBtn.Click();
+        [FindByXPath("//div[text() = 'Register']")]
+        public ClickableDelegate<RegisterPage, _> OpenRegistration { get; private set; }
 
-            try
-            {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
-                    .Until(_ => !string.IsNullOrEmpty(ErrorMessage) || CurrentPageName == PageName);
-            }
-            catch { /**/ }
-        }
+        [FindById("errorMessage")]
+        public Text<_> Error { get; private set; }
 
-        public string ErrorMessage => ErrorMsg.Text;
+        public _ Login(string login, string password) =>
+                Name.Set(login)
+                .Password.Set(password)
+                .LoginBtn.Click();
+
+        public DepositPage Login() =>
+                Name.Set(Defaults.Login)
+                .Password.Set(Defaults.Password)
+                .LoginBtn.ClickAndGo();
     }
 }

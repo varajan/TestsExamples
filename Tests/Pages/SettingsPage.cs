@@ -1,64 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+﻿using Atata;
 using Tests.Data;
 
 namespace Tests.Pages
 {
-    public class SettingsPage : BasePage
+    public class SettingsPage : Page<SettingsPage>
     {
-        public override string PageName => "Settings";
 
-        private SelectElement DateFormatSelect => new(WebDriver.Driver.FindElement(By.Id("dateFormat")));
-        private SelectElement NumberFormatSelect => new(WebDriver.Driver.FindElement(By.Id("numberFormat")));
-        private SelectElement CurrencySelect => new(WebDriver.Driver.FindElement(By.Id("currency")));
+        [FindById("dateFormat")]
+        public Select<SettingsPage> DateFormat { get; private set; }
 
-        private IWebElement SaveBtn => WebDriver.Driver.FindElement(By.Id("save"));
-        private IWebElement CancelBtn => WebDriver.Driver.FindElement(By.Id("cancel"));
-        private IWebElement LogoutBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Logout']"));
+        [FindById("numberFormat")]
+        public Select<SettingsPage> NumberFormat { get; private set; }
 
-        public List<string> DateFormats => DateFormatSelect.Options.Select(x => x.Text).ToList();
-        public string DateFormat
-        {
-            get => DateFormatSelect.SelectedOption.Text;
-            set => DateFormatSelect.SelectByText(value);
-        }
+        [FindById("currency")]
+        public Select<SettingsPage> Currency { get; private set; }
 
-        public List<string> NumberFormats => NumberFormatSelect.Options.Select(x => x.Text).ToList();
-        public string NumberFormat
-        {
-            get => NumberFormatSelect.SelectedOption.Text;
-            set => NumberFormatSelect.SelectByText(value);
-        }
+        //[CloseConfirmBox()]
+        public ButtonDelegate<DepositPage, SettingsPage> Save { get; private set; }
 
-        public List<string> Currencies => CurrencySelect.Options.Select(x => x.Text).ToList();
-        public string Currency
-        {
-            get => CurrencySelect.SelectedOption.Text;
-            set => CurrencySelect.SelectByText(value);
-        }
+        public ButtonDelegate<DepositPage, SettingsPage> Cancel { get; private set; }
 
-        public void Save()
-        {
-            SaveBtn.Click();
-            WebDriver.Alert?.Accept();
-        }
+        [FindByXPath("//div[text() = 'Logout']")]
+        public ClickableDelegate<LoginPage, SettingsPage> Logout { get; private set; }
 
-        public void ResetToDefaults() => Set(Defaults.Currency, Defaults.NumberFormat, Defaults.DateFormat);
+        public DepositPage ResetToDefaults() => Set(Defaults.Currency, Defaults.NumberFormat, Defaults.DateFormat);
 
-        public void Set(string currency, string numberFormat, string dateFormat)
-        {
-            Open();
-
-            Currency = currency;
-            NumberFormat = numberFormat;
-            DateFormat = dateFormat;
-
-            Save();
-        }
-
-        public void Cancel() => CancelBtn.Click();
-        public void Logout() => LogoutBtn.Click();
+        public DepositPage Set(string currency, string numberFormat, string dateFormat) => this
+            .Currency.Set(currency)
+            .NumberFormat.Set(numberFormat)
+            .DateFormat.Set(dateFormat)
+            .Save.ClickAndGo();
     }
 }
