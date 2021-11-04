@@ -6,9 +6,8 @@ namespace Tests.Tests
 {
     public class HistoryPageTests : BaseTest
     {
-        protected DepositPage Login() =>
-            Go.To<LoginPage>()
-                .Login()
+        protected DepositPage OpenDepositPage() =>
+            LoginAsRandomUser()
                 .OpenSettings()
                 .ResetToDefaults()
                 .OpenHistory()
@@ -17,28 +16,38 @@ namespace Tests.Tests
 
         [Test]
         public void ClearHistoryTest() =>
-            Login()
-                .Populate("1000", "100", "300").Calculate()
-                .Populate("1500", "25", "100").Calculate()
-                .OpenHistory().Clear().ReturnToCalculator().OpenHistory();
-        //HistoryPage.History.ShouldBeEmpty();
+            OpenDepositPage()
+                .Populate("1000", "100", "300")
+                    .Calculate()
+                    .RetrieveData(out var row1, Defaults.DateFormat, Defaults.NumberFormat)
+                .Populate("1500", "25", "100")
+                    .Calculate()
+                    .RetrieveData(out var row2, Defaults.DateFormat, Defaults.NumberFormat)
+                .OpenHistory().Clear().ReturnToCalculator().OpenHistory()
+                .History.Headers.Should.ContainHavingContent(TermMatch.Equals, Defaults.HistoryHeaders)
+                .History.Rows.Count.Should.Equal(0);
 
         [Test]
-        public void AssertHistoryTableTest() =>
-            Login()
+        public void AssertHistoryTableTest()
+        {
+            OpenDepositPage()
                 .Populate("1000", "100", "300").Calculate()
                 .Populate("1500", "25", "100").Calculate()
-                .OpenHistory().Clear().ReturnToCalculator().OpenHistory();
+                .OpenHistory()
+                .History.Headers.Should.ContainHavingContent(TermMatch.Equals, Defaults.HistoryHeaders)
+                .History.Rows.Count.Should.Equal(2);
+            //.History.Rows[0].Should.(TermMatch.Equals, Defaults.HistoryHeaders);
+        }
 
-            //DepositPage.Calculate("1000", "100", "300");
-            //expectedHistory.Insert(0, DepositPage.GetData());
+        //DepositPage.Calculate("1000", "100", "300");
+        //expectedHistory.Insert(0, DepositPage.GetData());
 
-            //DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
-            //expectedHistory.Insert(0, DepositPage.GetData());
+        //DepositPage.Calculate("1500", "25", "100", "360", DateTime.Today.AddDays(7));
+        //expectedHistory.Insert(0, DepositPage.GetData());
 
         [Test]
         public void HistoryShowsLast9RecordsTest() =>
-            Login()
+            OpenDepositPage()
                 .Populate("1000", "100", "300").Calculate()
                 .Populate("1500", "25", "100").Calculate()
                 .OpenHistory().Clear().ReturnToCalculator().OpenHistory();
@@ -52,7 +61,7 @@ namespace Tests.Tests
         [TestCase("€ - euro", "123 456 789.00", "MM/dd/yyyy")]
         [TestCase("£ - Great Britain Pound", "123 456 789,00", "MM dd yyyy")]
         public void HistoryRespectSettingsTest(string currency, string numberFormat, string dateFormat) =>
-            Login()
+            OpenDepositPage()
                 .OpenSettings().Set(currency, numberFormat, dateFormat)
                 .Populate("100000", "99", "299").Calculate()
                 .OpenSettings().ResetToDefaults()

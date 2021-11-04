@@ -2,20 +2,17 @@
 
 namespace Tests.Pages
 {
-    public class HistoryPage : Page<HistoryPage>
+    using _ = HistoryPage;
+
+    public class HistoryPage : Page<_>
     {
         [FindByXPath("//div[text() = 'Calculator']")]
-        public ClickableDelegate<DepositPage,HistoryPage> ReturnToCalculator { get; private set; }
+        public ClickableDelegate<DepositPage, _> ReturnToCalculator { get; private set; }
 
-        [FindById("clear")]
-        public ButtonDelegate<HistoryPage> Clear { get; private set; }
+        [FindById]
+        public ButtonDelegate<_> Clear { get; private set; }
 
-        //public IWebElement Table => WebDriver.Driver.FindElement(By.Id("history"));
-        //public List<List<string>> History => Table
-        //    .FindElements(By.XPath("//tr[td]"))
-        //    .Select(row => row
-        //        .FindElements(By.TagName("TD"))
-        //        .Select(cell => cell.Text).ToList())
-        //    .ToList();
+        [FindById]
+        public Table<_> History { get; private set; }
     }
 }

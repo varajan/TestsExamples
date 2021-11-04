@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Atata;
 
@@ -49,6 +50,43 @@ namespace Tests.Pages
 
         [FindByXPath("//div[text() = 'History']")]
         public ClickableDelegate<HistoryPage, _> OpenHistory { get; private set; }
+
+        public _ RetrieveData(out List<string> row, string dateFormat, string numberFormat)
+        {
+            row = new()
+            {
+                FormatNumber(Amount.Value, numberFormat),
+                RateOfInterest + "%",
+                Term.Value,
+                FinancialYear.Value,
+                new DateTime().ToString(dateFormat, CultureInfo.InvariantCulture),
+                EndDate.Value,
+                InterestEarned.Value,
+                Income.Value
+            };
+
+            return this;
+
+            string FormatNumber(string value, string format)
+            {
+                var result = Math.Round(decimal.Parse(value), 2, MidpointRounding.AwayFromZero)
+                    .ToString("N", CultureInfo.InvariantCulture);
+
+                switch (format)
+                {
+                    case "123.456.789,00":
+                        return result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');
+
+                    case "123 456 789.00":
+                        return result.Replace(',', ' ');
+
+                    case "123 456 789,00":
+                        return result.Replace(',', ' ').Replace('.', ',');
+                }
+
+                return result;
+            }
+        }
 
         public _ Populate(string amount, string interest, string term, string finYear = "365") => this
                 .FinancialYear.Set(finYear)

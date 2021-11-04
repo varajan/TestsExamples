@@ -18,5 +18,13 @@ namespace Tests.Tests
 
             AtataContext.GlobalConfiguration.AutoSetUpDriverToUse();
         }
+
+        [OneTimeTearDown]
+        public void DeleteUsers()
+        {
+            Go.ToUrl($"{Defaults.BaseUrl}/Register/DeleteAllUsers");
+
+            AtataContext.Current?.CleanUp();
+        }
     }
 }

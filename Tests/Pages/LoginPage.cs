@@ -8,10 +8,15 @@ namespace Tests.Pages
     [VerifyTitle]
     public class LoginPage : Page<_>
     {
+        public Frame<_> ContentFrame { get; private set; }
+
+        [FindById("remindPasswordView")]
+        public Frame<_> RemindPasswordView { get; private set; }
+
         [FindById("login")]
         public TextInput<_> Name { get; private set; }
 
-        [FindById("password")]
+        [FindById]
         public PasswordInput<_> Password { get; private set; }
 
         [FindById("loginBtn")]
@@ -31,8 +36,8 @@ namespace Tests.Pages
                 .Password.Set(password)
                 .LoginBtn.Click();
 
-        public DepositPage Login() =>
-                Name.Set(Defaults.Login)
+        public DepositPage Login(string login = null) =>
+                Name.Set(login ?? Defaults.Login)
                 .Password.Set(Defaults.Password)
                 .LoginBtn.ClickAndGo();
     }

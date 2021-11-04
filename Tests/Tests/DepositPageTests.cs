@@ -10,7 +10,7 @@ namespace Tests.Tests
     [TestFixture]
     public class DepositPageTests : BaseTest
     {
-        protected DepositPage Login() => Go.To<LoginPage>().Login().OpenSettings().ResetToDefaults();
+        protected DepositPage OpenDepositPage() => LoginAsRandomUser().OpenSettings().ResetToDefaults();
 
         [TestCase(31, "January", "2021")]
         [TestCase(29, "February", "2020")]
@@ -29,7 +29,7 @@ namespace Tests.Tests
         {
             var expectedDays = Enumerable.Range(1, days).Select(x => x.ToString());
 
-            Login()
+            OpenDepositPage()
                 .Year.Set(year)
                 .Month.Set(month)
                 .Day.Options
@@ -41,7 +41,7 @@ namespace Tests.Tests
         {
             var expectedMonths = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
-            Login()
+            OpenDepositPage()
                 .Month.Options
                     .Should.BeEquivalent(expectedMonths);
         }
@@ -51,14 +51,14 @@ namespace Tests.Tests
         {
             var expectedYears = Enumerable.Range(2010, 16).Select(x => x.ToString());
 
-            Login()
+            OpenDepositPage()
                 .Year.Options
                     .Should.BeEquivalent(expectedYears);
         }
 
         [Test]
         public void FinancialYearDefaultValueTest() =>
-            Login()
+            OpenDepositPage()
                 .FinancialYear.Should.Equal("365");
 
                 [TestCase("6000", "10", "120", "360", "200.00", "6,200.00")]
@@ -66,7 +66,7 @@ namespace Tests.Tests
         [TestCase("100000", "99.9", "365", "365", "99,900.00", "199,900.00")]
         [TestCase("100000", "100.0", "360", "360", "100,000.00", "200,000.00")]
         public void CalculateDepositTest(string amount, string interest, string term, string finYear, string interestEarned, string income) =>
-            Login()
+            OpenDepositPage()
                 .Amount.Set(amount)
                 .RateOfInterest.Set(interest)
                 .Term.Set(term)
@@ -80,7 +80,7 @@ namespace Tests.Tests
         [TestCase("100000", "100000")]
         [TestCase("100001", "0")]
         public void AllowedAmountValuesTest(string enteredAmount, string displayedAmount) =>
-            Login()
+            OpenDepositPage()
                 .Amount
                     .Set(enteredAmount)
                 .Amount
@@ -89,7 +89,7 @@ namespace Tests.Tests
         [TestCase("100", "100")]
         [TestCase("100.1", "0")]
         public void AllowedInterestValuesTest(string enteredAmount, string displayedAmount) =>
-            Login()
+            OpenDepositPage()
                 .RateOfInterest
                     .Set(enteredAmount)
                 .RateOfInterest
@@ -101,7 +101,7 @@ namespace Tests.Tests
         [TestCase("365", "366", "0")]
         [TestCase("365", "3.6", "0")]
         public void AllowedInvestmentTermValuesTest(string finYear, string enteredAmount, string displayedAmount) =>
-            Login()
+            OpenDepositPage()
                 .FinancialYear.Set(finYear)
                 .Term.Set(enteredAmount)
                 .Term.Should.Equal(displayedAmount);
@@ -112,7 +112,7 @@ namespace Tests.Tests
             var startDate = DateTime.Today.AddDays(10);
             var endDate = startDate.AddDays(100).ToString(Defaults.DateFormat, CultureInfo.InvariantCulture);
 
-            Login()
+            OpenDepositPage()
                 .Populate("1000", "10", "100")
                 .SetStartDate(startDate)
                 .Calculate.Click()

@@ -14,5 +14,7 @@
         public static readonly string Currency = "$ - US dollar";
         public static readonly string NumberFormat = "123,456,789.00";
         public static readonly string DateFormat = "dd/MM/yyyy";
-    }
+
+        public static readonly string[] HistoryHeaders = {"Amount", "%", "Term", "Year", "From", "To", "Interest", "Income"};
+}
 }

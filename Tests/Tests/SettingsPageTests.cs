@@ -10,9 +10,7 @@ namespace Tests.Tests
     public class SettingsPageTests : BaseTest
     {
         public SettingsPage OpenSettings() =>
-            Go
-            .To<LoginPage>()
-            .Login()
+            LoginAsRandomUser()
             .OpenSettings()
             .ResetToDefaults()
             .OpenSettings();

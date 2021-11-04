@@ -13,7 +13,7 @@ namespace Tests.Pages
         {
             try
             {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3))
+                new WebDriverWait(context.Driver, TimeSpan.FromSeconds(3))
                     .Until(_ => ExpectedConditions.AlertIsPresent().Invoke(context.Driver) != null);
             }
             catch { /**/ }

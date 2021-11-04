@@ -8,14 +8,19 @@ namespace Tests.Tests
     [Parallelizable(ParallelScope.Self)]
     public class BaseTest
     {
-        [OneTimeSetUp]
-        public void OneTimeSetup()
+        public DepositPage LoginAsRandomUser() =>
+            Go.To<LoginPage>()
+                .OpenRegistration()
+                .Register(out var login)
+                .Login(login);
+
+        public LoginPage CreateDefaultUser()
         {
-            Go.ToUrl($"{Defaults.BaseUrl}/Register/DeleteAllUsers");
-            Go.ToUrl(Defaults.BaseUrl);
             Go.To<LoginPage>()
                 .OpenRegistration()
                 .Register(Defaults.Login, Defaults.Email, Defaults.Password);
+
+            return Go.To<LoginPage>();
         }
 
         [SetUp]

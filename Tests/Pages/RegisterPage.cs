@@ -25,6 +25,13 @@ namespace Tests.Pages
         [FindById("errorMessage")]
         public Text<_> Error { get; private set; }
 
+        public LoginPage Register(out string login) => this
+            .Name.SetRandom(out login)
+            .Email.Set($"{login}@email.test.com")
+            .Password1.Set(Defaults.Password)
+            .Password2.Set(Defaults.Password)
+            .RegisterBtn.ClickAndGo();
+
 
         public LoginPage Register(string login, string email, string password) => this
             .Name.Set(login)

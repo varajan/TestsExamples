@@ -14,7 +14,7 @@ namespace Tests.Pages
         [FindById("currency")]
         public Select<SettingsPage> Currency { get; private set; }
 
-        //[CloseConfirmBox()]
+        [ConfirmAlertIfShow]
         public ButtonDelegate<DepositPage, SettingsPage> Save { get; private set; }
 
         public ButtonDelegate<DepositPage, SettingsPage> Cancel { get; private set; }

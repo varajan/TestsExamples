@@ -8,11 +8,12 @@ namespace Tests.Tests
     public class LoginPageTests : BaseTest
     {
         [Test]
-        public void LoginWithCorrectCredentialsTest() =>
+        public void RegisterAndLoginTest() =>
             Go.To<LoginPage>()
-                .Login()
-                .PageTitle
-                    .Should.Equal("Deposit calculator");
+                .OpenRegistration()
+                .Register("Login", "test-test@test.com", "PaSsWoRd")
+                .Login("login", "PaSsWoRd")
+                .PageTitle.Should.Equal("Deposit calculator");
 
         [TestCase("test", "newyork2")]
         [TestCase("text", "newyork1")]
@@ -22,7 +23,7 @@ namespace Tests.Tests
         [TestCase("test", "")]
         [TestCase("", "newyork1")]
         public void LoginWithInvalidCredentialsTest(string login, string password) =>
-            Go.To<LoginPage>()
+            CreateDefaultUser()
                 .Login(login, password)
                 .Error
                 .Content.ExpectTo.Equal("Incorrect user name or password!");
