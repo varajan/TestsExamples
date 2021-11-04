@@ -1,6 +1,5 @@
 ﻿using Atata;
 using NUnit.Framework;
-using Tests.Data;
 
 namespace Tests.Tests
 {

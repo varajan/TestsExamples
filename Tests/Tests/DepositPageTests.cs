@@ -3,18 +3,14 @@ using System.Globalization;
 using System.Linq;
 using Atata;
 using NUnit.Framework;
-using Tests.Data;
 using Tests.Pages;
 
 namespace Tests.Tests
 {
     [TestFixture]
-    public class DepositPageTests : BaseTestA
+    public class DepositPageTests : BaseTest
     {
-        protected DepositPage DepositPage;
-
-        [SetUp]
-        public void Login() => DepositPage = Go.To<LoginPage>().Login().OpenSettings().ResetToDefaults();
+        protected DepositPage Login() => Go.To<LoginPage>().Login().OpenSettings().ResetToDefaults();
 
         [TestCase(31, "January", "2021")]
         [TestCase(29, "February", "2020")]
@@ -33,7 +29,7 @@ namespace Tests.Tests
         {
             var expectedDays = Enumerable.Range(1, days).Select(x => x.ToString());
 
-            Go.To<DepositPage>()
+            Login()
                 .Year.Set(year)
                 .Month.Set(month)
                 .Day.Options
@@ -45,7 +41,7 @@ namespace Tests.Tests
         {
             var expectedMonths = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
-            Go.To<DepositPage>()
+            Login()
                 .Month.Options
                     .Should.BeEquivalent(expectedMonths);
         }
@@ -55,27 +51,26 @@ namespace Tests.Tests
         {
             var expectedYears = Enumerable.Range(2010, 16).Select(x => x.ToString());
 
-            Go.To<DepositPage>()
+            Login()
                 .Year.Options
                     .Should.BeEquivalent(expectedYears);
         }
 
         [Test]
         public void FinancialYearDefaultValueTest() =>
-            Go.To<DepositPage>()
-                .FinYear360.Should.Not.BeChecked()
-                .FinYear365.Should.BeChecked();
+            Login()
+                .FinancialYear.Should.Equal("365");
 
-        [TestCase("6000", "10", "120", "360", "200.00", "6,200.00")]
+                [TestCase("6000", "10", "120", "360", "200.00", "6,200.00")]
         [TestCase("6000", "10", "120", "365", "197.26", "6,197.26")]
         [TestCase("100000", "99.9", "365", "365", "99,900.00", "199,900.00")]
         [TestCase("100000", "100.0", "360", "360", "100,000.00", "200,000.00")]
         public void CalculateDepositTest(string amount, string interest, string term, string finYear, string interestEarned, string income) =>
-            Go.To<DepositPage>()
+            Login()
                 .Amount.Set(amount)
                 .RateOfInterest.Set(interest)
                 .Term.Set(term)
-                .SelectFinYear(finYear)
+                .FinancialYear.Set(finYear)
                 .Calculate.Click()
                 .Income
                     .Should.Equal(income)
@@ -85,7 +80,7 @@ namespace Tests.Tests
         [TestCase("100000", "100000")]
         [TestCase("100001", "0")]
         public void AllowedAmountValuesTest(string enteredAmount, string displayedAmount) =>
-            Go.To<DepositPage>()
+            Login()
                 .Amount
                     .Set(enteredAmount)
                 .Amount
@@ -94,7 +89,7 @@ namespace Tests.Tests
         [TestCase("100", "100")]
         [TestCase("100.1", "0")]
         public void AllowedInterestValuesTest(string enteredAmount, string displayedAmount) =>
-            Go.To<DepositPage>()
+            Login()
                 .RateOfInterest
                     .Set(enteredAmount)
                 .RateOfInterest
@@ -106,12 +101,10 @@ namespace Tests.Tests
         [TestCase("365", "366", "0")]
         [TestCase("365", "3.6", "0")]
         public void AllowedInvestmentTermValuesTest(string finYear, string enteredAmount, string displayedAmount) =>
-            Go.To<DepositPage>()
-                .SelectFinYear(finYear)
-                .Term
-                    .Set(enteredAmount)
-                .Term
-                    .Should.Equal(displayedAmount);
+            Login()
+                .FinancialYear.Set(finYear)
+                .Term.Set(enteredAmount)
+                .Term.Should.Equal(displayedAmount);
 
         [Test]
         public void CalculateEndDateTest()
@@ -119,7 +112,7 @@ namespace Tests.Tests
             var startDate = DateTime.Today.AddDays(10);
             var endDate = startDate.AddDays(100).ToString(Defaults.DateFormat, CultureInfo.InvariantCulture);
 
-            Go.To<DepositPage>()
+            Login()
                 .Populate("1000", "10", "100")
                 .SetStartDate(startDate)
                 .Calculate.Click()

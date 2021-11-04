@@ -1,4 +1,4 @@
-﻿namespace Tests.Data
+﻿namespace Tests
 {
     public static class Defaults
     {

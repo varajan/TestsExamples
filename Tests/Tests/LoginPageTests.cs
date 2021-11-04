@@ -5,7 +5,7 @@ using Tests.Pages;
 namespace Tests.Tests
 {
     [TestFixture]
-    public class LoginPageTests : BaseTestA
+    public class LoginPageTests : BaseTest
     {
         [Test]
         public void LoginWithCorrectCredentialsTest() =>

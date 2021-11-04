@@ -1,5 +1,4 @@
 ﻿using Atata;
-using SeleniumExtras.WaitHelpers;
 
 namespace Tests.Pages
 {
@@ -21,7 +20,7 @@ namespace Tests.Pages
 
         [ConfirmAlertIfShow]
         [FindById("register")]
-        private ButtonDelegate<LoginPage, _> RegisterBtn { get; set; }
+        private Button<LoginPage, _> RegisterBtn { get; set; }
 
         [FindById("errorMessage")]
         public Text<_> Error { get; private set; }
@@ -40,13 +39,5 @@ namespace Tests.Pages
             .Password1.Set(password)
             .Password2.Set(confirm)
             .RegisterBtn.Click();
-
-        public class ConfirmAlertIfShow : TriggerAttribute
-        {
-            public ConfirmAlertIfShow() : base(TriggerEvents.AfterClick) { }
-
-            protected override void Execute<TOwner>(TriggerContext<TOwner> context) =>
-                ExpectedConditions.AlertIsPresent().Invoke(context.Driver)?.Accept();
-        }
     }
 }

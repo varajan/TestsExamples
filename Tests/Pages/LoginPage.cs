@@ -1,5 +1,4 @@
 ﻿using Atata;
-using Tests.Data;
 
 namespace Tests.Pages
 {

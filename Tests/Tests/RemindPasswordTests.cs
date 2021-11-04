@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-using Tests.Extensions;
 
 namespace Tests.Tests
 {
-    public class RemindPasswordTests : BaseTest
+    public class RemindPasswordTests //: BaseTest
     {
         //[SetUp]
         //public void OpenLoginPage() => LoginPage.Open();

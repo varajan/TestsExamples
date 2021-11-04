@@ -4,14 +4,12 @@ using Tests.Pages;
 
 namespace Tests.Tests
 {
-    public class RegisterPageTests : BaseTestA
+    public class RegisterPageTests : BaseTest
     {
-        [SetUp]
-        public void OpenRegistration() => Go.To<LoginPage>().OpenRegistration();
-
         [Test]
         public void RegisterAndLoginTest() =>
-            Go.To<RegisterPage>()
+            Go.To<LoginPage>()
+                .OpenRegistration()
                 .Register("Login", "test-test@test.com", "PaSsWoRd")
                 .Login("login", "PaSsWoRd")
                 .PageTitle
@@ -24,7 +22,8 @@ namespace Tests.Tests
         [TestCase("User", "password", "password", "some.test.com", "Invalid email.")]
         [TestCase("User", "pass", "pass", "some@test.com", "Password is too short.")]
         public void RegisterWithInvalidData(string login, string password1, string password2, string email, string error) =>
-            Go.To<RegisterPage>()
+            Go.To<LoginPage>()
+                .OpenRegistration()
                 .Register(login, email, password1, password2)
                 .Error.Should.Equal(error);
     }

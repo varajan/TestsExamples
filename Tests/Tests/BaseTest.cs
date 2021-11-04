@@ -1,13 +1,12 @@
 ﻿using Atata;
 using NUnit.Framework;
-using Tests.Data;
 using Tests.Pages;
 
 namespace Tests.Tests
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Self)]
-    public class BaseTestA
+    public class BaseTest
     {
         [OneTimeSetUp]
         public void OneTimeSetup()
@@ -30,23 +29,5 @@ namespace Tests.Tests
         {
             AtataContext.Current?.CleanUp();
         }
-    }
-
-    public class BaseTest
-    {
-        //public RegisterPage RegisterPage => new();
-        //public SettingsPage SettingsPage => new();
-        public HistoryPage HistoryPage => new();
-
-        //[OneTimeSetUp]
-        //public void CreateTestUser()
-        //{
-        //    RegisterPage.DeleteAll();
-        //    RegisterPage.Register(Defaults.Login, Defaults.Email, Defaults.Password);
-        //    RegisterPage.Alert?.Accept();
-        //}
-
-        [TearDown]
-        public void TearDown() => WebDriver.Quit();
     }
 }

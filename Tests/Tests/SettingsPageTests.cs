@@ -2,16 +2,14 @@
 using System.Globalization;
 using Atata;
 using NUnit.Framework;
-using Tests.Data;
 using Tests.Pages;
 
 namespace Tests.Tests
 {
     [TestFixture]
-    public class SettingsPageTestsA : BaseTestA
+    public class SettingsPageTests : BaseTest
     {
-        [SetUp]
-        public void OpenSettings() =>
+        public SettingsPage OpenSettings() =>
             Go
             .To<LoginPage>()
             .Login()
@@ -21,19 +19,19 @@ namespace Tests.Tests
 
         [Test]
         public void DateFormatOptionsTest() =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .DateFormat.Options
                     .Should.BeEquivalent("dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy");
 
         [Test]
         public void NumberFormatOptionsTest() =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .NumberFormat.Options
                     .Should.BeEquivalent("123,456,789.00", "123.456.789,00", "123 456 789.00", "123 456 789,00");
 
         [Test]
         public void CurrencyOptionsTest() =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .Currency.Options
                     .Should.BeEquivalent("$ - US dollar", "€ - euro", "£ - Great Britain Pound");
 
@@ -42,7 +40,7 @@ namespace Tests.Tests
         [TestCase("123 456 789.00", "127 397.26", "27 397.26")]
         [TestCase("123 456 789,00", "127 397,26", "27 397,26")]
         public void ChangeNumberFormatTest(string format, string income, string interest) =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .NumberFormat.Set(format).Save()
                 .Populate("100000", "100", "100").Calculate()
                 .Income.Should.Equal(income)
@@ -54,7 +52,7 @@ namespace Tests.Tests
         [TestCase("MM/dd/yyyy")]
         [TestCase("MM dd yyyy")]
         public void ChangeDateFormatTest(string format) =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .DateFormat.Set(format).Save()
                 .EndDate.Should
                     .Equal(DateTime.Today.ToString(format, CultureInfo.InvariantCulture));
@@ -63,19 +61,19 @@ namespace Tests.Tests
         [TestCase("€", "€ - euro")]
         [TestCase("£", "£ - Great Britain Pound")]
         public void ChangeCurrencyTest(string symbol, string currency) =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .Currency.Set(currency).Save()
                 .Currency.Should.Equal(symbol);
 
         [Test]
         public void LogoutTest() =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .Logout()
                 .PageTitle.Should.Equal("Login");
 
         [Test]
         public void CancelSettingsChangesTest() =>
-            Go.To<SettingsPage>()
+            OpenSettings()
                 .DateFormat.Set("MM/dd/yyyy")
                 .NumberFormat.Set("123 456 789,00")
                 .Currency.Set("€ - euro")
