@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Atata;
 
 namespace Tests.Pages
@@ -17,8 +18,8 @@ namespace Tests.Pages
         [FindById("year")]
         public Select<_> Year { get; private set; }
 
-        [FindByName("finYear")]
-        [FindItemByValue]
+        [FindItemByParentContent]
+        [FindByXPath("//tr[@id='finYear']//input")]
         public RadioButtonList<string, _> FinancialYear { get; private set; }
 
         [FindById("currency")]
@@ -58,7 +59,7 @@ namespace Tests.Pages
                 FormatNumber(Amount.Value, numberFormat),
                 RateOfInterest + "%",
                 Term.Value,
-                FinancialYear.Value,
+                FinancialYear.Value.Split(' ').First(),
                 new DateTime().ToString(dateFormat, CultureInfo.InvariantCulture),
                 EndDate.Value,
                 InterestEarned.Value,
@@ -88,8 +89,8 @@ namespace Tests.Pages
             }
         }
 
-        public _ Populate(string amount, string interest, string term, string finYear = "365") => this
-                .FinancialYear.Set(finYear)
+        public _ Populate(string amount, string interest, string term) => this
+                .FinancialYear.Set("365 days")
                 .Amount.Set(amount)
                 .RateOfInterest.Set(interest)
                 .Term.Set(term);

@@ -59,12 +59,12 @@ namespace Tests.Tests
         [Test]
         public void FinancialYearDefaultValueTest() =>
             OpenDepositPage()
-                .FinancialYear.Should.Equal("365");
+                .FinancialYear.Should.Equal("365 days");
 
-                [TestCase("6000", "10", "120", "360", "200.00", "6,200.00")]
-        [TestCase("6000", "10", "120", "365", "197.26", "6,197.26")]
-        [TestCase("100000", "99.9", "365", "365", "99,900.00", "199,900.00")]
-        [TestCase("100000", "100.0", "360", "360", "100,000.00", "200,000.00")]
+        [TestCase("6000", "10", "120", "360 days", "200.00", "6,200.00")]
+        [TestCase("6000", "10", "120", "365 days", "197.26", "6,197.26")]
+        [TestCase("100000", "99.9", "365", "365 days", "99,900.00", "199,900.00")]
+        [TestCase("100000", "100.0", "360", "360 days", "100,000.00", "200,000.00")]
         public void CalculateDepositTest(string amount, string interest, string term, string finYear, string interestEarned, string income) =>
             OpenDepositPage()
                 .Amount.Set(amount)
@@ -95,11 +95,11 @@ namespace Tests.Tests
                 .RateOfInterest
                     .Should.Equal(displayedAmount);
 
-        [TestCase("360", "360", "360")]
-        [TestCase("360", "361", "0")]
-        [TestCase("365", "365", "365")]
-        [TestCase("365", "366", "0")]
-        [TestCase("365", "3.6", "0")]
+        [TestCase("360 days", "360", "360")]
+        [TestCase("360 days", "361", "0")]
+        [TestCase("365 days", "365", "365")]
+        [TestCase("365 days", "366", "0")]
+        [TestCase("365 days", "3.6", "0")]
         public void AllowedInvestmentTermValuesTest(string finYear, string enteredAmount, string displayedAmount) =>
             OpenDepositPage()
                 .FinancialYear.Set(finYear)

@@ -10,8 +10,7 @@ namespace Tests.Tests
         public void GlobalSetUp()
         {
             AtataContext.GlobalConfiguration
-                .UseChrome()
-                    .WithArguments("start-maximized")
+                .UseEdge()
                 .UseBaseUrl(Defaults.BaseUrl)
                 .UseCulture("en-US")
                 .UseAllNUnitFeatures();
