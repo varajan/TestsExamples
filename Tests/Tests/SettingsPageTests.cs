@@ -9,11 +9,7 @@ namespace Tests.Tests
     [TestFixture]
     public class SettingsPageTests : BaseTest
     {
-        public SettingsPage OpenSettings() =>
-            LoginAsRandomUser()
-            .OpenSettings()
-            .ResetToDefaults()
-            .OpenSettings();
+        public SettingsPage OpenSettings() => OpenDepositPage().OpenSettings();
 
         [Test]
         public void DateFormatOptionsTest() =>

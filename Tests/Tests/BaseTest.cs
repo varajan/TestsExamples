@@ -8,7 +8,7 @@ namespace Tests.Tests
     [Parallelizable(ParallelScope.Self)]
     public class BaseTest
     {
-        public DepositPage LoginAsRandomUser() =>
+        public DepositPage OpenDepositPage() =>
             Go.To<LoginPage>()
                 .OpenRegistration()
                 .Register(out var login)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Atata;
@@ -34,15 +33,20 @@ namespace Tests.Pages
         [FindByXPath("//*[contains(text(), 'Investment Term')]/..//input")]
         public TextInput<_> Term { get; private set; }
 
+        [WaitForJQueryAjax]
+        [WaitUntilEnabled(TriggerEvents.AfterClick)]
         [FindById("calculateBtn")]
         public ButtonDelegate<_> Calculate { get; private set; }
 
+        [WaitForJQueryAjax(TriggerEvents.BeforeAccess)]
         [FindByXPath("//*[contains(text(), 'Interest Earned')]/..//input")]
         public TextInput<_> InterestEarned { get; private set; }
 
+        [WaitForJQueryAjax(TriggerEvents.BeforeAccess)]
         [FindByXPath("//*[contains(text(), 'Income')]/..//input")]
         public TextInput<_> Income { get; private set; }
 
+        [WaitForJQueryAjax(TriggerEvents.BeforeAccess)]
         [FindByXPath("//*[contains(text(), 'End Date')]/..//input")]
         public TextInput<_> EndDate { get; private set; }
 
@@ -52,19 +56,27 @@ namespace Tests.Pages
         [FindByXPath("//div[text() = 'History']")]
         public ClickableDelegate<HistoryPage, _> OpenHistory { get; private set; }
 
-        public _ RetrieveData(out List<string> row, string dateFormat, string numberFormat)
+        public _ RetrieveData(out string data, string dateFormat = null, string numberFormat = null)
         {
-            row = new()
+            var year = int.Parse(Year.Value);
+            var month = DateTime.ParseExact(Month.Value, "MMMM", CultureInfo.InvariantCulture).Month;
+            var day = int.Parse(Day.Value);
+            var startDate = new DateTime(year, month, day);
+            var endDate = DateTime.ParseExact(EndDate.Value, Defaults.DateFormats, null);
+
+            var row = new[]
             {
-                FormatNumber(Amount.Value, numberFormat),
-                RateOfInterest + "%",
+                FormatNumber(Amount.Value, numberFormat ?? Defaults.NumberFormat),
+                RateOfInterest.Value + "%",
                 Term.Value,
                 FinancialYear.Value.Split(' ').First(),
-                new DateTime().ToString(dateFormat, CultureInfo.InvariantCulture),
-                EndDate.Value,
-                InterestEarned.Value,
-                Income.Value
+                startDate.ToString(dateFormat ?? Defaults.DateFormat, CultureInfo.InvariantCulture),
+                endDate.ToString(dateFormat ?? Defaults.DateFormat, CultureInfo.InvariantCulture),
+                FormatNumber(InterestEarned.Value, numberFormat ?? Defaults.NumberFormat),
+                FormatNumber(Income.Value, numberFormat ?? Defaults.NumberFormat)
             };
+
+            data = string.Join(" ", row);
 
             return this;
 

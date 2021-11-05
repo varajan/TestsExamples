@@ -3,15 +3,12 @@ using System.Globalization;
 using System.Linq;
 using Atata;
 using NUnit.Framework;
-using Tests.Pages;
 
 namespace Tests.Tests
 {
     [TestFixture]
     public class DepositPageTests : BaseTest
     {
-        protected DepositPage OpenDepositPage() => LoginAsRandomUser().OpenSettings().ResetToDefaults();
-
         [TestCase(31, "January", "2021")]
         [TestCase(29, "February", "2020")]
         [TestCase(28, "February", "2021")]
