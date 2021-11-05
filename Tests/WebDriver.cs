@@ -14,12 +14,10 @@ namespace Tests
     public class WebDriver
     {
         private readonly IObjectContainer _objectContainer;
-        private readonly ScenarioContext _scenarioContext;
-        private static object Lock = new();
+        private static readonly object Lock = new();
 
         public WebDriver(IObjectContainer objectContainer, ScenarioContext scenarioContext)
         {
-            _scenarioContext = scenarioContext;
             _objectContainer = objectContainer;
         }
 

@@ -19,10 +19,10 @@ namespace Tests.Steps
             RegisterPage.Register(user["Login"], user["Email"], user["Password"], user["Password Confirm"]);
         }
 
-        [Then("Registation is completed successfully with message: (.*)")]
+        [Then("Registration is completed successfully with message: (.*)")]
         public void AssertSuccess(string message) => RegisterPage.Message.ShouldEqual(message);
 
-        [Then("Registation is failed with message: (.*)")]
+        [Then("Registration is failed with message: (.*)")]
         public void AssertFail(string error) => RegisterPage.Error.ShouldEqual(error);
     }
 }

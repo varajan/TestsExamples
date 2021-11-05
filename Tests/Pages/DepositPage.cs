@@ -93,7 +93,7 @@ namespace Tests.Pages
 
         public string FinancialYear
         {
-            get => WebDriver.FindElement(By.XPath($"//td[text() = '365 days']/input")).Selected ? "365" : "360";
+            get => WebDriver.FindElement(By.XPath("//td[text() = '365 days']/input")).Selected ? "365" : "360";
             set => WebDriver.FindElement(By.XPath($"//td[text() = '{value} days']/input")).Click();
         }
 

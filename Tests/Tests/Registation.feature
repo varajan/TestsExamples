@@ -11,7 +11,7 @@ Scenario: Valid data
 	When I fill in registration data:
 		| Login | Email             | Password | Password Confirm |
 		| Steve | Steve@Collier.com | Meadows  | Meadows          |
-	Then Registation is completed successfully with message: Registration was successful.
+	Then Registration is completed successfully with message: Registration was successful.
 		And I can login with 'steve' login and 'Meadows' password
 
 Scenario: Invalid data
@@ -19,7 +19,7 @@ Scenario: Invalid data
 	When I fill in registration data:
 		| Login   | Email   | Password    | Password Confirm |
 		| <login> | <email> | <password1> | <password2>      |
-	Then Registation is failed with message: <error>
+	Then Registration is failed with message: <error>
 
 Examples: 
 		| login   | email              | password1 | password2 | error                                       |
