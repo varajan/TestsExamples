@@ -1,4 +1,4 @@
-UI tests with WebDriver and SpecFlow test frameworks with parallel execution, test data is created via API.
+C# UI tests with WebDriver and SpecFlow test frameworks with parallel execution, test data is created via API.
 
 - Selenium WebDriver v4.0.1
 - ChromeDriver v95
