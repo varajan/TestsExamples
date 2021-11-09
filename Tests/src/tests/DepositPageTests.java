@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +18,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.google.common.collect.Lists;
 
 public class DepositPageTests extends BaseTest {
-	@Before
 	@BeforeEach
 	public void login() {
 		depositPage = loginPage.login();
@@ -111,8 +110,10 @@ public class DepositPageTests extends BaseTest {
 		depositPage.setFinYear(finYear);
 		depositPage.calculate();
 		
-		Assert.assertEquals(interest, depositPage.getInterest());
-		Assert.assertEquals(income, depositPage.getIncome());
+		Assertions.assertAll(
+			() -> Assert.assertEquals(interest, depositPage.getInterest()),
+			() -> Assert.assertEquals(income, depositPage.getIncome())
+		);
 	}
 
 	static Stream<Arguments> allowedAmountValues(){
@@ -129,6 +130,7 @@ public class DepositPageTests extends BaseTest {
 	public void allowedAmountValuesTest(String enteredAmount, String displayedAmount)
     {
 		depositPage.setAmount(enteredAmount);
+		
 		Assert.assertEquals(displayedAmount, depositPage.getAmount());
     }
 
@@ -144,6 +146,7 @@ public class DepositPageTests extends BaseTest {
 	@MethodSource("allowedInterestValues")
 	public void allowedInterestValuesTest(String enteredAmount, String displayedAmount) {
 		depositPage.setPercent("100");
+		
 		Assert.assertEquals("100", depositPage.getPercent());
 	}
 
@@ -162,6 +165,7 @@ public class DepositPageTests extends BaseTest {
 	public void verifyTermTest(String finYear, String entered, String displayed) {
 		depositPage.setFinYear(finYear);
 		depositPage.setTerm(entered);
+		
 		Assert.assertEquals(displayed, depositPage.getTerm());
 	}
 }

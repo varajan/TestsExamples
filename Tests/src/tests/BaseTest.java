@@ -1,9 +1,6 @@
 package tests;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
 import pages.DepositPage;
@@ -18,14 +15,12 @@ public class BaseTest {
 	protected DepositPage depositPage;
 	protected LoginPage loginPage;
 	
-	@Before
 	@BeforeEach
 	public void initDriver() {
 		driver = Driver.initWebDriver();
 		loginPage = new LoginPage(driver);
 	}
 	
-	@After
 	@AfterEach
     public void tearDown() {
         driver.quit();

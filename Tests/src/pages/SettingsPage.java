@@ -43,9 +43,16 @@ public class SettingsPage extends BasePage {
 	public void setCurrency(String value) { setSelectValue(currency, value); }
 	public List<String> getCurrencies(){ return getSelectOptions(currency); }
 
+	public SettingsPage set(String dateFormat, String numberFormat, String currency) {
+		setDateFormat(dateFormat);
+		setNumberFormat(numberFormat);
+		setCurrency(currency);
+		
+		return this;
+	}
+	
 	public DepositPage save() {
 		save.click();
-		// alert
 		return new DepositPage(driver);
 	}
 	

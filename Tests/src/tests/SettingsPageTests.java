@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,10 +14,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.google.common.collect.Lists;
 
+import utilities.Constants;
 import utilities.Dates;
 
 public class SettingsPageTests extends BaseTest {
-	@Before
 	@BeforeEach
 	public void openSettings() {
 		settingsPage = loginPage.login().openSettings();
@@ -28,10 +28,12 @@ public class SettingsPageTests extends BaseTest {
 		List<String> dateFormats   = Lists.newArrayList("dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy");
 		List<String> numberFormats = Lists.newArrayList("123,456,789.00", "123.456.789,00", "123 456 789.00", "123 456 789,00");
 		List<String> currencies    = Lists.newArrayList("$ - US dollar", "€ - euro", "£ - Great Britain Pound");
-		
-		Assert.assertEquals(dateFormats, settingsPage.getDateFormats());
-		Assert.assertEquals(numberFormats, settingsPage.getNumberFormats());
-		Assert.assertEquals(currencies, settingsPage.getCurrencies());
+
+		Assertions.assertAll(
+			() -> Assert.assertEquals(dateFormats, settingsPage.getDateFormats()),
+			() -> Assert.assertEquals(numberFormats, settingsPage.getNumberFormats()),
+			() -> Assert.assertEquals(currencies, settingsPage.getCurrencies())
+		);
 	}
 
 	static Stream<Arguments> currencies(){
@@ -92,8 +94,10 @@ public class SettingsPageTests extends BaseTest {
         depositPage.populate("100000", "100", "100");
         depositPage.calculate();
         
-        Assert.assertEquals(income, depositPage.getIncome());
-        Assert.assertEquals(interest, depositPage.getInterest());
+		Assertions.assertAll(
+	        () -> Assert.assertEquals(income, depositPage.getIncome()),
+	        () -> Assert.assertEquals(interest, depositPage.getInterest())
+        );
     }
 	
 	@Test
@@ -102,4 +106,19 @@ public class SettingsPageTests extends BaseTest {
 		
 		Assert.assertEquals("Login", loginPage.getTitle());
 	}
+	
+	@Test
+	public void CancelSettingsChangesTest()
+    {
+		settingsPage
+			.set("MM/dd/yyyy", "123 456 789,00", "€ - euro")
+			.cancel()
+			.openSettings();
+
+		Assertions.assertAll(
+			() -> Assert.assertEquals(Constants.DefaultDateFormat, settingsPage.getDateFormat()),
+			() -> Assert.assertEquals(Constants.DefaultNumberFormat, settingsPage.getNumberFormat()),
+			() -> Assert.assertEquals(Constants.DefaultCurrency, settingsPage.getCurrency())
+		);
+    }
 }
