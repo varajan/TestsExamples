@@ -15,6 +15,10 @@ public class Dates {
 	
 	public static String formatDate(String value, String format) throws ParseException {
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(value);
+		return formatDate(date, format);
+	}
+	
+	public static String formatDate(Date date, String format) {
 		String result = new SimpleDateFormat(format, Locale.ENGLISH).format(date);
 
 		return result;

@@ -1,20 +1,21 @@
 package pages;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 import utilities.Dates;
 
-public class DepositPage {
+public class DepositPage extends BasePage {
 	@FindBy(id = "amount")
 	private WebElement amount;
+	
+	@FindBy(id = "currency")
+	private WebElement currency;
 	
 	@FindBy(id = "percent")
 	private WebElement percent;
@@ -49,15 +50,19 @@ public class DepositPage {
 	@FindBy(id = "income")
 	private WebElement income;
 	
-	private WebDriver driver;
+	@FindBy(xpath = "//div[text() = 'History']")
+	private WebElement history;
+	
+	@FindBy(xpath = "//div[text() = 'Settings']")
+	private WebElement settings;
 	
 	public DepositPage(WebDriver driver) {
-		this.driver = driver;
+		super(driver);
 		PageFactory.initElements(this.driver, this);
 	}
 
-	public Boolean isOpened() {
-		return driver.getTitle().equals("Deposit calculator");
+	public String getCurrency() {
+		return currency.getText();
 	}
 	
 	public String getFinYear() {
@@ -79,75 +84,49 @@ public class DepositPage {
 		}
 	}
 	
-	public String getStartDate() throws ParseException {
-		Select daySelect = new Select(day);
-		Select monthSelect = new Select(month);
-		Select yearSelect = new Select(year);
-		
-		String dayValue = String.format("%02d", Integer.parseInt(daySelect.getFirstSelectedOption().getText()));
-		String monthValue = String.format("%02d", Dates.getMonthNumberFromName(monthSelect.getFirstSelectedOption().getText()));
-		String yearValue = yearSelect.getFirstSelectedOption().getText();
-		
-		return dayValue + "/" + monthValue + "/" + yearValue;
+	public String getStartDate() {
+		return getDay() + "/" + getMonth() + "/" + getYear();
 	}
 	
 	public void setStartDate(String value) throws ParseException {
-		new Select(year).selectByVisibleText(Dates.formatDate(value, "yyyy"));
-		new Select(month).selectByVisibleText(Dates.formatDate(value, "MMMM"));
-		new Select(day).selectByVisibleText(Dates.formatDate(value, "d"));
+		String yyyy = Dates.formatDate(value, "yyyy");
+		String mmmm = Dates.formatDate(value, "MMMM");
+		String d = Dates.formatDate(value, "d");
+		
+		setYear(yyyy);
+		setMonth(mmmm);
+		setDay(d);
 	}
 	
-	public List<String> getDays(){
-		return getOptions(new Select(day));
+	public String getDay() {
+		String d = getSelectValue(day);
+		String dd = String.format("%02d", Integer.parseInt(d));
+		return dd;
 	}
+	public void setDay(String value) { setSelectValue(day, value); }
+	public List<String> getDays(){ return getSelectOptions(day); }
 
-	public void setMonth(String value) {
-		new Select(month).selectByVisibleText(value);
+	public String getMonth() {
+		String mmmm = getSelectValue(month);
+		String mm = String.format("%02d", mmmm);
+		return mm;
 	}
+	public void setMonth(String value) { setSelectValue(month, value); }
+	public List<String> getMonths(){ return getSelectOptions(month); }
 	
-	public List<String> getMonths(){
-		return getOptions(new Select(month));
-	}
+	public String getYear() { return getSelectValue(year); }
+	public void setYear(String value) { setSelectValue(year, value); }
+	public List<String> getYears(){ return getSelectOptions(year); }
+
+	public String getAmount() { return getInputValue(amount); }
+	public void setAmount(String value) { setInputValue(amount, value); }
 	
-	public void setYear(String value) {
-		new Select(year).selectByVisibleText(value);
-	}
-	
-	public List<String> getYears(){
-		return getOptions(new Select(year));
-	}
-	
-	private List<String> getOptions(Select select){
-		List<String> result = new ArrayList<String>();
-		
-		for (WebElement option : select.getOptions()) {
-			result.add(option.getText());
-		}
-		
-		return result;
-	}
-	
-	public String getAmount() {
-		return amount.getAttribute("value");
-	}
-	public void setAmount(String value) {
-		amount.sendKeys(value);
-	}
-	
-	public String getPercent() {
-		return percent.getAttribute("value");
-	}
-	public void setPercent(String value) {
-		percent.sendKeys(value);
-	}
-	
-	public String getTerm() {
-		return term.getAttribute("value");
-	}
-	public void setTerm(String value) {
-		term.sendKeys(value);
-	}
-	
+	public String getPercent() { return getInputValue(percent); }
+	public void setPercent(String value) { setInputValue(percent, value); }
+
+	public String getTerm() { return getInputValue(term); }
+	public void setTerm(String value) { setInputValue(term, value); }
+
 	public void populate(String amount, String percent, String term) {
 		setAmount(amount);
 		setPercent(percent);
@@ -158,15 +137,12 @@ public class DepositPage {
 		calculateBtn.click();
 	}
 
-	public String getEndDate() {
-		return endDate.getAttribute("value");
-	}
-
-	public String getInterest() {
-		return interest.getAttribute("value");
-	}
-
-	public String getIncome() {
-		return income.getAttribute("value");
+	public String getEndDate()  { return getInputValue(endDate); }
+	public String getInterest() { return getInputValue(interest); }
+	public String getIncome()   { return getInputValue(income); }
+	
+	public SettingsPage openSettings() {
+		settings.click();
+		return new SettingsPage(driver);
 	}
 }

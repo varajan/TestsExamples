@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import utilities.Constants;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 	@FindBy(id = "login")
 	public WebElement loginFld;
 	
@@ -20,10 +20,8 @@ public class LoginPage {
 	@FindBy(id = "errorMessage")
 	public WebElement errorMessage;
 	
-	private WebDriver driver;
-	
 	public LoginPage(WebDriver driver) {
-		this.driver = driver;
+		super(driver);
 		PageFactory.initElements(this.driver, this);
 	}
 	
