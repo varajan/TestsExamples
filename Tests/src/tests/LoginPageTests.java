@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import utilities.Constants;
 
 public class LoginPageTests extends  BaseTest{
-
 	@Test
 	public void positiveLoginTest() {
 		depositPage = loginPage.login();

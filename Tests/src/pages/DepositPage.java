@@ -3,10 +3,12 @@ package pages;
 import java.text.ParseException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import utilities.Dates;
 
@@ -59,6 +61,8 @@ public class DepositPage extends BasePage {
 	public DepositPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(this.driver, this);
+		
+		driverWait().until(ExpectedConditions.presenceOfElementLocated(By.id("amount")));
 	}
 
 	public String getCurrency() {
