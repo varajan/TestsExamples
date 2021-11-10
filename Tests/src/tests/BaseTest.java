@@ -13,6 +13,7 @@ public class BaseTest {
 	protected LoginPage loginPage;
 	protected DepositPage depositPage;
 	protected SettingsPage settingsPage;
+	protected HistoryPage historyPage;
 	
 	@Before
 	@BeforeEach

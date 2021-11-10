@@ -10,7 +10,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.google.common.collect.Lists;
+
+import utilities.Constants;
 import utilities.Dates;
+import utilities.Strings;
 
 public class DepositPage extends BasePage {
 	@FindBy(id = "amount")
@@ -88,7 +92,7 @@ public class DepositPage extends BasePage {
 		}
 	}
 	
-	public String getStartDate() {
+	public String getStartDate() throws ParseException {
 		return getDay() + "/" + getMonth() + "/" + getYear();
 	}
 	
@@ -110,10 +114,10 @@ public class DepositPage extends BasePage {
 	public void setDay(String value) { setSelectValue(day, value); }
 	public List<String> getDays(){ return getSelectOptions(day); }
 
-	public String getMonth() {
+	public String getMonth() throws ParseException {
 		String mmmm = getSelectValue(month);
-		String mm = String.format("%02d", mmmm);
-		return mm;
+		int mm = Dates.getMonthNumberFromName(mmmm);
+		return String.format("%02d", mm);
 	}
 	public void setMonth(String value) { setSelectValue(month, value); }
 	public List<String> getMonths(){ return getSelectOptions(month); }
@@ -131,22 +135,51 @@ public class DepositPage extends BasePage {
 	public String getTerm() { return getInputValue(term); }
 	public void setTerm(String value) { setInputValue(term, value); }
 
-	public void populate(String amount, String percent, String term) {
+	public DepositPage populate(String amount, String percent, String term) {
 		setAmount(amount);
 		setPercent(percent);
 		setTerm(term);
+		
+		return this;
 	}
 	
-	public void calculate() {
+	public DepositPage calculate() {
 		calculateBtn.click();
+		this.driverWait().until(ExpectedConditions.elementToBeClickable(calculateBtn));
+
+		return this;
 	}
 
+	public List<String> getData() throws ParseException{
+		return getData(Constants.DefaultDateFormat, Constants.DefaultNumberFormat);
+	}
+
+	public List<String> getData(String dateFormat, String numberFormat) throws ParseException{
+		return Lists.newArrayList(
+			Strings.formatNumber(getAmount(), numberFormat),
+			getPercent() + "%",
+			getTerm(),
+			getFinYear(),
+			Dates.formatDate(getStartDate(), dateFormat),
+			getEndDate(),
+			getInterest(),
+			getIncome()
+		);
+	}
+	
 	public String getEndDate()  { return getInputValue(endDate); }
 	public String getInterest() { return getInputValue(interest); }
 	public String getIncome()   { return getInputValue(income); }
 	
 	public SettingsPage openSettings() {
 		settings.click();
+		
 		return new SettingsPage(driver);
+	}
+	
+	public HistoryPage openHistory() {
+		history.click();
+		
+		return new HistoryPage(driver);
 	}
 }

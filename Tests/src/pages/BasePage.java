@@ -54,6 +54,7 @@ public class BasePage {
 	}
 
 	protected void setInputValue(WebElement element, String value) {
+		element.clear();
 		element.sendKeys(value);
 	}
 }

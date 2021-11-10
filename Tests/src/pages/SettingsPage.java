@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import utilities.Constants;
+
 public class SettingsPage extends BasePage {
 	@FindBy(id = "dateFormat")
 	private WebElement dateFormat;
@@ -43,6 +45,12 @@ public class SettingsPage extends BasePage {
 	public void setCurrency(String value) { setSelectValue(currency, value); }
 	public List<String> getCurrencies(){ return getSelectOptions(currency); }
 
+	public DepositPage resetToDefault() {
+		set(Constants.DefaultDateFormat, Constants.DefaultNumberFormat, Constants.DefaultCurrency);
+
+		return save();
+	}
+	
 	public SettingsPage set(String dateFormat, String numberFormat, String currency) {
 		setDateFormat(dateFormat);
 		setNumberFormat(numberFormat);
