@@ -80,24 +80,34 @@ namespace Tests.Pages
 
             return this;
 
-            string FormatNumber(string value, string format)
+            static string FormatNumber(string value, string format)
             {
-                var result = Math.Round(decimal.Parse(value), 2, MidpointRounding.AwayFromZero)
-                    .ToString("N", CultureInfo.InvariantCulture);
+                NumberFormatInfo formatInfo = new();
 
                 switch (format)
                 {
+                    case "123,456,789.00":
+                        formatInfo.NumberDecimalSeparator = ".";
+                        formatInfo.NumberGroupSeparator = ",";
+                        break;
+
                     case "123.456.789,00":
-                        return result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');
+                        formatInfo.NumberDecimalSeparator = ",";
+                        formatInfo.NumberGroupSeparator = ".";
+                        break;
 
                     case "123 456 789.00":
-                        return result.Replace(',', ' ');
+                        formatInfo.NumberDecimalSeparator = ".";
+                        formatInfo.NumberGroupSeparator = " ";
+                        break;
 
                     case "123 456 789,00":
-                        return result.Replace(',', ' ').Replace('.', ',');
+                        formatInfo.NumberDecimalSeparator = ",";
+                        formatInfo.NumberGroupSeparator = " ";
+                        break;
                 }
 
-                return result;
+                return decimal.Parse(value).ToString("N2", formatInfo);
             }
         }
 
