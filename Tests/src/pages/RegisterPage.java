@@ -1,13 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import utilities.Constants;
 
 public class RegisterPage extends BasePage {
 	@FindBy(id = "login")
@@ -39,13 +35,10 @@ public class RegisterPage extends BasePage {
 		this.password1.sendKeys(password1);
 		this.password2.sendKeys(password2);
 		this.register.click();
+		
+		waitForElementVisible(errorMessage);
 
-		driverWait().until(ExpectedConditions.presenceOfElementLocated(By.id("errorMessage")));
 		return this.errorMessage.getText();
-	}
-	
-	public LoginPage register() {
-		return register(Constants.Login, Constants.Email, Constants.Password);
 	}
 	
 	public LoginPage register(String login, String email, String password) {
@@ -55,7 +48,7 @@ public class RegisterPage extends BasePage {
 		this.password2.sendKeys(password);
 		this.register.click();
 		
-		driverWait().until(ExpectedConditions.alertIsPresent());
+		waitForAlert();
 		driver.switchTo().alert().accept();
 		
 		return new LoginPage(driver);

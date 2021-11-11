@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -120,7 +120,6 @@ public class DepositPageTests extends BaseTest {
 	    return Stream.of(
 			Arguments.of("100000", "100000"),
 			Arguments.of("99999.99", "99999.99"),
-			Arguments.of("99999.991", "0"),
 			Arguments.of("100001", "0")
 		);
 	}

@@ -9,40 +9,39 @@ import utilities.Constants;
 
 public class LoginPage extends BasePage {
 	@FindBy(id = "login")
-	public WebElement loginFld;
+	private WebElement loginFld;
 	
 	@FindBy(id = "password")
-	public WebElement passwordFld;
+	private WebElement passwordFld;
 	
 	@FindBy(id = "loginBtn")
-	public WebElement loginBtn;
+	private WebElement loginBtn;
 	
 	@FindBy(id = "errorMessage")
-	public WebElement errorMessage;
+	private WebElement errorMessage;
 
 	@FindBy(xpath = "//div[text() = 'Register']")
 	private WebElement register;
-	
+
 	public LoginPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(this.driver, this);
 	}
 
+	public RemindPasswordView remindPasswordView = new RemindPasswordView(driver);
+	
 	public RegisterPage openRegistration() {
 		register.click();
 		
 		return new RegisterPage(driver);
 	}
 	
-	public LoginPage deleteAllUsers() {
-		driver.get(Constants.BaseUrl + "/Register/DeleteAllUsers");
-		driver.get(Constants.BaseUrl);
-
-		return this;
-	}
-	
 	public DepositPage login() {
 		return login(Constants.Login, Constants.Password);
+	}
+
+	public DepositPage login(String login) {
+		return login(login, Constants.Password);
 	}
 	
 	public DepositPage login(String login, String password) {
@@ -51,5 +50,22 @@ public class LoginPage extends BasePage {
 		loginBtn.click();
 
 		return new DepositPage(driver);
+	}
+
+	public LoginPage set(String login, String password) {
+		loginFld.sendKeys(login);
+		passwordFld.sendKeys(password);
+		
+		return this;
+	}
+	
+	public LoginPage clickLogin() {
+		loginBtn.click();
+
+		return this;
+	}
+	
+	public String getError() {
+		return errorMessage.getText();
 	}
 }

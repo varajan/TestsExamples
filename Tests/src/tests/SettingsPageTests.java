@@ -1,13 +1,14 @@
 package tests;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,11 +17,17 @@ import com.google.common.collect.Lists;
 
 import utilities.Constants;
 import utilities.Dates;
+import utilities.Users;
 
 public class SettingsPageTests extends BaseTest {
 	@BeforeEach
-	public void openSettings() {
-		settingsPage = loginPage.login().openSettings();
+	public void openSettings() throws IOException {
+		String user = "settings";
+
+		Users.delete(user);
+		Users.register(user);
+
+		settingsPage = loginPage.login(user).openSettings();
 	}
 
 	@Test

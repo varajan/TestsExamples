@@ -3,12 +3,10 @@ package pages;
 import java.text.ParseException;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.google.common.collect.Lists;
 
@@ -66,7 +64,7 @@ public class DepositPage extends BasePage {
 		super(driver);
 		PageFactory.initElements(this.driver, this);
 		
-		driverWait().until(ExpectedConditions.presenceOfElementLocated(By.id("amount")));
+		waitForElementVisible(amount);
 	}
 
 	public String getCurrency() {
@@ -145,7 +143,7 @@ public class DepositPage extends BasePage {
 	
 	public DepositPage calculate() {
 		calculateBtn.click();
-		this.driverWait().until(ExpectedConditions.elementToBeClickable(calculateBtn));
+		waitForElementToBeClickable(calculateBtn);
 
 		return this;
 	}

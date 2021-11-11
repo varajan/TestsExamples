@@ -2,12 +2,15 @@ package tests;
 
 import java.util.stream.Stream;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import utilities.Constants;
+import utilities.Result;
 
 public class LoginPageTests extends  BaseTest{
 	@Test
@@ -31,10 +34,38 @@ public class LoginPageTests extends  BaseTest{
 	@MethodSource("credentials")
 	public void negativeLoginTest(String login, String password)
     {
-		loginPage.loginFld.sendKeys(login);
-		loginPage.passwordFld.sendKeys(password);
-		loginPage.loginBtn.click();
+		loginPage.set(login, password).clickLogin();
 		
-		Assert.assertEquals("Incorrect user name or password!", loginPage.errorMessage.getText());
+		Assert.assertEquals("Incorrect user name or password!", loginPage.getError());
     }
+	
+	@Test
+	public void openCloseRemindPasswordTest() {
+		loginPage.remindPasswordView.open();
+		loginPage.remindPasswordView.close();
+
+		Assert.assertFalse(loginPage.remindPasswordView.isOpened());
+	}
+	
+	static Stream<Arguments> remindPassword(){
+	    return Stream.of(
+ 	       Arguments.of(false, "", "Invalid email."),
+ 	       Arguments.of(false, "@invalid.email", "Invalid email."),
+ 	       Arguments.of(false, "@invalid@email", "Invalid email."),
+ 	       Arguments.of(false, "invalid.email@", "Invalid email."),
+ 	       Arguments.of(false, "valid.email@test", "No user was found."),
+ 	       Arguments.of(true, "Test@test.com", "Email with instructions was sent to test@test.com")
+		);
+	}
+
+	@ParameterizedTest
+	@MethodSource("remindPassword")
+	public void negativeRemindPasswordTest(boolean isSuccessful, String email, String error) {
+		Result sendReminder = loginPage.remindPasswordView.open().send(email);
+		
+		Assertions.assertAll(
+			() -> Assert.assertEquals(isSuccessful, sendReminder.isSuccessful()),
+			() -> Assert.assertEquals(error, sendReminder.getMessage())
+		);
+	}
 }

@@ -1,6 +1,7 @@
 package utilities;
 
 public class Constants {
+	public static int WaitTimeout = 3;
 	public static String BaseUrl = "http://localhost:64177";
 	
 	public static String Login = "test";

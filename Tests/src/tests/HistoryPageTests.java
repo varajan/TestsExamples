@@ -1,24 +1,30 @@
 package tests;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import utilities.Users;
+
 public class HistoryPageTests extends BaseTest {
-	@Before
 	@BeforeEach
-	public void openDepositPage() {
-		depositPage = loginPage.login().openSettings().resetToDefault().openHistory().clear().openCalculator();
+	public void openDepositPage() throws IOException {
+		String user = "settings";
+
+		Users.delete(user);
+		Users.register(user);
+
+		depositPage = loginPage.login(user);
 	}
 	
 	@Test
@@ -66,7 +72,6 @@ public class HistoryPageTests extends BaseTest {
         
         Assert.assertEquals(expectedHistory, historyPage.getHistory());
     }
-
 
 	static Stream<Arguments> settings(){
 	    return Stream.of(
