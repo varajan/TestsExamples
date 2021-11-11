@@ -22,7 +22,6 @@ namespace Tests.API
                 ? new HttpRequestMessage(method, $"{Defaults.BaseUrl}/{url}")
                 : new HttpRequestMessage(method, $"{Defaults.BaseUrl}/{url}") { Content = content };
 
-            //var rr = Client.SendAsync(request).Result;
             Client.SendAsync(request).Wait();
         }
     }
