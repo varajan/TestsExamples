@@ -2,7 +2,7 @@ import unittest
 
 from Constants import Constants
 from pages.LoginPage import LoginPage
-from tests.BaseTestCase import BaseTestCase
+from tests.BaseTest import BaseTestCase
 
 
 class LoginPageTests(BaseTestCase):
@@ -15,9 +15,9 @@ class LoginPageTests(BaseTestCase):
 
     def negative(self, login, password):
         login_page = LoginPage(self.driver)
-        login_page.login(login, password)
+        error = login_page.login(login, password)
 
-        self.assertEqual(login_page.get_error(), "Incorrect user name or password!")
+        self.assertEqual(error, "Incorrect user name or password!")
 
     def positive(self, login, password):
         login_page = LoginPage(self.driver)

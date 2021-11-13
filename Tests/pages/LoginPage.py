@@ -3,6 +3,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from Constants import Constants
 from pages.BasePage import BasePage
+from pages.DepositPage import DepositPage
 
 
 class LoginPage(BasePage):
@@ -10,9 +11,6 @@ class LoginPage(BasePage):
         super().__init__(driver)
         self.driver.get(Constants.URL + "/Login")
         sleep(1)
-
-    def find_element(self, *locator):
-        return self.driver.find_element(*locator)
 
     def login(self, login, password):
         self.find_element(By.ID, "login").click()
@@ -22,5 +20,7 @@ class LoginPage(BasePage):
         self.find_element(By.ID, "loginBtn").click()
         sleep(1)
 
-    def get_error(self):
-        return self.find_element(By.ID, "errorMessage").text
+        if self.element_exists(By.ID, "errorMessage"):
+            return self.find_element(By.ID, "errorMessage").text
+
+        return DepositPage(self.driver)
