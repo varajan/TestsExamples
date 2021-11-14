@@ -12,6 +12,12 @@ class DepositPage(BasePage):
         super().__init__(driver)
         sleep(1)
 
+    def open_settings(self):
+        from pages.SettingsPage import SettingsPage
+        self.find_element(By.XPATH, "//div[text() = 'Settings']").click()
+        return SettingsPage(self.driver)
+
+    def get_currency(self): return self.find_element(By.ID, "currency").text
     def get_amount(self): return self.get_input_value("amount")
     def set_amount(self, amount): self.set_input_value(amount, "amount")
 
@@ -39,14 +45,14 @@ class DepositPage(BasePage):
     def set_start_date_year(self, value): self.select_in_dropdown("year", value)
 
     def set_start_date(self, date):
-        self.get_select("day").select_by_visible_text(str(date.year))
-        self.get_select("month").select_by_visible_text(calendar.month_name[date.month])
-        self.get_select("year").select_by_visible_text(str(date.day))
+        self.select_in_dropdown("day", str(date.year))
+        self.select_in_dropdown("month", calendar.month_name[date.month])
+        self.select_in_dropdown("year", str(date.day))
 
     def get_start_date(self):
-        d = self.get_select("day").first_selected_option.text
-        m = list(calendar.month_name).index(self.get_select("month").first_selected_option.text)
-        y = self.get_select("year").first_selected_option.text
+        d = self.get_selected_option("day")
+        m = list(calendar.month_name).index(self.get_selected_option("month"))
+        y = self.get_selected_option("year")
 
         return datetime(int(y), m, int(d)).date()
 

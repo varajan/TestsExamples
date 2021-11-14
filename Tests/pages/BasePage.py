@@ -17,6 +17,7 @@ class BasePage(object):
     def find_element(self, *locator): return self.driver.find_element(*locator)
 
     def get_select(self, select_id): return Select(self.find_element(By.ID, select_id))
+    def get_selected_option(self, select_id): return self.get_select(select_id).first_selected_option.text
     def get_select_options(self, select_id): return [option.text for option in self.get_select(select_id).options]
     def select_in_dropdown(self, select_id, value): self.get_select(select_id).select_by_visible_text(value)
 
