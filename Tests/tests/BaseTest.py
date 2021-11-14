@@ -7,7 +7,6 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.service = Service("./../chromedriver.exe")
         self.driver = webdriver.Chrome(service=self.service)
-        self.driver.maximize_window()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         self.driver.quit()

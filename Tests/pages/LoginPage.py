@@ -13,10 +13,8 @@ class LoginPage(BasePage):
         sleep(1)
 
     def login(self, login, password):
-        self.find_element(By.ID, "login").click()
-        self.find_element(By.ID, "login").send_keys(login)
-        self.find_element(By.ID, "password").click()
-        self.find_element(By.ID, "password").send_keys(password)
+        self.set_input_value(login, "login")
+        self.set_input_value(password, "password")
         self.find_element(By.ID, "loginBtn").click()
         sleep(1)
 
