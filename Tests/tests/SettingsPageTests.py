@@ -4,13 +4,15 @@ from datetime import datetime
 from Constants import Constants
 from pages.LoginPage import LoginPage
 from tests.BaseTest import BaseTestCase
-from utils.DateFormatter import DateFormatter
+from utils import API
+from utils.Formatter import Formatter
 
 
 class SettingsPageTests(BaseTestCase):
     def setUp(self):
         super().setUp()
-        self.settings_page = LoginPage(self.driver).login(Constants.Login, Constants.Password).open_settings()
+        API.Users.create("Settings")
+        self.settings_page = LoginPage(self.driver).login("Settings").open_settings()
 
     def test_logout(self):
         self.settings_page.logout()
@@ -46,7 +48,7 @@ class SettingsPageTests(BaseTestCase):
     def test_change_date_format_4(self): self.change_date_format("MM dd yyyy")
 
     def change_date_format(self, date_format):
-        end_date = DateFormatter.format_date(datetime.now().date(), date_format)
+        end_date = Formatter.format_date(datetime.now().date(), date_format)
         deposit_page = self.settings_page.set_date_format(date_format).save()
 
         self.assertEqual(end_date, deposit_page.get_end_date())
@@ -66,9 +68,9 @@ class SettingsPageTests(BaseTestCase):
         self.settings_page.set_currency("€ - euro")
         self.settings_page = self.settings_page.cancel().open_settings()
 
-        self.assertEqual("123,456,789.00", self.settings_page.get_number_format())
-        self.assertEqual("dd/MM/yyyy", self.settings_page.get_date_format())
-        self.assertEqual("$ - US dollar", self.settings_page.get_currency())
+        self.assertEqual(Constants.NUMBER_FORMAT, self.settings_page.get_number_format())
+        self.assertEqual(Constants.DATE_FORMAT, self.settings_page.get_date_format())
+        self.assertEqual(Constants.CURRENCY, self.settings_page.get_currency())
 
     if __name__ == '__main__':
         unittest.main()

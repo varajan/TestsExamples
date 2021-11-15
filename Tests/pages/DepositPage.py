@@ -5,6 +5,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 
 from pages.BasePage import BasePage
+from utils.Formatter import Formatter
 
 
 class DepositPage(BasePage):
@@ -16,6 +17,11 @@ class DepositPage(BasePage):
         from pages.SettingsPage import SettingsPage
         self.find_element(By.XPATH, "//div[text() = 'Settings']").click()
         return SettingsPage(self.driver)
+
+    def open_history(self):
+        from pages.HistoryPage import HistoryPage
+        self.find_element(By.XPATH, "//div[text() = 'History']").click()
+        return HistoryPage(self.driver)
 
     def get_currency(self): return self.find_element(By.ID, "currency").text
     def get_amount(self): return self.get_input_value("amount")
@@ -45,9 +51,9 @@ class DepositPage(BasePage):
     def set_start_date_year(self, value): self.select_in_dropdown("year", value)
 
     def set_start_date(self, date):
-        self.select_in_dropdown("day", str(date.year))
+        self.select_in_dropdown("year", str(date.year))
         self.select_in_dropdown("month", calendar.month_name[date.month])
-        self.select_in_dropdown("year", str(date.day))
+        self.select_in_dropdown("day", str(date.day))
 
     def get_start_date(self):
         d = self.get_selected_option("day")
@@ -66,4 +72,18 @@ class DepositPage(BasePage):
         self.set_term(term)
         self.set_fin_year(fin_year)
         self.find_element(By.ID, "calculateBtn").click()
-        # wait for enabled
+        self.wait_for_clickable(3, (By.ID, "calculateBtn"))
+
+        return self
+
+    def get_data(self, date_format, number_format):
+        return [
+            Formatter.format_number(self.get_amount(), number_format),
+            self.get_percent() + "%",
+            self.get_term(),
+            self.get_fin_year(),
+            Formatter.format_date(self.get_start_date(), date_format),
+            self.get_end_date(),
+            self.get_interest(),
+            self.get_income()
+        ]

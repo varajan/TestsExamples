@@ -1,6 +1,8 @@
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage(object):
@@ -15,6 +17,7 @@ class BasePage(object):
         return True
 
     def find_element(self, *locator): return self.driver.find_element(*locator)
+    def find_elements(self, *locator): return self.driver.find_elements(*locator)
 
     def get_select(self, select_id): return Select(self.find_element(By.ID, select_id))
     def get_selected_option(self, select_id): return self.get_select(select_id).first_selected_option.text
@@ -28,3 +31,19 @@ class BasePage(object):
         control.click()
         control.clear()
         control.send_keys(value)
+
+    def wait(self, seconds): return WebDriverWait(self.driver, seconds)
+    def wait_for_clickable(self, seconds, mark):  self.wait(seconds).until(EC.element_to_be_clickable(mark))
+
+    def wait_for_alert(self, seconds):
+        try:
+            self.wait(seconds).until(EC.alert_is_present())
+            return self.driver.switch_to.alert
+        except Exception:
+            return None
+
+    def switch_to_frame(self, frame_id):
+        self.driver.switch_to.frame(self.find_element(By.ID, frame_id))
+
+    def switch_to_default_frame(self):
+        self.driver.switch_to.default_content()

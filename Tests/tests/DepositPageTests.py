@@ -2,7 +2,6 @@ import calendar
 import unittest
 from datetime import datetime, timedelta
 
-from Constants import Constants
 from pages.LoginPage import LoginPage
 from tests.BaseTest import BaseTestCase
 
@@ -10,7 +9,7 @@ from tests.BaseTest import BaseTestCase
 class DepositPageTests(BaseTestCase):
     def setUp(self):
         super().setUp()
-        self.deposit_page = LoginPage(self.driver).login(Constants.Login, Constants.Password)
+        self.deposit_page = LoginPage(self.driver).login()
 
     def test_default_fin_year_value_is_365(self):
         self.assertEqual(self.deposit_page.get_fin_year(), "365")
