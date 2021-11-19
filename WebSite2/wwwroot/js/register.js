@@ -8,22 +8,17 @@ Register = function () {
     var password1 = document.getElementById('password1').value;
     var password2 = document.getElementById('password2').value;
 
-    if (password1 !== password2) {
-        ShowError("Passwords are different!");
-        return;
-    }
-
     $.ajax({
         type: 'POST',
-        // url: '@Url.Action("Register", "Register")',
-        data: { 'login': login, 'password': password1, 'email': email },
+        url: 'api/register',
+        data: { 'login': login, 'password': password1, 'password2': password2, 'email': email },
         dataType: 'json',
         success: function (response) {
             alert("Registration was successful.");
-            // window.location.href = window.location = '@Url.Action("Index", "Login")';
+            window.location.href = '/';
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            ShowError(errorThrown);
+        error: function (error) {
+            ShowError(error.responseText);
         }
     });
 }

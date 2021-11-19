@@ -5,7 +5,7 @@ var currency = document.getElementById('currency');
 function Save() {
     $.ajax({
         type: 'POST',
-        url: '@Url.Action("Save", "Settings")',
+        url: 'api/settings/save',
         data: {
             'login': getCookie('login'),
             'dateFormat': dateFormat.options[dateFormat.selectedIndex].textContent,
@@ -32,7 +32,7 @@ function select(dropdown, value) {
 function Get() {
     $.ajax({
         type: 'POST',
-        url: '@Url.Action("Get", "Settings")',
+        url: 'api/settings',
         dataType: 'json',
         data: {
             'login': getCookie('login')

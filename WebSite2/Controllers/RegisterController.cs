@@ -7,9 +7,14 @@ namespace WebSite2.Controllers
     [Route("api/[controller]")]
     public class RegisterController : Controller
     {
-        [HttpPost("Register")]
+        [HttpPost]
         public IActionResult Register(UserDto dto)
         {
+            if (dto.Password != dto.Password2)
+            {
+                return Conflict("Passwords are different.");
+            }
+
             if (!dto.Email.IsValidEmail())
             {
                 return Conflict("Invalid email.");

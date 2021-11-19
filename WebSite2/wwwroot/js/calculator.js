@@ -33,7 +33,7 @@ CalculateDate = function () {
 
     $.ajax({
         type: 'GET',
-        // url: '@Url.Action("Date", "Settings")',
+        url: 'api/settings/date',
         data: { 'date': new Date(year, month, day + days).yyyymmdd(), 'login': getCookie('login') },
         dataType: 'json',
         success: function (response) {
@@ -45,7 +45,7 @@ CalculateDate = function () {
 async function SetNumber(id, number) {
     $.ajax({
         type: 'GET',
-        // url: '@Url.Action("Number", "Settings")',
+        url: 'api/settings/number',
         data: { 'number': number, 'login': getCookie('login') },
         dataType: 'json',
         success: function (response) {
@@ -132,7 +132,7 @@ async function Save() {
 
     $.ajax({
         type: 'POST',
-        // url: '@Url.Action("Save", "History")',
+        url: 'api/history/save',
         data: {
             'login': getCookie('login'),
             'amount': amount,
@@ -188,7 +188,7 @@ SetYear = function (year) {
 SetCurrency = function () {
     $.ajax({
         type: 'GET',
-        // url: '@Url.Action("Currency", "Settings")',
+        url: 'api/settings/currency',
         dataType: 'json',
         data: { 'login': getCookie('login') },
         success: function (response) {

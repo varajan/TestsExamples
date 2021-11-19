@@ -12,7 +12,7 @@ Login = function () {
     data: { 'login': login, 'password': password },
     success: function (response) {
       createCookie("login", login, 1);
-      window.location.href = window.location = 'Calculator';
+      window.location.href = 'Calculator';
     },
     error: function () {
       ShowError("Incorrect user name or password!");

@@ -37,22 +37,28 @@ namespace WebSite2
 
         public static decimal ParseNumber(this string number, string login)
         {
-            //switch (Settings.Get(login).NumberFormat)
-            //{
-            //    case "123,456,789.00":
-            //        return number.Replace(",", "").Replace('.', ',').AsDecimal();
+            var result = "0";
 
-            //    case "123.456.789,00":
-            //        return number.Replace(".", "").AsDecimal();
+            switch (Settings.Get(login).NumberFormat)
+            {
+                case "123,456,789.00":
+                    result = number.Replace(",", "").Replace('.', ',');
+                    break;
 
-            //    case "123 456 789.00":
-            //        return number.Replace(" ", "").Replace('.', ',').AsDecimal();
+                case "123.456.789,00":
+                    result = number.Replace(".", "");
+                break;
 
-            //    case "123 456 789,00":
-            //        return number.Replace(" ", "").AsDecimal();
-            //}
+                case "123 456 789.00":
+                    result = number.Replace(" ", "").Replace('.', ',');
+                    break;
 
-            return 0;
+                case "123 456 789,00":
+                    result = number.Replace(" ", "");
+                    break;
+            }
+
+            return Convert.ToDecimal(result);
         }
 
         public static string FormatNumber(this decimal number, string login)
