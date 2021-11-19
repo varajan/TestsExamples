@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -70,12 +69,12 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Register", "Register")',
+            // url: '@Url.Action("Register", "Register")',
             data: { 'login': login, 'password': password1, 'email': email },
             dataType: 'json',
             success: function (response) {
                 alert("Registration was successful.");
-                window.location.href = window.location = '@Url.Action("Index", "Login")';
+                // window.location.href = window.location = '@Url.Action("Index", "Login")';
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 ShowError(errorThrown);

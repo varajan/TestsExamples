@@ -3,12 +3,7 @@
 namespace WebSite2.Controllers
 {
     [Route("api/[controller]")]
-    public class DepositController : Controller
-    {
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
-    }
+	public class DepositController : Controller
+	{
+	}
 }

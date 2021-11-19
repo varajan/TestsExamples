@@ -1,7 +1,6 @@
 ﻿@page
-@model WebSite2.Pages.IndexModel
+@model WebSite2.Pages.Shared.RegisterModel
 @{
-    ViewData["Title"] = "Home page";
 }
 
 <!DOCTYPE html>
@@ -12,9 +11,7 @@
 </head>
 <body>
     <div align="center">
-        <div style="width: 500px; height: 270px; border: double">
-            <div style="text-align: right; cursor: pointer" onclick="window.location='/Register'">Register</div>
-
+        <div style="width:500px; height:270px; border:double">
             <table>
                 <tr>
                     <th class="user">Login:</th>
@@ -23,26 +20,34 @@
                     </td>
                 </tr>
                 <tr>
+                    <th class="email">Email:</th>
+                    <td>
+                        <input id="email" />
+                    </td>
+                </tr>
+                <tr>
                     <th class="pass">Password:</th>
                     <td>
-                        <input type="password" id="password" />
+                        <input type="password" id="password1" />
+                    </td>
+                    <td style="width: 100px">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Confirm password:</th>
+                    <td>
+                        <input type="password" id="password2" />
                     </td>
                     <td style="width: 100px">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" align="right" style="width: 100px" id="buttons">
-                        <button onclick="Login()" title="Login" id="loginBtn">Login</button>
-                        <button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind password</button>
+                        <button onclick="Register()" title="Register" id="register">Register</button>
                     </td>
                 </tr>
                 <tr>
                     <th style="color: red" id="errorMessage" colspan="3"></th>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <iframe id="remindPasswordView" hidden src="RemindPassword.html" style="height: 130px"></iframe>
-                    </td>
                 </tr>
             </table>
         </div>
@@ -53,4 +58,4 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/cookies.js" asp-append-version="true"></script>
-<script src="~/js/login.js" asp-append-version="true"></script>
+<script src="~/js/register.js" asp-append-version="true"></script>

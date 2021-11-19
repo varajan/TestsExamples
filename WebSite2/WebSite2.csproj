@@ -5,17 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Shared\RemindPassword.html" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.HelpPage" Version="5.2.7" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Pages\Shared\RemindPassword.html">
+    <Content Update="wwwroot\RemindPassword.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115.5" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,31 @@
+﻿@page
+@model WebSite2.Pages.HistoryModel
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div align="center">
+        <div style="width:500px; height:270px; border:double">
+
+            <div style="text-align: right; cursor: pointer" onclick="window.location = 'Deposit'">Calculator</div>
+
+            <table id="history">
+                <tr class="header"> <th>Amount</th> <th>%</th> <th>Term</th> <th>Year</th> <th>From</th> <th>To</th> <th>Interest</th> <th>Income</th> </tr>
+            </table>
+            <button id="clear">Clear</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/cookies.js" asp-append-version="true"></script>
+<script src="~/js/history.js" asp-append-version="true"></script>
