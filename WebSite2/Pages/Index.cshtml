@@ -5,7 +5,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -33,6 +32,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="right" style="width: 100px" id="buttons">
+                        <button onclick="Login()" title="Login" id="loginBtn">Login</button>
+                        <button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind password</button>
                     </td>
                 </tr>
                 <tr>
@@ -49,46 +50,7 @@
 </body>
 </html>
 
-<script type="text/javascript">
-    RemindPassword = function () {
-        document.getElementById('remindPasswordView').hidden = false;
-    }
-
-    Login = function () {
-        var login = document.getElementById('login').value;
-        var password = document.getElementById('password').value;
-
-        $.ajax({
-            type: 'POST',
-            url: 'api/login/validate',
-            data: { 'login': login, 'password': password },
-            success: function (response) {
-                createCookie("login", login, 1);
-                window.location.href = window.location = 'Calculator';
-            },
-            error: function () {
-                ShowError("Incorrect user name or password!");
-            }
-        });
-    }
-
-    ShowError = function (error) {
-        document.getElementById('errorMessage').textContent = error;
-    }
-
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-
-    window.onload = function () {
-        sleep(500).then(() => {
-            document.getElementById('buttons').insertAdjacentHTML('afterBegin',
-                '<button onclick="Login()" title="Login" id="loginBtn">Login</button>');
-
-            document.getElementById('buttons').insertAdjacentHTML('beforeEnd',
-                '<button onclick="RemindPassword()" title="remind" id="remindBtn" style="display:none">Remind password</button>');
-
-            sleep(500).then(() => document.getElementById('remindBtn').style.display = "initial");
-        });
-    }
-</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/cookies.js" asp-append-version="true"></script>
+<script src="~/js/login.js" asp-append-version="true"></script>
