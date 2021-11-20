@@ -25,7 +25,7 @@ namespace Tests.Tests
 
         [TestCase("Test", "password", "password", "some-email@test.com", "User with this login is already registered.")]
         [TestCase("User", "password", "password", "test@test.com", "User with this email is already registered.")]
-        [TestCase("User", "password", "passwort", "some-email@test.com", "Passwords are different!")]
+        [TestCase("User", "password", "passwort", "some-email@test.com", "Passwords are different.")]
         [TestCase("User", "password", "password", "@test.com", "Invalid email.")]
         [TestCase("User", "password", "password", "some.test.com", "Invalid email.")]
         [TestCase("User", "pass", "pass", "some@test.com", "Password is too short.")]
