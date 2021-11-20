@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ main, cs_nunit ]
   pull_request:
     branches: [ main, cs_nunit ]
 
@@ -20,7 +18,9 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-      - name: Install dependencies WebSite
+      - name: [WebSite] restore dependencies
         run: dotnet restore WebSite.sln
-      - name: Build WebSite
+      - name: [WebSite] Build
         run: dotnet build WebSite.sln --configuration Release --no-restore 
+      - name: [WebSite] Launch
+        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
