@@ -21,6 +21,8 @@ namespace Tests
                         UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
                         AcceptInsecureCertificates = true
                     };
+                    options.AddArgument("--log-level=3");
+
                     _driver = new ChromeDriver(options);
 
                     PageLoad = Defaults.PageLoad;
