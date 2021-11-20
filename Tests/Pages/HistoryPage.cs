@@ -6,6 +6,7 @@ namespace Tests.Pages
 {
     public class HistoryPage : BasePage
     {
+        public override string PageUrl => "History";
         public override string PageName => "History";
 
         private IWebElement CalculatorBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Calculator']"));

@@ -8,6 +8,7 @@ namespace Tests.Pages
 {
     public class SettingsPage : BasePage
     {
+        public override string PageUrl => "Settings";
         public override string PageName => "Settings";
 
         private SelectElement DateFormatSelect => new(WebDriver.Driver.FindElement(By.Id("dateFormat")));

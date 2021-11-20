@@ -16,7 +16,12 @@ namespace Tests
             {
                 if (_driver == null)
                 {
-                    _driver = new ChromeDriver();
+                    var options = new ChromeOptions
+                    {
+                        UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                        AcceptInsecureCertificates = true
+                    };
+                    _driver = new ChromeDriver(options);
 
                     PageLoad = Defaults.PageLoad;
                     ImplicitWait = Defaults.ImplicitWait;

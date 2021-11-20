@@ -2,7 +2,7 @@
 {
     public static class Defaults
     {
-        public static readonly string BaseUrl = "http://localhost:64177";
+        public static readonly string BaseUrl = "https://localhost:5001";
         public static readonly int PageLoad = 15;
         public static readonly int ImplicitWait = 3;
 

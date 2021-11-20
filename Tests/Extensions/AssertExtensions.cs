@@ -21,8 +21,6 @@ namespace Tests.Extensions
             actualDate.ShouldEqual(expectedDate, because);
         }
 
-        public static void ShouldBeEmpty(this IEnumerable<string> actual, string because = null) => Assert.AreEqual(0, actual.Count(), because);
-
         public static void ShouldEqual(this IEnumerable<string> actual, IEnumerable<string> expected, string because = null)
         {
             var error = string.Empty;

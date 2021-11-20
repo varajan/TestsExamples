@@ -1,12 +1,13 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+using Tests.Data;
 
 namespace Tests.Pages
 {
     public class LoginPage : BasePage
     {
+        public override string PageUrl => "";
         public override string PageName => "Login";
 
         private IWebElement LoginFld => WebDriver.Driver.FindElement(By.Id("login"));
@@ -27,7 +28,8 @@ namespace Tests.Pages
 
             try
             {
-                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(3)).Until(ExpectedConditions.AlertIsPresent());
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(_ => !string.IsNullOrEmpty(ErrorMessage) || CurrentPageName == PageName);
             }
             catch { /**/ }
         }

@@ -12,11 +12,11 @@ namespace Tests.Pages
 {
     public class DepositPage : BasePage
     {
+        public override string PageUrl => "Calculator";
         public override string PageName => "Deposit calculator";
 
         private IWebElement GetInput(string label) => WebDriver.Driver.FindElement(By.XPath($"//*[contains(text(), '{label}')]/..//input"));
         private IWebElement SettingsBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'Settings']"));
-        private IWebElement HistoryBtn => WebDriver.Driver.FindElement(By.XPath("//div[text() = 'History']"));
         private IWebElement CalculateBtn => WebDriver.Driver.FindElement(By.Id("calculateBtn"));
 
         private SelectElement DaySelect => new (WebDriver.Driver.FindElement(By.Id("day")));
@@ -95,7 +95,7 @@ namespace Tests.Pages
 
         public string FinancialYear
         {
-            get => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '365 days']/input")).Selected ? "365" : "360";
+            get => WebDriver.Driver.FindElement(By.XPath("//td[text() = '365 days']/input")).Selected ? "365" : "360";
             set => WebDriver.Driver.FindElement(By.XPath($"//td[text() = '{value} days']/input")).Click();
         }
 
@@ -135,13 +135,12 @@ namespace Tests.Pages
         }
 
         public void OpenSettings() => SettingsBtn.Click();
-        public void OpenHistory() => HistoryBtn.Click();
 
         public void Calculate()
         {
             CalculateBtn.Click();
 
-            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(5))
+            new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
                 .Until(ExpectedConditions.ElementToBeClickable(By.Id("calculateBtn")));
         }
     }
