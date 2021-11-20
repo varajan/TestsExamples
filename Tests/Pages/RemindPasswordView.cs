@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Tests.Data;
+using Tests.Extensions;
 
 namespace Tests.Pages
 {
@@ -37,7 +38,7 @@ namespace Tests.Pages
         public (bool IsSuccessful, string Message) Send(string email)
         {
             WebDriver.SwitchToFrame(_iframe);
-            EmailFld.SendKeys(email);
+            EmailFld.SetText(email);
             SendBtn.Click();
 
             try

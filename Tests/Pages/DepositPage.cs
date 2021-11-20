@@ -63,34 +63,19 @@ namespace Tests.Pages
         public string DepositAmount
         {
             get => GetInput("Deposit Amount").GetAttribute("value");
-            set
-            {
-                var input = GetInput("Deposit Amount");
-                input.Clear();
-                input.SendKeys(value);
-            }
+            set => GetInput("Deposit Amount").SetText(value);
         }
 
         public string RateOfInterest
         {
             get => GetInput("Rate of Interest").GetAttribute("value");
-            set
-            {
-                var input = GetInput("Rate of Interest");
-                input.Clear();
-                input.SendKeys(value);
-            }
+            set => GetInput("Rate of Interest").SetText(value);
         }
 
         public string InvestmentTerm
         {
             get => GetInput("Investment Term").GetAttribute("value");
-            set
-            {
-                var input = GetInput("Investment Term");
-                input.Clear();
-                input.SendKeys(value);
-            }
+            set => GetInput("Investment Term").SetText(value);
         }
 
         public string FinancialYear

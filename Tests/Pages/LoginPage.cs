@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Tests.Data;
+using Tests.Extensions;
 
 namespace Tests.Pages
 {
@@ -22,8 +23,8 @@ namespace Tests.Pages
         {
             Open();
 
-            LoginFld.SendKeys(login);
-            PasswordFld.SendKeys(password);
+            LoginFld.SetText(login);
+            PasswordFld.SetText(password);
             LoginBtn.Click();
 
             try

@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Tests.Data;
+using Tests.Extensions;
 
 namespace Tests.Pages
 {
@@ -23,10 +24,10 @@ namespace Tests.Pages
         {
             Open();
 
-            LoginFld.SendKeys(login);
-            EmailFld.SendKeys(email);
-            PasswordFld.SendKeys(password);
-            ConfirmFld.SendKeys(confirm ?? password);
+            LoginFld.SetText(login);
+            EmailFld.SetText(email);
+            PasswordFld.SetText(password);
+            ConfirmFld.SetText(confirm ?? password);
             RegisterBtn.Click();
 
             try
