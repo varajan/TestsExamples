@@ -10,9 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\RemindPassword.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Update="wwwroot\**\*"> <CopyToOutputDirectory>Always</CopyToOutputDirectory> </Content>
   </ItemGroup>
 
 </Project>
