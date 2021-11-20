@@ -26,5 +26,5 @@ jobs:
         run: dotnet restore Tests.sln
       - name: Tests - Build
         run: dotnet build Tests.sln --configuration Release --no-restore
-      - name: Test - Run
+      - name: Tests - Run
         run: dotnet test Tests.sln --no-restore --verbosity Minimal

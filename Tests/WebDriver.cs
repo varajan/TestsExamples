@@ -16,14 +16,19 @@ namespace Tests
             {
                 if (_driver == null)
                 {
+                    var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                    chromeDriverService.HideCommandPromptWindow = true;
+                    chromeDriverService.SuppressInitialDiagnosticInformation = true;
+
                     var options = new ChromeOptions
                     {
                         UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
                         AcceptInsecureCertificates = true
                     };
-                    options.AddArgument("--log-level=3");
+                    options.AddArgument("--silent");
+                    options.AddArgument("log-level=3");
 
-                    _driver = new ChromeDriver(options);
+                    _driver = new ChromeDriver(chromeDriverService, options);
 
                     PageLoad = Defaults.PageLoad;
                     ImplicitWait = Defaults.ImplicitWait;
