@@ -1,8 +1,6 @@
 name: .NET
 
-on:
-  pull_request:
-    branches: [ main, cs_nunit ]
+on: pull_request
 
 jobs:
   build:
@@ -18,15 +16,15 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-      - name: Install dependencies WebSite
+      - name: WebSite - restore dependencies
         run: dotnet restore WebSite.sln
-      - name: Build WebSite
-        run: dotnet build WebSite.sln --configuration Release --no-restore
-      - name: Run WebSite
-        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe
-      - name: Install dependencies Tests
+      - name: WebSite - Build
+        run: dotnet build WebSite.sln --configuration Release --no-restore 
+      - name: WebSite - Launch
+        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
+      - name: Tests - restore dependencies
         run: dotnet restore Tests.sln
-      - name: Build Tests
+      - name: Tests - Build
         run: dotnet build Tests.sln --configuration Release --no-restore
-      - name: Test
-        run: dotnet test Tests.sln --no-restore --verbosity normal
+      - name: Test - Run
+        run: dotnet test Tests.sln --no-restore --verbosity quiet

@@ -1,20 +1,16 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using System.Web.WebPages;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
 namespace WebSite.Controllers
 {
+    [Route("api/[controller]")]
     public class HistoryController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
-        public ActionResult Get(SaveHistoryDto dto)
+        public IActionResult Get(SaveHistoryDto dto)
         {
             var history = History.Get(dto.Login);
             history.Reverse();
@@ -24,30 +20,31 @@ namespace WebSite.Controllers
                 .Select(x =>
                 new[]
                 {
-                    x.Amount.AsDecimal().FormatNumber(x.Login),
+                    Convert.ToDecimal(x.Amount).FormatNumber(x.Login),
                     x.Percent + "%",
                     x.Days.ToString(),
                     x.Year,
                     x.StartDate.FormatDate(dto.Login),
                     x.EndDate.FormatDate(dto.Login),
-                    x.Interest.AsDecimal().FormatNumber(dto.Login),
-                    x.Income.AsDecimal().FormatNumber(dto.Login)
+                    Convert.ToDecimal(x.Interest).FormatNumber(dto.Login),
+                    Convert.ToDecimal(x.Income).FormatNumber(dto.Login)
                 });
-            return Json(result, JsonRequestBehavior.AllowGet);
+
+            return Json(result);
         }
 
-        [HttpPost]
-        public ActionResult Clear(SaveHistoryDto dto)
+        [HttpPost("clear")]
+        public IActionResult Clear(SaveHistoryDto dto)
         {
             History.Clear(dto.Login);
-            return Json("OK");
+            return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("save")]
         public ActionResult Save(SaveHistoryDto dto)
         {
             History.Add(dto);
-            return Json("OK");
+            return Ok();
         }
     }
 }
