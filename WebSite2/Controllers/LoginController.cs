@@ -7,10 +7,10 @@ namespace WebSite2.Controllers
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        [HttpPost("remind/{email}")]
+        [HttpPost("remind")]
         public IActionResult Remind(string email)
         {
-            email = email.ToLower();
+            email = email?.ToLower() ?? string.Empty;
 
             if (!email.IsValidEmail())
             {
