@@ -1,46 +1,42 @@
 ﻿using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
 namespace WebSite.Controllers
 {
+    [Route("api/[controller]")]
     public class SettingsController : Controller
     {
-        public ActionResult Index()
+        [HttpGet("date")]
+        public IActionResult Date(string date, string login)
         {
-            return View();
+            return Json(date.FormatDate(login));
         }
 
-        [HttpGet]
-        public ActionResult Date(string date, string login)
+        [HttpGet("number")]
+        public IActionResult Number(decimal number, string login)
         {
-            return Json(date.FormatDate(login), JsonRequestBehavior.AllowGet);
+            return Json(number.FormatNumber(login));
         }
 
-        [HttpGet]
-        public ActionResult Number(decimal number, string login)
+        [HttpGet("currency")]
+        public IActionResult Currency(string login)
         {
-            return Json(number.FormatNumber(login), JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public ActionResult Currency(string login)
-        {
-            return Json(Settings.Get(login).Currency.Split(' ').First(), JsonRequestBehavior.AllowGet);
+            return Json(Settings.Get(login).Currency.Split(' ').First());
         }
 
         [HttpPost]
-        public ActionResult Get(SettingsDto dto)
+        public IActionResult Get(SettingsDto dto)
         {
             return Json(Settings.Get(dto.Login));
         }
 
-        [HttpPost]
-        public ActionResult Save(SettingsDto dto)
+        [HttpPost("save")]
+        public IActionResult Save(SettingsDto dto)
         {
             Settings.Save(dto);
-            return Json("OK");
+            return Ok();
         }
     }
 }

@@ -1,44 +1,39 @@
-﻿using System.Net;
-using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
 namespace WebSite.Controllers
 {
+    [Route("api/[controller]")]
     public class LoginController : Controller
-	{
-		public ActionResult Index()
-		{
-			return View();
-		}
-
-        [HttpPost]
-        public ActionResult Remind(string email)
+    {
+        [HttpPost("remind")]
+        public IActionResult Remind(string email)
         {
-            email = email.ToLower();
+            email = email?.ToLower() ?? string.Empty;
 
             if (!email.IsValidEmail())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "Invalid email.");
+                return Conflict("Invalid email.");
             }
 
             if (!Users.Emails.Contains(email))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "No user was found.");
+                return Conflict("No user was found.");
             }
 
             return Json($"Email with instructions was sent to {email}");
         }
 
-        [HttpGet]
-        public ActionResult Validate(UserDto dto)
+        [HttpPost("validate")]
+        public IActionResult Validate(UserDto dto)
         {
             if (Users.IsValid(dto.Login, dto.Password))
             {
-                return Json("OK", JsonRequestBehavior.AllowGet);
+                return Ok();
             }
 
-            return HttpNotFound("Invalid credentials");
+            return NotFound("Invalid credentials");
         }
     }
 }
