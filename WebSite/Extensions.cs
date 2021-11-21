@@ -35,6 +35,8 @@ namespace WebSite
 
         public static int ToInt(this string value) => int.Parse(value);
 
+        public static decimal ToDecimal(this string number) => decimal.Parse(number.Replace(',', '.'), CultureInfo.InvariantCulture);
+
         public static decimal ParseNumber(this string number, string login)
         {
             var result = "0";
@@ -47,7 +49,7 @@ namespace WebSite
 
                 case "123.456.789,00":
                     result = number.Replace(".", "");
-                break;
+                    break;
 
                 case "123 456 789.00":
                     result = number.Replace(" ", "").Replace('.', ',');
@@ -58,7 +60,7 @@ namespace WebSite
                     break;
             }
 
-            return Convert.ToDecimal(result);
+            return result.ToDecimal();
         }
 
         public static string FormatNumber(this decimal number, string login)
