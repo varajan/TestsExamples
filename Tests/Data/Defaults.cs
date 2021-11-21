@@ -1,10 +1,13 @@
 ﻿using System.Configuration;
+using System.Reflection;
 
 namespace Tests.Data
 {
     public static class Defaults
     {
-        public static readonly string BaseUrl = ConfigurationManager.AppSettings["BaseUrl"]; 
+        public static string BaseUrl => ConfigurationManager
+            .OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
+                .AppSettings.Settings["BaseUrl"].Value;
 
         public static readonly int PageLoad = 15;
         public static readonly int ImplicitWait = 3;
