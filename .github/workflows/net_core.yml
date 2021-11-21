@@ -12,15 +12,33 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: '5.0.x'
+
       - name: WebSite - restore dependencies
         run: dotnet restore WebSite.sln
+        
       - name: WebSite - Build
-        run: dotnet build WebSite.sln --configuration Release --no-restore 
+        run: dotnet build WebSite.sln --configuration Release --no-restore
+        
       - name: WebSite - Launch
-        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
+        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe
+        
       - name: Tests - restore dependencies
         run: dotnet restore Tests.sln
+        
       - name: Tests - Build
         run: dotnet build Tests.sln --configuration Release --no-restore
+        
       - name: Tests - Run
         run: dotnet test Tests.sln --configuration Release --no-restore --verbosity Minimal
+        
+      - name: Tests - Artifacts
+        run: |
+         mkdir artifacts
+         dir >> artifacts/dir.txt
+         dir >> ./Tests/bin/Release/net5.0 tests.txt
+        
+      - name: Tests - Publish
+        uses: actions/upload-artifact@v2
+        with: 
+          name: artifacts
+          path: artifact
