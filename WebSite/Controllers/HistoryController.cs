@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
@@ -20,14 +19,14 @@ namespace WebSite.Controllers
                 .Select(x =>
                 new[]
                 {
-                    Convert.ToDecimal(x.Amount).FormatNumber(x.Login),
+                    x.Amount.ToDecimal().FormatNumber(x.Login),
                     x.Percent + "%",
                     x.Days.ToString(),
                     x.Year,
                     x.StartDate.FormatDate(dto.Login),
                     x.EndDate.FormatDate(dto.Login),
-                    Convert.ToDecimal(x.Interest).FormatNumber(dto.Login),
-                    Convert.ToDecimal(x.Income).FormatNumber(dto.Login)
+                    x.Interest.ToDecimal().FormatNumber(x.Login),
+                    x.Income.ToDecimal().FormatNumber(x.Login)
                 });
 
             return Json(result);
