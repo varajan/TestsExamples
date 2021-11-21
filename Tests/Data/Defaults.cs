@@ -1,12 +1,11 @@
-﻿namespace Tests.Data
+﻿using System.Configuration;
+
+namespace Tests.Data
 {
     public static class Defaults
     {
-#if DEBUG
-        public static readonly string BaseUrl = "https://localhost:44392";
-#else
-        public static readonly string BaseUrl = "https://localhost:5001";
-#endif
+        public static readonly string BaseUrl = ConfigurationManager.AppSettings["BaseUrl"]; 
+
         public static readonly int PageLoad = 15;
         public static readonly int ImplicitWait = 3;
 
