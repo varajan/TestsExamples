@@ -12,6 +12,9 @@ namespace Tests.Tests
         public SettingsPage SettingsPage => new();
         public HistoryPage HistoryPage => new();
 
+        [SetUp]
+        public void BeforeEachTest() => Reporter.InitTest();
+
         [OneTimeSetUp]
         public void CreateTestUser()
         {
@@ -21,6 +24,17 @@ namespace Tests.Tests
         }
 
         [TearDown]
-        public void TearDown() => WebDriver.Quit();
+        public void AfterEachTest()
+        {
+            Reporter.AppendReport();
+            WebDriver.Quit();
+        }
+    }
+
+    [SetUpFixture]
+    public class SetUpFixture
+    {
+        [OneTimeTearDown]
+        public void AfterAllTests() => Reporter.ExtentReport.Flush();
     }
 }
