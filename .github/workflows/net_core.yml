@@ -35,7 +35,7 @@ jobs:
         run: |
          mkdir artifacts
          dir >> artifacts/dir.txt
-         dir >> ./Tests/bin/Release/net5.0 >> artifacts/tests.txt
+         dir ./Tests/bin/Release/net5.0 >> artifacts/tests.txt
         
       - name: Tests - Publish
         uses: actions/upload-artifact@v2
