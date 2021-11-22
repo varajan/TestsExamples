@@ -32,6 +32,7 @@ jobs:
         run: dotnet test Tests.sln --configuration Release --no-restore --verbosity Minimal
         
       - name: Report - Publish
+        if: success() || failure()
         uses: actions/upload-artifact@v2
         with: 
           name: artifacts
