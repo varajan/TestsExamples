@@ -3,8 +3,7 @@
     while (data[0])
         data[0].parentNode.removeChild(data[0]);
 
-    $.ajax({ type: 'POST', url: 'api/history/clear', data: { 'login': getCookie('login'), dataType: 'json' } },
-    );
+    $.ajax({ type: 'POST', url: 'api/history/clear', data: { 'login': getCookie('login'), dataType: 'json' } } );
 }
 document.getElementById("clear").addEventListener("click", clear);
 

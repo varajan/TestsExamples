@@ -26,14 +26,14 @@ namespace WebSite.Controllers
         }
 
         [HttpPost("validate")]
-        public IActionResult Validate(UserDto dto)
+        public IActionResult Validate([FromBody] UserDto dto)
         {
             if (Users.IsValid(dto.Login, dto.Password))
             {
                 return Ok();
             }
 
-            return NotFound("Invalid credentials");
+            return NotFound("Incorrect user name or password!");
         }
     }
 }

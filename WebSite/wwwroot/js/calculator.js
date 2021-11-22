@@ -129,22 +129,23 @@ async function Save() {
     var income = document.getElementById('income').value;
     var startDate = new Date(year, month, day).yyyymmdd();
     var endDate = new Date(year, month, day + days).yyyymmdd();
+    var login = getCookie('login');
 
     $.ajax({
         type: 'POST',
         url: 'api/history/save',
-        data: {
-            'login': getCookie('login'),
-            'amount': amount,
-            'percent': percent,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            'login': login,
+            'amount': amount.toString(),
+            'percent': percent.toString(),
             'interest': interest,
             'days': days,
             'startDate': startDate,
             'endDate': endDate,
-            'year': finYear,
+            'year': finYear.toString(),
             'income': income
-        },
-        //dataType: 'json',
+        }),
         success: function (response) {
             document.getElementById('calculateBtn').disabled = false;
         }

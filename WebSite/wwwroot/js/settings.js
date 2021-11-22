@@ -6,14 +6,14 @@ function Save() {
     $.ajax({
         type: 'POST',
         url: 'api/settings/save',
-        data: {
+        dataType: 'application/json',
+        contentType: 'application/json',
+        data: JSON.stringify({
             'login': getCookie('login'),
             'dateFormat': dateFormat.options[dateFormat.selectedIndex].textContent,
             'numberFormat': numberFormat.options[numberFormat.selectedIndex].textContent,
             'currency': currency.options[currency.selectedIndex].textContent
-        },
-
-        dataType: 'json',
+        }),
         success: function (response) {
             alert('Changes are saved!');
         }
@@ -33,10 +33,11 @@ function Get() {
     $.ajax({
         type: 'POST',
         url: 'api/settings',
-        dataType: 'json',
-        data: {
+        dataType: 'application/json',
+        contentType: 'application/json',
+        data: JSON.stringify({
             'login': getCookie('login')
-        },
+        }),
         success: function (response) {
             Select(dateFormat, response.DateFormat);
             Select(numberFormat, response.NumberFormat);

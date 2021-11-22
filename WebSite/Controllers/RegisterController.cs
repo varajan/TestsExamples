@@ -8,7 +8,7 @@ namespace WebSite.Controllers
     public class RegisterController : Controller
     {
         [HttpPost]
-        public IActionResult Register(UserDto dto)
+        public IActionResult Register([FromBody] UserDto dto)
         {
             if (dto.Password != dto.Password2)
             {
@@ -41,7 +41,7 @@ namespace WebSite.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(UserDto dto)
+        public IActionResult Delete([FromBody] UserDto dto)
         {
             Users.Delete(dto.Login);
 
