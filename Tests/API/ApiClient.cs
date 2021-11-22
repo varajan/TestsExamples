@@ -17,7 +17,7 @@ namespace Tests.API
 
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
         }
 
         public static HttpResponseMessage Post(string url, object model = null) => SendRequest(HttpMethod.Post, url, model);
