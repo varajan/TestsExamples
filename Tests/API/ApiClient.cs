@@ -11,18 +11,18 @@ namespace Tests.API
 
         static ApiClient() => Client = new HttpClient();
 
-        public static void Post(string url, object model = null) => SendRequest(HttpMethod.Post, url, model);
-        public static void Delete(string url, object model = null) => SendRequest(HttpMethod.Delete, url, model);
+        public static HttpResponseMessage Post(string url, object model = null) => SendRequest(HttpMethod.Post, url, model);
+        public static HttpResponseMessage Delete(string url, object model = null) => SendRequest(HttpMethod.Delete, url, model);
 
-        private static void SendRequest(HttpMethod method, string url, object model = null)
+        private static HttpResponseMessage SendRequest(HttpMethod method, string url, object model = null)
         {
             var json = JsonConvert.SerializeObject(model, Formatting.Indented);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var request = model == null
-                ? new HttpRequestMessage(method, $"{Defaults.BaseUrl}/{url}")
-                : new HttpRequestMessage(method, $"{Defaults.BaseUrl}/{url}") { Content = content };
+                ? new HttpRequestMessage(method, $"{Defaults.BaseUrl}/api/{url}")
+                : new HttpRequestMessage(method, $"{Defaults.BaseUrl}/api/{url}") { Content = content };
 
-            Client.SendAsync(request).Wait();
+            return Client.SendAsync(request).Result;
         }
     }
 }

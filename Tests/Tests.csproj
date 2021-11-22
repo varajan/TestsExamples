@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowObsoleteCodeBehindFiles Remove="Tests\Deposit\DepositPage - Copy.feature.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="4.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0">
@@ -32,6 +32,20 @@
     <Compile Update="Tests\Deposit\StartDateDay.feature.cs">
       <DependentUpon>StartDateDay.feature</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
+    <None Update="App.Debug.config">
+      <IsTransformFile>true</IsTransformFile>
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Update="App.Release.config">
+      <IsTransformFile>true</IsTransformFile>
+      <DependentUpon>App.config</DependentUpon>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

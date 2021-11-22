@@ -55,7 +55,7 @@ Scenario: History shows last 9 rows
 Scenario: History respect settings
 	Given I login as 'Jack'
 		And I update settings: '<number format>', '<date format>', '<currency>'
-		And I open Deposit page
+		And I open Calculator page
 		And I select Start Date as '10/11/2022'
 		And I calculate deposit for $100000 with 99% on 299 days
 	When I open History page

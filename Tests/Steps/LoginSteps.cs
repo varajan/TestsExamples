@@ -20,20 +20,26 @@ namespace Tests.Steps
         [Given("Existed users:")]
         public void CreateUsers(Table table)
         {
-            var users = table.Rows.Select(x => new UserDto { Login = x["Login"], Password = x["Password"], Email = x["Email"] }).ToList();
+            var users = table.Rows.Select(x => new UserDto
+            {
+                Login = x["Login"],
+                Password = x["Password"],
+                Password2 = x["Password"],
+                Email = x["Email"]
+            }).ToList();
 
             users.ForEach(Users.Register);
         }
 
         [Given("I open (.*) page")]
         [When("I open (.*) page")]
-        public void OpenPage(string name) => BasePage.Open(name);
+        public void OpenPage(string url) => BasePage.Open(url);
 
         [Given("I login as '(.*)'")]
         public void Login(string login)
         {
             TestUser = login;
-            var user = new UserDto { Login = login, Password = Defaults.Password, Email = $"{login}@test.com" };
+            var user = new UserDto { Login = login, Password = Defaults.Password, Password2 = Defaults.Password, Email = $"{login}@test.com" };
 
             Users.Delete(login);
             Users.Register(user);

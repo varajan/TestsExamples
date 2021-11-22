@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Web.WebPages;
 using WebSite.DB;
 
 namespace WebSite
@@ -36,24 +35,32 @@ namespace WebSite
 
         public static int ToInt(this string value) => int.Parse(value);
 
+        public static decimal ToDecimal(this string number) => decimal.Parse(number.Replace(',', '.'), CultureInfo.InvariantCulture);
+
         public static decimal ParseNumber(this string number, string login)
         {
+            var result = "0";
+
             switch (Settings.Get(login).NumberFormat)
             {
                 case "123,456,789.00":
-                    return number.Replace(",", "").Replace('.', ',').AsDecimal();
+                    result = number.Replace(",", "").Replace('.', ',');
+                    break;
 
                 case "123.456.789,00":
-                    return number.Replace(".", "").AsDecimal();
+                    result = number.Replace(".", "");
+                    break;
 
                 case "123 456 789.00":
-                    return number.Replace(" ", "").Replace('.', ',').AsDecimal();
+                    result = number.Replace(" ", "").Replace('.', ',');
+                    break;
 
                 case "123 456 789,00":
-                    return number.Replace(" ", "").AsDecimal();
+                    result = number.Replace(" ", "");
+                    break;
             }
 
-            return 0;
+            return result.ToDecimal();
         }
 
         public static string FormatNumber(this decimal number, string login)
