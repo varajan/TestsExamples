@@ -33,9 +33,9 @@ namespace WebSite.Controllers
         }
 
         [HttpPost("clear")]
-        public IActionResult Clear([FromBody] SaveHistoryDto dto)
+        public IActionResult Clear(string login)
         {
-            History.Clear(dto.Login);
+            History.Clear(login);
             return Ok();
         }
 
