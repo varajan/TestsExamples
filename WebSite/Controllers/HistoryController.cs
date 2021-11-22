@@ -9,9 +9,9 @@ namespace WebSite.Controllers
     public class HistoryController : Controller
     {
         [HttpGet]
-        public IActionResult Get(SaveHistoryDto dto)
+        public IActionResult Get(string login)
         {
-            var history = History.Get(dto.Login);
+            var history = History.Get(login);
             history.Reverse();
 
             var result = history
@@ -23,8 +23,8 @@ namespace WebSite.Controllers
                     x.Percent + "%",
                     x.Days.ToString(),
                     x.Year,
-                    x.StartDate.FormatDate(dto.Login),
-                    x.EndDate.FormatDate(dto.Login),
+                    x.StartDate.FormatDate(login),
+                    x.EndDate.FormatDate(login),
                     x.Interest.ToDecimal().FormatNumber(x.Login),
                     x.Income.ToDecimal().FormatNumber(x.Login)
                 });
@@ -33,14 +33,14 @@ namespace WebSite.Controllers
         }
 
         [HttpPost("clear")]
-        public IActionResult Clear(SaveHistoryDto dto)
+        public IActionResult Clear([FromBody] SaveHistoryDto dto)
         {
             History.Clear(dto.Login);
             return Ok();
         }
 
         [HttpPost("save")]
-        public ActionResult Save(SaveHistoryDto dto)
+        public ActionResult Save([FromBody] SaveHistoryDto dto)
         {
             History.Add(dto);
             return Ok();

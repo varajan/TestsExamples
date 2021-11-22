@@ -8,14 +8,15 @@ Login = function () {
 
   $.ajax({
     type: 'POST',
-    url: 'api/login/validate',
-    data: { 'login': login, 'password': password },
+      url: 'api/login/validate',
+      contentType: 'application/json',
+      data: JSON.stringify({ 'login': login, 'password': password }),
     success: function (response) {
       createCookie("login", login, 1);
       window.location.href = 'Calculator';
     },
-    error: function () {
-      ShowError("Incorrect user name or password!");
+      error: function (error) {
+          ShowError(error.responseText);
     }
   });
 }

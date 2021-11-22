@@ -11,8 +11,8 @@ Register = function () {
     $.ajax({
         type: 'POST',
         url: 'api/register',
-        data: { 'login': login, 'password': password1, 'password2': password2, 'email': email },
-        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'login': login, 'password': password1, 'password2': password2, 'email': email }),
         success: function (response) {
             alert("Registration was successful.");
             window.location.href = '/';

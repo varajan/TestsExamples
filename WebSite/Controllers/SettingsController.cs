@@ -27,13 +27,13 @@ namespace WebSite.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get(SettingsDto dto)
+        public IActionResult Get([FromBody] SettingsDto dto)
         {
             return Json(Settings.Get(dto.Login));
         }
 
         [HttpPost("save")]
-        public IActionResult Save(SettingsDto dto)
+        public IActionResult Save([FromBody] SettingsDto dto)
         {
             Settings.Save(dto);
             return Ok();
