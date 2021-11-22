@@ -1,38 +1,38 @@
-﻿using System.Net;
-using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
 
 namespace WebSite.Controllers
 {
+    [Route("api/[controller]")]
     public class RegisterController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult Register(UserDto dto)
+        public IActionResult Register(UserDto dto)
         {
+            if (dto.Password != dto.Password2)
+            {
+                return Conflict("Passwords are different.");
+            }
+
             if (!dto.Email.IsValidEmail())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "Invalid email.");
+                return Conflict("Invalid email.");
             }
 
             if (Users.Emails.Contains(dto.Email.Trim()))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "User with this email is already registered.");
+                return Conflict("User with this email is already registered.");
             }
 
             if (Users.Names.Contains(dto.Login.ToLower().Trim()))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "User with this login is already registered.");
+                return Conflict("User with this login is already registered.");
             }
 
             if (dto.Password.Trim().Length < 5)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict, "Password is too short.");
+                return Conflict("Password is too short.");
             }
 
             Users.Add(dto);
@@ -40,23 +40,23 @@ namespace WebSite.Controllers
             return Json("OK");
         }
 
-        [HttpDelete]
-        public ActionResult Delete(UserDto dto)
+        [HttpDelete("delete")]
+        public IActionResult Delete(UserDto dto)
         {
             Users.Delete(dto.Login);
 
             return Json("OK");
         }
 
-        [HttpGet]
-        public ActionResult DeleteAllUsers() => DeleteAll();
+        [HttpGet("deleteAll")]
+        public IActionResult DeleteAllUsers() => DeleteAll();
 
-        [HttpDelete]
-        public ActionResult DeleteAll()
+        [HttpDelete("deleteAll")]
+        public IActionResult DeleteAll()
         {
             Users.Names.ForEach(Users.Delete);
 
-            return Json("OK", JsonRequestBehavior.AllowGet);
+            return Ok();
         }
     }
 }
