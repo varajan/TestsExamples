@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using Tests.Data;
@@ -12,12 +11,10 @@ namespace Tests.API
 
         static ApiClient()
         {
+            var clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
 
-            Client = new HttpClient();
-
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            Client = new HttpClient(clientHandler);
         }
 
         public static HttpResponseMessage Post(string url, object model = null) => SendRequest(HttpMethod.Post, url, model);

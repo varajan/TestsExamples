@@ -97,6 +97,6 @@ namespace Tests
         }
 
         public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
-            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl));
+            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty));
     }
 }
