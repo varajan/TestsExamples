@@ -96,16 +96,7 @@ namespace Tests
             return webDriver.Manage().Cookies.AllCookies.FirstOrDefault(x => x.Name == key)?.Value;
         }
 
-        public static void SetCookie<T>(this IWebDriver webDriver, string key, T value)
-        {
-
-            var coo = new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl);
-
-            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty));
-
-        }
-
-        //public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
-        //    webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl));
+        public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
+            webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl));
     }
 }
