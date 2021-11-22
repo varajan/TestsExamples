@@ -27,8 +27,19 @@ namespace Tests
             {
                 lock (Lock)
                 {
-                    var options = new ChromeOptions { UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore };
-                    var driver = new ChromeDriver(options);
+                    var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                    chromeDriverService.HideCommandPromptWindow = true;
+                    chromeDriverService.SuppressInitialDiagnosticInformation = true;
+
+                    var options = new ChromeOptions
+                    {
+                        UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore,
+                        AcceptInsecureCertificates = true
+                    };
+                    options.AddArgument("--silent");
+                    options.AddArgument("log-level=3");
+
+                    var driver = new ChromeDriver(chromeDriverService, options);
 
                     driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(Defaults.PageLoad);
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Defaults.ImplicitWait);
@@ -85,7 +96,16 @@ namespace Tests
             return webDriver.Manage().Cookies.AllCookies.FirstOrDefault(x => x.Name == key)?.Value;
         }
 
-        public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
+        public static void SetCookie<T>(this IWebDriver webDriver, string key, T value)
+        {
+
+            var coo = new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl);
+
             webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty));
+
+        }
+
+        //public static void SetCookie<T>(this IWebDriver webDriver, string key, T value) =>
+        //    webDriver.Manage().Cookies.AddCookie(new Cookie(key, value?.ToString() ?? string.Empty, Defaults.BaseUrl));
     }
 }

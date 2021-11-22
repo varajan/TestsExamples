@@ -3,22 +3,30 @@ name: .NET
 on: pull_request
 
 jobs:
-  build:
+  build_and_test:
 
     runs-on: windows-latest
-    strategy:
-      matrix:
-        dotnet-version: ['5.0.x' ]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core SDK '5.0.x'
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '5.0.x'
+
       - name: WebSite - restore dependencies
         run: dotnet restore WebSite.sln
+        
       - name: WebSite - Build
-        run: dotnet build WebSite.sln --configuration Release --no-restore 
+        run: dotnet build WebSite.sln --configuration Release --no-restore
+        
       - name: WebSite - Launch
-        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
+        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe
+        
+      - name: Tests - restore dependencies
+        run: dotnet restore Tests.sln
+        
+      - name: Tests - Build
+        run: dotnet build Tests.sln --configuration Release --no-restore
+        
+      - name: Tests - Run
+        run: dotnet test Tests.sln --configuration Release --no-restore --verbosity Minimal

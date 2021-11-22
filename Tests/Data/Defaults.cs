@@ -1,8 +1,14 @@
-﻿namespace Tests.Data
+﻿using System.Configuration;
+using System.Reflection;
+
+namespace Tests.Data
 {
     public static class Defaults
     {
-        public static readonly string BaseUrl = "http://localhost:64177";
+        public static readonly string BaseUrl = ConfigurationManager
+            .OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
+                .AppSettings.Settings["BaseUrl"].Value;
+
         public static readonly int PageLoad = 15;
         public static readonly int ImplicitWait = 3;
 

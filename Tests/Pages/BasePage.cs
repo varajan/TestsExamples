@@ -16,12 +16,13 @@ namespace Tests.Pages
 
         public void Open() => Open(PageName);
 
-        public void Open(string page)
+        public void Open(string url)
         {
+            url = url.Equals("Login") ? string.Empty : url;
             var login = WebDriver.GetCookie("login");
 
-            WebDriver.Url = $"{Defaults.BaseUrl}/{page}";
-            WebDriver.SetCookie("login", login);
+            WebDriver.Url = $"{Defaults.BaseUrl}/{url}";
+            if (!string.IsNullOrEmpty(url)) WebDriver.SetCookie("login", login);
         }
     }
 }
