@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Atata" Version="1.13.1" />
+    <PackageReference Include="Atata" Version="1.14.0" />
+    <PackageReference Include="Atata.Configuration.Json" Version="1.8.0" />
     <PackageReference Include="Atata.WebDriverSetup" Version="1.2.1" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
@@ -16,14 +17,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
     <PackageReference Include="coverlet.collector" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Selenium.Support" Version="4.0.1" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.0.1" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="95.0.4638.5400" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
@@ -38,6 +36,9 @@
     <None Update="App.Release.config">
       <IsTransformFile>true</IsTransformFile>
       <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Update="chrome_options.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

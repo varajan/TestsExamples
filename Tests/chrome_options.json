@@ -1,0 +1,8 @@
+{
+  "driver": {
+    "type": "chrome",
+    "options": {
+      "arguments": ["ignore-certificate-errors"]
+    }
+  }
+}

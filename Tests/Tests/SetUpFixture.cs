@@ -9,8 +9,10 @@ namespace Tests.Tests
         [OneTimeSetUp]
         public void GlobalSetUp()
         {
-            AtataContext.GlobalConfiguration
-                .UseEdge()
+            AtataContext
+                .GlobalConfiguration
+                .UseChrome()
+                .ApplyJsonConfig("chrome_options.json")
                 .UseBaseUrl(Defaults.BaseUrl)
                 .UseCulture("en-US")
                 .UseAllNUnitFeatures();
