@@ -2,7 +2,11 @@
   "driver": {
     "type": "chrome",
     "options": {
-      "arguments": ["ignore-certificate-errors"]
+      "arguments": [
+        "--silent",
+        "log-level=3",
+        "ignore-certificate-errors"
+      ]
     }
   }
 }
