@@ -4,7 +4,7 @@ namespace Tests.Pages
 {
     using _ = LoginPage;
 
-    [Url("login")]
+    [Url("")]
     [VerifyTitle]
     public class LoginPage : Page<_>
     {

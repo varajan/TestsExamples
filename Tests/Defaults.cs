@@ -1,8 +1,11 @@
-﻿namespace Tests
+﻿using System.Configuration;
+using System.Reflection;
+
+namespace Tests
 {
     public static class Defaults
     {
-        public static readonly string BaseUrl = "http://localhost:64177";
+        public static readonly string BaseUrl = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings["BaseUrl"].Value;
 
         public static readonly string Login = "test";
         public static readonly string Email = "test@test.com";

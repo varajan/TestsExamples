@@ -21,7 +21,7 @@ namespace Tests.Tests
         [OneTimeTearDown]
         public void DeleteUsers()
         {
-            Go.ToUrl($"{Defaults.BaseUrl}/Register/DeleteAllUsers");
+            Go.ToUrl($"{Defaults.BaseUrl}/api/Register/DeleteAll");
 
             AtataContext.Current?.CleanUp();
         }
