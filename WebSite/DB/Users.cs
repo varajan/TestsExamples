@@ -20,7 +20,7 @@ namespace WebSite.DB
             Settings.Delete(user);
             History.Clear(user);
 
-            DB.Execute($"DELETE FROM Users WHERE Login = '{user.ToLower()}'");
+            DB.Execute($"DELETE FROM Users WHERE Login = '{user?.ToLower() ?? string.Empty}'");
         }
     }
 }

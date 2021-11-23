@@ -1,0 +1,57 @@
+﻿@page
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div align="center">
+        <div style="width:500px; height:270px; border:double">
+            <table>
+                <tr>
+                    <th class="user">Login:</th>
+                    <td>
+                        <input id="login" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="email">Email:</th>
+                    <td>
+                        <input id="email" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Password:</th>
+                    <td>
+                        <input type="password" id="password1" />
+                    </td>
+                    <td style="width: 100px">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="pass">Confirm password:</th>
+                    <td>
+                        <input type="password" id="password2" />
+                    </td>
+                    <td style="width: 100px">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right" style="width: 100px" id="buttons">
+                        <button onclick="Register()" title="Register" id="register">Register</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="color: red" id="errorMessage" colspan="3"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/cookies.js" asp-append-version="true"></script>
+<script src="~/js/register.js" asp-append-version="true"></script>
