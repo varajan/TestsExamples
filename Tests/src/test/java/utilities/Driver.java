@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Driver {
 	public static WebDriver initWebDriver() {
-		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "chromedriver");
 
 		ChromeOptions options = new ChromeOptions();
 		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
