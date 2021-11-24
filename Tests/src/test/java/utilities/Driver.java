@@ -15,9 +15,7 @@ public class Driver {
 		ChromeOptions options = new ChromeOptions();
 		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
 		options.setAcceptInsecureCerts(true);
-		options.addArguments("--headless");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
+		options.addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage", "--silent", "log-level=3");
 
 		WebDriver driver = new ChromeDriver(options);
 
