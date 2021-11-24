@@ -28,7 +28,7 @@ public class RegisterPageTests extends BaseTest {
 	    return Stream.of(
  	       Arguments.of("Test", "password", "password", "some-email@test.com", "User with this login is already registered."),
  	       Arguments.of("User", "password", "password", "test@test.com", "User with this email is already registered."),
- 	       Arguments.of("User", "password", "passwort", "some-email@test.com", "Passwords are different!"),
+ 	       Arguments.of("User", "password", "passwort", "some-email@test.com", "Passwords are different."),
  	       Arguments.of("User", "password", "password", "@test.com", "Invalid email."),
  	       Arguments.of("User", "password", "password", "some.test.com", "Invalid email."),
  	       Arguments.of("User", "pass", "pass", "some@test.com", "Password is too short.")

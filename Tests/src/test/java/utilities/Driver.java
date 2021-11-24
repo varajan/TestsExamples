@@ -12,9 +12,6 @@ import test.java.data.Constants;
 public class Driver {
 	public static WebDriver initWebDriver() {
 		WebDriverManager.chromedriver().setup();
-//		driver = new ChromeDriver();
-//		System.setProperty("webdriver.chrome.driver", "chromedriver");
-
 		ChromeOptions options = new ChromeOptions();
 		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
 		options.setAcceptInsecureCerts(true);
