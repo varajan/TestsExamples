@@ -1,4 +1,4 @@
-package tests;
+package test.java.tests;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -18,9 +18,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.google.common.collect.Lists;
 
-import data.Constants;
-import utilities.Dates;
-import data.Users;
+import test.java.data.Constants;
+import test.java.data.Users;
+import test.java.utilities.Dates;
 
 public class SettingsPageTests extends BaseTest {
 	@BeforeEach

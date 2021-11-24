@@ -1,4 +1,4 @@
-package tests;
+package test.java.tests;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -7,11 +7,13 @@ import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
-
-import pages.*;
-import data.Constants;
-import utilities.Driver;
-import data.Users;
+import test.java.data.Constants;
+import test.java.data.Users;
+import test.java.pages.DepositPage;
+import test.java.pages.HistoryPage;
+import test.java.pages.LoginPage;
+import test.java.pages.SettingsPage;
+import test.java.utilities.Driver;
 
 public class BaseTest {
 	private WebDriver driver;

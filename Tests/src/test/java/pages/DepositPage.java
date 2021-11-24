@@ -1,4 +1,4 @@
-package pages;
+package test.java.pages;
 
 import java.text.ParseException;
 import java.util.List;
@@ -9,10 +9,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.google.common.collect.Lists;
-
-import data.Constants;
-import utilities.Dates;
-import utilities.Strings;
+import test.java.data.Constants;
+import test.java.utilities.Dates;
+import test.java.utilities.Strings;
 
 public class DepositPage extends BasePage {
 	@FindBy(id = "amount")

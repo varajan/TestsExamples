@@ -1,11 +1,10 @@
-package data;
+package test.java.data;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
-import data.models.User;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -25,6 +24,7 @@ import org.apache.hc.core5.ssl.SSLContexts;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
+import test.java.data.models.User;
 
 import javax.net.ssl.SSLContext;
 

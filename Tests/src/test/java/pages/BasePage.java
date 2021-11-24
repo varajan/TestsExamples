@@ -1,4 +1,4 @@
-package pages;
+package test.java.pages;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pages;
+package test.java.pages;
 
 import java.time.Duration;
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import data.Constants;
+import test.java.data.Constants;
 
 public abstract class PageWaits {
 	protected WebDriver driver;

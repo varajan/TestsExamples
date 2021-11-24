@@ -1,4 +1,4 @@
-package utilities;
+package test.java.utilities;
 
 public class Result {
 	private boolean isSuccessful;

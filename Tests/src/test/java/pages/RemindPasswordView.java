@@ -1,11 +1,10 @@
-package pages;
+package test.java.pages;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import utilities.Result;
+import test.java.utilities.Result;
 
 public class RemindPasswordView extends PageWaits {
 	private String remindPasswordView = "remindPasswordView";

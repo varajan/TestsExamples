@@ -1,16 +1,19 @@
-package utilities;
+package test.java.utilities;
 
 import java.time.Duration;
 
-import data.Constants;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import test.java.data.Constants;
 
 public class Driver {
 	public static WebDriver initWebDriver() {
-		System.setProperty("webdriver.chrome.driver", "chromedriver");
+		WebDriverManager.chromedriver().setup();
+//		driver = new ChromeDriver();
+//		System.setProperty("webdriver.chrome.driver", "chromedriver");
 
 		ChromeOptions options = new ChromeOptions();
 		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);

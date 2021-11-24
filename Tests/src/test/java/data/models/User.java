@@ -1,6 +1,6 @@
-package data.models;
+package test.java.data.models;
 
-import data.Constants;
+import test.java.data.Constants;
 
 public class User {
     private String login;

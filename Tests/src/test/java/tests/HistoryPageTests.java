@@ -1,4 +1,4 @@
-package tests;
+package test.java.tests;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -16,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import data.Users;
+import test.java.data.Users;
 
 public class HistoryPageTests extends BaseTest {
 	@BeforeEach

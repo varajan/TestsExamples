@@ -1,4 +1,4 @@
-package data;
+package test.java.data;
 
 public class Constants {
 	public static int WaitTimeout = 3;
