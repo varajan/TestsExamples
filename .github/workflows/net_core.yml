@@ -34,6 +34,4 @@ jobs:
           dotnet WebSite.dll &
 
       - name: Tests
-        run: |
-          chmod +x ./Tests/chromedriver && 
-          mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
+        run: mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
