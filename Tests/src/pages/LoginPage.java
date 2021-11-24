@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import utilities.Constants;
+import data.Constants;
 
 public class LoginPage extends BasePage {
 	@FindBy(id = "login")

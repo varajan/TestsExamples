@@ -2,6 +2,7 @@ package utilities;
 
 import java.time.Duration;
 
+import data.Constants;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,6 +14,7 @@ public class Driver {
 
 		ChromeOptions options = new ChromeOptions();
 		options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.IGNORE);
+		options.setAcceptInsecureCerts(true);
 
 		WebDriver driver = new ChromeDriver(options);
 

@@ -1,6 +1,9 @@
 package tests;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -15,13 +18,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.google.common.collect.Lists;
 
-import utilities.Constants;
+import data.Constants;
 import utilities.Dates;
-import utilities.Users;
+import data.Users;
 
 public class SettingsPageTests extends BaseTest {
 	@BeforeEach
-	public void openSettings() throws IOException {
+	public void openSettings() throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		String user = "settings";
 
 		Users.delete(user);

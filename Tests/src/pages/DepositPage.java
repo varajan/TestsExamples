@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.google.common.collect.Lists;
 
-import utilities.Constants;
+import data.Constants;
 import utilities.Dates;
 import utilities.Strings;
 

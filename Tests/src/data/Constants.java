@@ -1,9 +1,12 @@
-package utilities;
+package data;
 
 public class Constants {
 	public static int WaitTimeout = 3;
-	public static String BaseUrl = "http://localhost:64177";
-	
+
+	public static String BaseUrl = System.getProperty("BaseUrl") != null
+			? System.getProperty("BaseUrl")
+			: "https://localhost:44392/";
+
 	public static String Login = "test";
 	public static String Password = "newyork1";
 	public static String Email = "test@test.com";

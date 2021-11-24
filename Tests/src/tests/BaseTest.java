@@ -1,14 +1,17 @@
 package tests;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
 import pages.*;
-import utilities.Constants;
+import data.Constants;
 import utilities.Driver;
-import utilities.Users;
+import data.Users;
 
 public class BaseTest {
 	private WebDriver driver;
@@ -20,7 +23,7 @@ public class BaseTest {
 	
 	@BeforeAll
 	@AfterAll
-	public static void beforeAll() throws IOException {
+	public static void beforeAll() throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		Users.deleteAll();
 		Users.register(Constants.Login);
 	}

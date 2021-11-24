@@ -1,6 +1,9 @@
 package tests;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,11 +17,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import utilities.Users;
+import data.Users;
 
 public class HistoryPageTests extends BaseTest {
 	@BeforeEach
-	public void openDepositPage() throws IOException {
+	public void openDepositPage() throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		String user = "settings";
 
 		Users.delete(user);
