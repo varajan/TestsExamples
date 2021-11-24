@@ -28,12 +28,12 @@ jobs:
 
       - name: WebSite
         run: |
-        dotnet restore WebSite.sln && 
-        dotnet build WebSite.sln --configuration Release --no-restore &&
-        cd ./WebSite/bin/Release/net5.0 &&
-        dotnet WebSite.dll &
+          dotnet restore WebSite.sln && 
+          dotnet build WebSite.sln --configuration Release --no-restore &&
+          cd ./WebSite/bin/Release/net5.0 &&
+          dotnet WebSite.dll &
 
       - name: Tests
         run: |
-        chmod +x ./Tests/chromedriver && 
-        mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
+          chmod +x ./Tests/chromedriver && 
+          mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
