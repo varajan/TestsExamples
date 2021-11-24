@@ -35,9 +35,9 @@ jobs:
       - name: WebSite - Launch
         run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
 
-      - name: Build with Maven
+      - name: Tests - Build
         run: mvn -B package --file ./Tests/pom.xml
 
-      - name: Maven Verify
-        run: mvn -B clean verify  --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
+      - name: Tests - Run
+        run: mvn test --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
         
