@@ -12,8 +12,8 @@ Login = function () {
       contentType: 'application/json',
       data: JSON.stringify({ 'login': login, 'password': password }),
     success: function (response) {
-      createCookie("login", login, 1);
-      window.location.href = 'Calculator';
+        createCookie("login", login, 1);
+        Calculator();
     },
       error: function (error) {
           ShowError(error.responseText);

@@ -34,6 +34,14 @@ function getCookie(name) {
     return "";
 }
 
+function Calculator() {
+    window.location = 'Calculator';
+}
+
+function Register() {
+    window.location = '/Register';
+}
+
 function Logout() {
     deleteCookie('login');
     window.location = '/';
