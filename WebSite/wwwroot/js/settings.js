@@ -6,7 +6,6 @@ function Save() {
     $.ajax({
         type: 'POST',
         url: 'api/settings/save',
-        dataType: 'application/json',
         contentType: 'application/json',
         data: JSON.stringify({
             'login': getCookie('login'),
@@ -16,8 +15,13 @@ function Save() {
         }),
         success: function (response) {
             alert('Changes are saved!');
+            window.location = 'Calculator';
         }
     });
+}
+
+function Cancel() {
+    window.location = 'Calculator';
 }
 
 function Select(dropdown, value) {

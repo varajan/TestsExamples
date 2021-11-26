@@ -11,11 +11,19 @@
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-function getCookie(c_name) {
+function deleteCookie(name) {
+    var value = getCookie(name);
+
+    if (value) {
+        createCookie(name, value, -100);
+    }
+}
+
+function getCookie(name) {
     if (document.cookie.length > 0) {
-        c_start = document.cookie.indexOf(c_name + "=");
+        c_start = document.cookie.indexOf(name + "=");
         if (c_start != -1) {
-            c_start = c_start + c_name.length + 1;
+            c_start = c_start + name.length + 1;
             c_end = document.cookie.indexOf(";", c_start);
             if (c_end == -1) {
                 c_end = document.cookie.length;
@@ -25,3 +33,29 @@ function getCookie(c_name) {
     }
     return "";
 }
+
+function Logout() {
+    deleteCookie('login');
+    window.location = '/';
+}
+
+function verifyLoggedIn() {
+    var baseUrl = getBaseUrl();
+    var name = getCookie('login');
+    var noLogin = [
+        baseUrl,
+        baseUrl + '/',
+        baseUrl + '/Register'
+    ];
+
+    if (!name && !noLogin.includes(window.location.href)) {
+        Logout();
+    }
+}
+
+function getBaseUrl() {
+    var getUrl = window.location;
+    return getUrl.protocol + "//" + getUrl.host;
+}
+
+verifyLoggedIn();
