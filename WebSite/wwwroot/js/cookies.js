@@ -34,6 +34,14 @@ function getCookie(name) {
     return "";
 }
 
+function History() {
+    window.location = 'History';
+}
+
+function Settings() {
+    window.location = 'Settings';
+}
+
 function Calculator() {
     window.location = 'Calculator';
 }
@@ -64,6 +72,25 @@ function verifyLoggedIn() {
 function getBaseUrl() {
     var getUrl = window.location;
     return getUrl.protocol + "//" + getUrl.host;
+}
+
+function SetDropdownValues(id) {
+    $.ajax({
+        type: 'GET',
+        url: 'api/settings/values',
+        dataType: 'json',
+        data: { 'name': id },
+        success: function (response) {
+            var dropdown = document.getElementById(id);
+
+            for (const val of response) {
+                var option = document.createElement("option");
+                option.value = val;
+                option.text = val;
+                dropdown.appendChild(option);
+            }
+        }
+    });
 }
 
 verifyLoggedIn();

@@ -198,6 +198,7 @@ SetCurrency = function () {
     });
 }
 
+SetDropdownValues('month');
 SetCalculateButtonState();
 SetCurrency();
 SetCurrentDate();

@@ -50,25 +50,6 @@ function Get() {
     });
 }
 
-function SetDropdownValues(id) {
-    $.ajax({
-        type: 'GET',
-        url: 'api/settings/values',
-        dataType: 'json',
-        data: { 'name': id },
-        success: function (response) {
-            var dropdown = document.getElementById(id);
-
-            for (const val of response) {
-                var option = document.createElement("option");
-                option.value = val;
-                option.text = val;
-                dropdown.appendChild(option);
-            }
-        }
-    });
-}
-
 SetDropdownValues("dateFormat");
 SetDropdownValues("numberFormat");
 SetDropdownValues("currency");

@@ -8,8 +8,8 @@
 <body>
     <div align="center">
         <div style="width:500px; height:300px; border:double">
-            <div style="text-align: right; cursor: pointer" onclick="window.location='Settings'">Settings</div>
-            <div style="text-align: right; cursor: pointer" onclick="window.location='History'">History</div>
+            <div style="text-align: right; cursor: pointer" onclick="Settings()">Settings</div>
+            <div style="text-align: right; cursor: pointer" onclick="History()">History</div>
 
             <table>
                 <tr>
@@ -30,20 +30,7 @@
                     <td>Start Date:</td>
                     <td colspan="2">
                         <select id="day" onchange="CalculateDate()"></select>
-                        <select id="month" onchange="ResetMonth(); CalculateDate();">
-                            <option>January</option>
-                            <option>February</option>
-                            <option>March</option>
-                            <option>April</option>
-                            <option>May</option>
-                            <option>June</option>
-                            <option>July</option>
-                            <option>August</option>
-                            <option>September</option>
-                            <option>October</option>
-                            <option>November</option>
-                            <option>December</option>
-                        </select>
+                        <select id="month" onchange="ResetMonth(); CalculateDate();"></select>
                         <select id="year" onchange="ResetMonth(); CalculateDate();"></select>
                     </td>
                 </tr>

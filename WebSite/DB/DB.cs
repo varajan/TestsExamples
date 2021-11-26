@@ -49,6 +49,9 @@ namespace WebSite.DB
 
             Constants.Delete("currency");
             Constants.Add("currency", "$ - US dollar", "€ -euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia");
+
+            Constants.Delete("month");
+            Constants.Add("month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         }
 
         public static void Execute(string sql)
