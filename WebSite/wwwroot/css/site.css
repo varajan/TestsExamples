@@ -1,1 +1,24 @@
-﻿
+﻿.link {
+    text-align: right; 
+    cursor: pointer
+}
+
+.settings {
+    visibility: visible
+}
+
+.history {
+    visibility: visible
+}
+
+.calculator {
+    visibility: visible
+}
+
+.login {
+    visibility: visible
+}
+
+.register {
+    visibility: visible
+}

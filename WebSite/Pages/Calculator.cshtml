@@ -8,8 +8,8 @@
 <body>
     <div align="center">
         <div style="width:500px; height:300px; border:double">
-            <div style="text-align: right; cursor: pointer" onclick="Settings()">Settings</div>
-            <div style="text-align: right; cursor: pointer" onclick="History()">History</div>
+            <div class="settings link" onclick="Settings()">Settings</div>
+            <div class="history link" onclick="History()">History</div>
 
             <table>
                 <tr>
@@ -62,6 +62,7 @@
 </body>
 </html>
 
+<link rel="stylesheet" href="~/css/site.css">
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/cookies.js" asp-append-version="true"></script>
