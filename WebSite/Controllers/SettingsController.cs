@@ -38,5 +38,11 @@ namespace WebSite.Controllers
             Settings.Save(dto);
             return Ok();
         }
+
+        [HttpGet("values")]
+        public IActionResult GetValues(string name)
+        {
+            return Json(Constants.Get(name));
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using WebSite.Models;
 
 namespace WebSite.DB
 {
@@ -21,6 +22,33 @@ namespace WebSite.DB
             Execute($"CREATE TABLE IF NOT EXISTS {Tables.Users} ({CreateColumns.Users}); ");
             Execute($"CREATE TABLE IF NOT EXISTS {Tables.Settings} ({CreateColumns.Settings}); ");
             Execute($"CREATE TABLE IF NOT EXISTS {Tables.History} ({CreateColumns.History});");
+            Execute($"CREATE TABLE IF NOT EXISTS {Tables.Constants} ({CreateColumns.Constants});");
+
+            CreateDefaultUser();
+            CreateConstants();
+        }
+
+        private static void CreateDefaultUser()
+        {
+            var test = new UserDto {Login = "test", Email = "test@test.com", Password = "newyork1", Password2 = "newyork1" };
+
+            if (!Users.Names.Contains(test.Login))
+            {
+                Users.Add(test);
+            }
+
+        }
+
+        private static void CreateConstants()
+        {
+            Constants.Delete("dateFormat");
+            Constants.Add("dateFormat", "dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy");
+
+            Constants.Delete("numberFormat");
+            Constants.Add("numberFormat", "123,456,789.00", "123.456.789,00", "123 456 789.00", "123 456 789,00");
+
+            Constants.Delete("currency");
+            Constants.Add("currency", "$ - US dollar", "€ -euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia");
         }
 
         public static void Execute(string sql)
@@ -127,6 +155,7 @@ namespace WebSite.DB
         public static string Users = "Users";
         public static string Settings = "Settings";
         public static string History = "History";
+        public static string Constants = "Constants";
     }
 
     public static class CreateColumns
@@ -134,5 +163,6 @@ namespace WebSite.DB
         public static string Users = "Login TEXT, Password TEXT, Email TEXT";
         public static string Settings = "Login TEXT, DateFormat TEXT, NumberFormat TEXT, Currency TEXT";
         public static string History = "Login TEXT, Amount TEXT, Percent TEXT, Year TEXT, StartDate TEXT, EndDate TEXT, Days NUMBER, Interest TEXT, Income TEXT";
+        public static string Constants = "Name TEXT, Value TEXT";
     }
 }
