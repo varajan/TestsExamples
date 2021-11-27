@@ -78,7 +78,7 @@ function getBaseUrl() {
     return getUrl.protocol + "//" + getUrl.host;
 }
 
-function SetDropdownValues(id, selected) {
+async function SetDropdownValues(id, selected) {
     $.ajax({
         type: 'GET',
         url: 'api/settings/values',
@@ -95,6 +95,7 @@ function SetDropdownValues(id, selected) {
             }
 
             dropdown.selectedIndex = selected;
+            return;
         }
     });
 }

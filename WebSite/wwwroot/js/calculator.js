@@ -55,7 +55,9 @@ async function SetNumber(id, number) {
     }).then(function () { return Promise.resolve('done'); });
 }
 
-ResetMonth = function () {
+async function ResetMonth() {
+    await Sleep(200);
+
     var day = ++document.getElementById('day').selectedIndex;
     var month = document.getElementById('month').selectedIndex;
     var leapYear = document.getElementById('year').value % 4 === 0;
@@ -83,6 +85,8 @@ ResetMonth = function () {
             SetDay(day < 29 ? day : 28);
             break;
     }
+
+    return;
 }
 
 async function SetCurrentDate () {
@@ -90,15 +94,12 @@ async function SetCurrentDate () {
 
     AddOptions('day', 1, 31);
     AddOptions('year', 2010, 2025);
-    SetDropdownValues('month', date.getMonth());
+    await SetDropdownValues('month', date.getMonth());
 
     document.getElementById('day').value = date.getDate();
     document.getElementById('year').value = date.getFullYear();
 
-
-//    document.getElementById('day').value = date.getDate();
-//    document.getElementById('month').selectedIndex = date.getMonth();
-//    document.getElementById('year').value = date.getFullYear();
+    return Promise.resolve('done');
 }
 
 SetDay = function (day) {
@@ -120,7 +121,6 @@ AddOptions = function (id, min, max) {
 }
 
 async function Save() {
-    //await new Promise((resolve, reject) => setTimeout(resolve, 500));
     await Sleep(500);
 
     var day = document.getElementById('day').selectedIndex + 1;
@@ -167,6 +167,8 @@ function SetCalculateButtonState() {
 }
 
 async function Calculate() {
+    await Sleep(200);
+
     document.getElementById('calculateBtn').disabled = true;
 
     var year = document.querySelector('#finYear input').checked ? 365 : 360;
@@ -204,10 +206,13 @@ SetCurrency = function () {
     });
 }
 
-//onCalculateLoad = function() {
+async function OnPageLoad()
+{
     SetCalculateButtonState();
     SetCurrency();
-    SetCurrentDate();
-    ResetMonth();
-    Calculate();
-//}
+    await SetCurrentDate();
+    await Calculate();
+    await ResetMonth();
+}
+
+OnPageLoad();
