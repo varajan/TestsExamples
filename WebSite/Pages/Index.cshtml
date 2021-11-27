@@ -9,7 +9,7 @@
 <body>
     <div align="center">
         <div style="width: 500px; height: 270px; border: double">
-            <div style="text-align: right; cursor: pointer" onclick="window.location='/Register'">Register</div>
+            <div class="register link btn btn-link" onclick="Register()">Register</div>
 
             <table>
                 <tr>
@@ -28,8 +28,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="right" style="width: 100px" id="buttons">
-                        <button onclick="Login()" title="Login" id="loginBtn">Login</button>
-                        <button onclick="RemindPassword()" title="remind" id="remindBtn">Remind password</button>
+                        <button type="button" class="btn btn-sm btn-success" onclick="Login()" title="Login" id="loginBtn">Login</button>
+                        <button type="button" class="btn btn-sm btn-warning" onclick="RemindPassword()" title="remind" id="remindBtn">Remind password</button>
                     </td>
                 </tr>
                 <tr>
@@ -46,7 +46,10 @@
 </body>
 </html>
 
+<link rel="stylesheet" href="~/css/site.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/cookies.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/login.js" asp-append-version="true"></script>
