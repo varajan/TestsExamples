@@ -29,9 +29,9 @@ function Get() {
             'login': getCookie('login')
         }),
         success: function (response) {
-            SetDropdownValues('dateFormat',   response.dateFormat);
-            SetDropdownValues('numberFormat', response.numberFormat);
-            SetDropdownValues('currency',     response.currency);
+            SetDropdownValuesFromValues('dateFormat',   response.dateFormat);
+            SetDropdownValuesFromValues('numberFormat', response.numberFormat);
+            SetDropdownValuesFromValues('currency',     response.currency);
         }
     });
 }

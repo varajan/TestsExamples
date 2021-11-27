@@ -78,26 +78,40 @@ function getBaseUrl() {
     return getUrl.protocol + "//" + getUrl.host;
 }
 
-async function SetDropdownValues(id, selected) {
+async function SetDropdownValuesFromValues(id, selected) {
     $.ajax({
         type: 'GET',
         url: 'api/settings/values',
         dataType: 'json',
         data: { 'name': id },
-        success: function (response) {
-            var dropdown = document.getElementById(id);
-
-            for (const val of response) {
-                var option = document.createElement("option");
-                option.value = val;
-                option.text = val;
-                dropdown.appendChild(option);
-            }
-
-            dropdown.selectedIndex = selected;
-            return;
+        success: async function (response) {
+            await SetDropdownValues(id, response, selected);
         }
     });
 }
 
+async function SetDropdownValues(id, values, selected) {
+    var dropdown = document.getElementById(id);
+
+    for (const value of values) {
+        var option = document.createElement("option");
+        option.value = value;
+        option.text = value;
+        dropdown.appendChild(option);
+    }
+
+    dropdown.selectedIndex = selected;
+    return;
+}
+
+async function SetDropdownSelectedValue(id, value) {
+    var dropdown = document.getElementById(id);
+
+    for (var i = 0; i < dropdown.options.length; i++) {
+        if (dropdown.options[i].text == value) {
+            dropdown.options[i].selected = true;
+            return;
+        }
+    }
+}
 verifyLoggedIn();
