@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using Tests.Data;
 
 namespace Tests.Pages
 {
@@ -19,6 +22,19 @@ namespace Tests.Pages
                 .FindElements(By.TagName("TD"))
                 .Select(cell => cell.Text).ToList())
             .ToList();
+
+        public override void Open()
+        {
+            base.Open();
+
+            try
+            {
+                new WebDriverWait(WebDriver.Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait))
+                    .Until(driver => driver.FindElements(By.XPath("//table//tr")).Any());
+            }
+            catch { /**/ }
+
+        }
 
         public void Clear() => ClearBtn.Click();
         public void ReturnToCalculator() => CalculatorBtn.Click();

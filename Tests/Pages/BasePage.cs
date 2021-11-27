@@ -12,6 +12,6 @@ namespace Tests.Pages
         public bool IsOpened => CurrentPageName.Equals(PageName);
 
         public IAlert Alert => WebDriver.Alert;
-        public void Open() => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/{PageUrl}";
+        public virtual void Open() => WebDriver.Driver.Url = $"{Defaults.BaseUrl}/{PageUrl}";
     }
 }

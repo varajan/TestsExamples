@@ -34,7 +34,7 @@ namespace Tests.Tests
         [Test]
         public void CurrencyOptionsTest()
         {
-            var options = new[] { "$ - US dollar", "€ - euro", "£ - Great Britain Pound" };
+            var options = new[] { "$ - US dollar", "€ - euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia" };
 
             SettingsPage.Currencies.ShouldEqual(options);
         }
@@ -86,6 +86,7 @@ namespace Tests.Tests
         [TestCase("$", "$ - US dollar")]
         [TestCase("€", "€ - euro")]
         [TestCase("£", "£ - Great Britain Pound")]
+        [TestCase("₴", "₴ - Ukrainian hryvnia")]
         public void ChangeCurrencyTest(string symbol, string currency)
         {
             SettingsPage.Currency = currency;
