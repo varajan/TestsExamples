@@ -95,6 +95,26 @@ namespace Tests.Tests
         }
 
         [Test]
+        public void SaveSettingsChangesTest()
+        {
+            // Arrange
+            SettingsPage.ResetToDefaults();
+            SettingsPage.Open();
+
+            // Act
+            SettingsPage.Currency = "€ - euro";
+            SettingsPage.NumberFormat = "123 456 789,00";
+            SettingsPage.DateFormat = "MM/dd/yyyy";
+            SettingsPage.Save();
+            SettingsPage.Open();
+
+            // Assert
+            SettingsPage.Currency.ShouldEqual("€ - euro");
+            SettingsPage.NumberFormat.ShouldEqual("123 456 789,00");
+            SettingsPage.DateFormat.ShouldEqual("MM/dd/yyyy");
+        }
+
+        [Test]
         public void CancelSettingsChangesTest()
         {
             // Arrange

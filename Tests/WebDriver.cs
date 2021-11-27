@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using Tests.Data;
 
@@ -51,7 +52,18 @@ namespace Tests
             set => _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(value);
         }
 
-        public static IAlert Alert => ExpectedConditions.AlertIsPresent().Invoke(_driver);
+        public static IAlert Alert
+        {
+            get
+            {
+                try
+                {
+                    new WebDriverWait(Driver, TimeSpan.FromSeconds(Defaults.ImplicitWait)).Until(ExpectedConditions.AlertIsPresent());
+                }
+                catch { /**/ }
+                return ExpectedConditions.AlertIsPresent().Invoke(_driver);
+            }
+        }
 
         public static void SwitchToFrame(string frameId)
         {
