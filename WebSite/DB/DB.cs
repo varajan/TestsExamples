@@ -24,19 +24,24 @@ namespace WebSite.DB
             Execute($"CREATE TABLE IF NOT EXISTS {Tables.History} ({CreateColumns.History});");
             Execute($"CREATE TABLE IF NOT EXISTS {Tables.Constants} ({CreateColumns.Constants});");
 
-            CreateDefaultUser();
+            CreateDefaultUsers();
             CreateConstants();
         }
 
-        private static void CreateDefaultUser()
+        private static void CreateDefaultUsers()
         {
             var test = new UserDto {Login = "test", Email = "test@test.com", Password = "newyork1", Password2 = "newyork1" };
+            var user = new UserDto {Login = "user", Email = "user@test.com", Password = "password", Password2 = "password" };
 
             if (!Users.Names.Contains(test.Login))
             {
                 Users.Add(test);
             }
 
+            if (!Users.Names.Contains(user.Login))
+            {
+                Users.Add(user);
+            }
         }
 
         private static void CreateConstants()
