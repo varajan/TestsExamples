@@ -85,15 +85,20 @@ ResetMonth = function () {
     }
 }
 
-SetCurrentDate = function () {
+async function SetCurrentDate () {
     var date = new Date();
 
     AddOptions('day', 1, 31);
     AddOptions('year', 2010, 2025);
+    SetDropdownValues('month', date.getMonth());
 
     document.getElementById('day').value = date.getDate();
-    document.getElementById('month').selectedIndex = date.getMonth();
     document.getElementById('year').value = date.getFullYear();
+
+
+//    document.getElementById('day').value = date.getDate();
+//    document.getElementById('month').selectedIndex = date.getMonth();
+//    document.getElementById('year').value = date.getFullYear();
 }
 
 SetDay = function (day) {
@@ -115,7 +120,8 @@ AddOptions = function (id, min, max) {
 }
 
 async function Save() {
-    await new Promise((resolve, reject) => setTimeout(resolve, 500));
+    //await new Promise((resolve, reject) => setTimeout(resolve, 500));
+    await Sleep(500);
 
     var day = document.getElementById('day').selectedIndex + 1;
     var month = document.getElementById('month').selectedIndex;
@@ -198,9 +204,10 @@ SetCurrency = function () {
     });
 }
 
-SetDropdownValues('month');
-SetCalculateButtonState();
-SetCurrency();
-SetCurrentDate();
-ResetMonth();
-Calculate();
+//onCalculateLoad = function() {
+    SetCalculateButtonState();
+    SetCurrency();
+    SetCurrentDate();
+    ResetMonth();
+    Calculate();
+//}

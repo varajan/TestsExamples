@@ -34,6 +34,10 @@ function getCookie(name) {
     return "";
 }
 
+async function Sleep(ms) {
+    await new Promise((resolve, reject) => setTimeout(resolve, ms));
+}
+
 function History() {
     window.location = 'History';
 }
@@ -74,7 +78,7 @@ function getBaseUrl() {
     return getUrl.protocol + "//" + getUrl.host;
 }
 
-function SetDropdownValues(id) {
+function SetDropdownValues(id, selected) {
     $.ajax({
         type: 'GET',
         url: 'api/settings/values',
@@ -89,6 +93,8 @@ function SetDropdownValues(id) {
                 option.text = val;
                 dropdown.appendChild(option);
             }
+
+            dropdown.selectedIndex = selected;
         }
     });
 }

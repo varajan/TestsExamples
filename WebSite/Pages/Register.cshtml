@@ -8,7 +8,7 @@
 <body>
     <div align="center">
         <div style="width:500px; height:270px; border:double">
-            <div class="login link" onclick="Logout()">Return to Login</div>
+            <div class="login link btn btn-link" onclick="Logout()">Return to Login</div>
 
             <table>
                 <tr>
@@ -41,7 +41,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="right" style="width: 100px" id="buttons">
-                        <button onclick="Register()" title="Register" id="register">Register</button>
+                        <button class="btn btn-success" onclick="Register()" title="Register" id="register">Register</button>
                     </td>
                 </tr>
                 <tr>
@@ -54,6 +54,8 @@
 </html>
 
 <link rel="stylesheet" href="~/css/site.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/cookies.js" asp-append-version="true"></script>

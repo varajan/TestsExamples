@@ -23,7 +23,9 @@ namespace WebSite.Controllers
         [HttpGet("currency")]
         public IActionResult Currency(string login)
         {
-            return Json(Settings.Get(login).Currency.Split(' ').First());
+            var currency = Constants.Get("currency").ElementAt(Settings.Get(login).Currency);
+
+            return Json(currency.Split(' ').First());
         }
 
         [HttpPost]

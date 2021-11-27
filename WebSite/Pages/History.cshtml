@@ -7,17 +7,19 @@
 </head>
 <body>
     <div align="center">
-        <div style="width:500px; height:270px; border:double">
+        <div style="width:700px">
 
-            <div class="calculator link" onclick="Calculator()">Calculator</div>
-            <table id="history"></table>
-            <button id="clear">Clear</button>
+            <div class="calculator link btn btn-link" onclick="Calculator()">Calculator</div>
+            <table id="history" class="table"></table>
+            <button class="btn btn-danger" id="clear">Clear</button>
         </div>
     </div>
 </body>
 </html>
 
 <link rel="stylesheet" href="~/css/site.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/cookies.js" asp-append-version="true"></script>

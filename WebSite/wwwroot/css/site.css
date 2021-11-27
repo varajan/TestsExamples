@@ -1,6 +1,11 @@
 ﻿.link {
-    text-align: right; 
+    float: right !important;
+    text-align: right;
     cursor: pointer
+}
+
+.settings-dropdown {
+    width: 200px !important;
 }
 
 .settings {
