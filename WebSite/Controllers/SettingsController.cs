@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
@@ -45,6 +46,21 @@ namespace WebSite.Controllers
         public IActionResult GetValues(string name)
         {
             return Json(Constants.Get(name));
+        }
+
+        [HttpGet("days")]
+        public IActionResult GetDays()
+        {
+            var today = DateTime.Today;
+            var result = Enumerable.Range(1, DateTime.DaysInMonth(today.Year, today.Month)).ToList();
+            return Json(result);
+        }
+
+        [HttpGet("years")]
+        public IActionResult GetYears()
+        {
+            var result = Enumerable.Range(2010, 20).ToList();
+            return Json(result);
         }
     }
 }
