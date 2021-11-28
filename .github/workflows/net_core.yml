@@ -16,9 +16,12 @@ jobs:
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
       - name: WebSite - restore dependencies
         run: dotnet restore WebSite.sln
+
       - name: WebSite - Build
         run: dotnet build WebSite.sln --configuration Release --no-restore 
+
       - name: WebSite - Launch
         run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
