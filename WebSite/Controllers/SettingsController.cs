@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebSite.DB;
 using WebSite.Models;
@@ -23,7 +24,9 @@ namespace WebSite.Controllers
         [HttpGet("currency")]
         public IActionResult Currency(string login)
         {
-            return Json(Settings.Get(login).Currency.Split(' ').First());
+            var currency = Constants.Get("currency").ElementAt(Settings.Get(login).Currency);
+
+            return Json(currency.Split(' ').First());
         }
 
         [HttpPost]
@@ -37,6 +40,27 @@ namespace WebSite.Controllers
         {
             Settings.Save(dto);
             return Ok();
+        }
+
+        [HttpGet("values")]
+        public IActionResult GetValues(string name)
+        {
+            return Json(Constants.Get(name));
+        }
+
+        [HttpGet("days")]
+        public IActionResult GetDays()
+        {
+            var today = DateTime.Today;
+            var result = Enumerable.Range(1, DateTime.DaysInMonth(today.Year, today.Month)).ToList();
+            return Json(result);
+        }
+
+        [HttpGet("years")]
+        public IActionResult GetYears()
+        {
+            var result = Enumerable.Range(2010, 20).ToList();
+            return Json(result);
         }
     }
 }

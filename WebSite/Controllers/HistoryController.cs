@@ -11,6 +11,7 @@ namespace WebSite.Controllers
         [HttpGet]
         public IActionResult Get(string login)
         {
+            var headers = new[] { "Amount", "%", "Term", "Year", "From", "To", "Interest", "Income"};
             var history = History.Get(login);
             history.Reverse();
 
@@ -27,7 +28,9 @@ namespace WebSite.Controllers
                     x.EndDate.FormatDate(login),
                     x.Interest.ToDecimal().FormatNumber(x.Login),
                     x.Income.ToDecimal().FormatNumber(x.Login)
-                });
+                }).ToList();
+
+            result.Insert(0, headers);
 
             return Json(result);
         }
