@@ -21,9 +21,9 @@ namespace WebSite.DB
             return new SettingsDto
             {
                 Login = login,
-                DateFormat = exists ? rows[0][0] : "dd/MM/yyyy",
-                NumberFormat = exists ? rows[0][1] : "123,456,789.00",
-                Currency = exists ? rows[0][2] : "$ - US dollar"
+                DateFormat = exists ? rows[0][0].ToInt() : 0,
+                NumberFormat = exists ? rows[0][1].ToInt() : 0,
+                Currency = exists ? rows[0][2].ToInt() : 0
             };
         }
     }

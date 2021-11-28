@@ -31,10 +31,14 @@ CalculateDate = function () {
     var year = document.getElementById('year').value;
     var days = Number(document.getElementById('term').value);
 
+    SetEndDate(new Date(year, month, day + days));
+}
+
+SetEndDate = function(date) {
     $.ajax({
         type: 'GET',
         url: 'api/settings/date',
-        data: { 'date': new Date(year, month, day + days).yyyymmdd(), 'login': getCookie('login') },
+        data: { 'date': date.yyyymmdd(), 'login': getCookie('login') },
         dataType: 'json',
         success: function (response) {
             document.getElementById('endDate').value = response;
@@ -55,7 +59,7 @@ async function SetNumber(id, number) {
     }).then(function () { return Promise.resolve('done'); });
 }
 
-ResetMonth = function () {
+async function ResetMonth() {
     var day = ++document.getElementById('day').selectedIndex;
     var month = document.getElementById('month').selectedIndex;
     var leapYear = document.getElementById('year').value % 4 === 0;
@@ -83,17 +87,42 @@ ResetMonth = function () {
             SetDay(day < 29 ? day : 28);
             break;
     }
+
+    return;
 }
 
-SetCurrentDate = function () {
+async function SetCurrentDate () {
     var date = new Date();
 
-    AddOptions('day', 1, 31);
-    AddOptions('year', 2010, 2025);
+    await SetDropdownDaysValues('day', date.getDate()-1);
+    await SetDropdownValuesFromValues('month', date.getMonth());
+    await SetDropdownYearsValues('year', date.getFullYear());
 
-    document.getElementById('day').value = date.getDate();
-    document.getElementById('month').selectedIndex = date.getMonth();
-    document.getElementById('year').value = date.getFullYear();
+    return Promise.resolve('done');
+}
+
+async function SetDropdownYearsValues(id, selected)
+{
+    $.ajax({
+        type: 'GET',
+        url: 'api/settings/years',
+        dataType: 'json',
+        success: async function (response) {
+            await SetDropdownValues(id, response);
+            await SetDropdownSelectedValue(id, selected);
+        }
+    });
+}
+
+async function SetDropdownDaysValues(id, selected) {
+    $.ajax({
+        type: 'GET',
+        url: 'api/settings/days',
+        dataType: 'json',
+        success: async function (response) {
+            await SetDropdownValues(id, response, selected);
+        }
+    });
 }
 
 SetDay = function (day) {
@@ -115,7 +144,7 @@ AddOptions = function (id, min, max) {
 }
 
 async function Save() {
-    await new Promise((resolve, reject) => setTimeout(resolve, 500));
+    await Sleep(500);
 
     var day = document.getElementById('day').selectedIndex + 1;
     var month = document.getElementById('month').selectedIndex;
@@ -201,5 +230,6 @@ SetCurrency = function () {
 SetCalculateButtonState();
 SetCurrency();
 SetCurrentDate();
-ResetMonth();
-Calculate();
+SetNumber('interest', 0);
+SetNumber('income', 0);
+SetEndDate(new Date());

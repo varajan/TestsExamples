@@ -1,5 +1,5 @@
 ﻿clear = function () {
-    var data = document.getElementsByClassName("data");
+    var data = document.getElementsByClassName('data-td');
     while (data[0])
         data[0].parentNode.removeChild(data[0]);
 
@@ -14,21 +14,23 @@ show = function () {
         dataType: 'json',
         data: { 'login': getCookie('login') },
         success: function (response) {
-            for (ir = 0; ir < response.length; ir++) {
-                addRow(response[ir]);
+            addRow(response[0], 'th');
+
+            for (ir = 1; ir < response.length; ir++) {
+                addRow(response[ir], 'td');
             }
         }
     });
 }
 
-addRow = function (row) {
+addRow = function (row, type) {
     var tr = document.createElement('tr');
-    tr.className = 'data';
+    tr.className = 'data-' + type;
 
     for (i = 0; i < row.length; i++) {
-        var td = document.createElement('td');
-        td.textContent = row[i];
-        tr.appendChild(td);
+        var cell = document.createElement(type);
+        cell.textContent = row[i];
+        tr.appendChild(cell);
     }
 
     document.getElementById('history').appendChild(tr);
