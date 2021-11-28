@@ -1,12 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace WebSite.Controllers
 {
+    [Route("api/[controller]")]
 	public class DepositController : Controller
 	{
-		public ActionResult Index()
-		{
-			return View();
-		}
 	}
 }

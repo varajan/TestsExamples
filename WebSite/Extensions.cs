@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Web.WebPages;
+using System.Linq;
 using WebSite.DB;
 
 namespace WebSite
@@ -29,39 +29,50 @@ namespace WebSite
 
         public static string FormatDate(this string date, string login)
         {
+            var dateFormat = Constants.Get("dateFormat").ElementAt(Settings.Get(login).DateFormat);
             var formats = new[] { "dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy", "yyyy/M/d" };
             var dateTime = DateTime.ParseExact(date, formats, null, DateTimeStyles.None);
-            return dateTime.ToString(Settings.Get(login).DateFormat, CultureInfo.InvariantCulture);
+            return dateTime.ToString(dateFormat, CultureInfo.InvariantCulture);
         }
 
         public static int ToInt(this string value) => int.Parse(value);
 
+        public static decimal ToDecimal(this string number) => decimal.Parse(number.Replace(',', '.'), CultureInfo.InvariantCulture);
+
         public static decimal ParseNumber(this string number, string login)
         {
-            switch (Settings.Get(login).NumberFormat)
+            var dateFormat = Constants.Get("numberFormat").ElementAt(Settings.Get(login).NumberFormat);
+            var result = "0";
+
+            switch (dateFormat)
             {
                 case "123,456,789.00":
-                    return number.Replace(",", "").Replace('.', ',').AsDecimal();
+                    result = number.Replace(",", "").Replace('.', ',');
+                    break;
 
                 case "123.456.789,00":
-                    return number.Replace(".", "").AsDecimal();
+                    result = number.Replace(".", "");
+                    break;
 
                 case "123 456 789.00":
-                    return number.Replace(" ", "").Replace('.', ',').AsDecimal();
+                    result = number.Replace(" ", "").Replace('.', ',');
+                    break;
 
                 case "123 456 789,00":
-                    return number.Replace(" ", "").AsDecimal();
+                    result = number.Replace(" ", "");
+                    break;
             }
 
-            return 0;
+            return result.ToDecimal();
         }
 
         public static string FormatNumber(this decimal number, string login)
         {
+            var dateFormat = Constants.Get("numberFormat").ElementAt(Settings.Get(login).NumberFormat);
             var result = Math.Round(number, 2, MidpointRounding.AwayFromZero)
                 .ToString("N", CultureInfo.InvariantCulture);
 
-            switch (Settings.Get(login).NumberFormat)
+            switch (dateFormat)
             {
                 case "123.456.789,00":
                     return result.Replace(',', ' ').Replace('.', ',').Replace(' ', '.');

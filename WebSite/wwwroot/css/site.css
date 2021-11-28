@@ -1,0 +1,29 @@
+﻿.link {
+    float: right !important;
+    text-align: right;
+    cursor: pointer
+}
+
+.settings-dropdown {
+    width: 200px !important;
+}
+
+.settings {
+    visibility: visible
+}
+
+.history {
+    visibility: visible
+}
+
+.calculator {
+    visibility: visible
+}
+
+.login {
+    visibility: visible
+}
+
+.register {
+    visibility: visible
+}
