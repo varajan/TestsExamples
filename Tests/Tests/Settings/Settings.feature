@@ -39,6 +39,7 @@ Scenario: Available currencies
 	| $ - US dollar           |
 	| € - euro                |
 	| £ - Great Britain Pound |
+	| ₴ - Ukrainian hryvnia   |
 
 Scenario: Logout
 	Given I login as 'Kaydon'

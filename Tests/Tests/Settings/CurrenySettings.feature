@@ -12,3 +12,4 @@ Examples:
 	| Christina | $ - US dollar           | $    |
 	| Chantelle | € - euro                | €    |
 	| Teodor    | £ - Great Britain Pound | £    |
+	| Teodor    | ₴ - Ukrainian hryvnia   | ₴    |

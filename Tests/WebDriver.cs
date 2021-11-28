@@ -4,6 +4,7 @@ using System.Linq;
 using BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using TechTalk.SpecFlow;
 using Tests.Data;
@@ -68,7 +69,15 @@ namespace Tests
 
     public static class WebDriverExtensions
     {
-        public static IAlert Alert(this IWebDriver driver) => ExpectedConditions.AlertIsPresent().Invoke(driver);
+        public static IAlert Alert(this IWebDriver driver)
+        {
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(Defaults.ImplicitWait)).Until(ExpectedConditions.AlertIsPresent());
+            }
+            catch { /*nothing*/ }
+            return ExpectedConditions.AlertIsPresent().Invoke(driver);
+        }
 
         public static void SwitchToFrame(this IWebDriver driver, string frameId)
         {
