@@ -1,0 +1,12 @@
+{
+  "driver": {
+    "type": "chrome",
+    "options": {
+      "arguments": [
+        "--silent",
+        "log-level=3",
+        "ignore-certificate-errors"
+      ]
+    }
+  }
+}
