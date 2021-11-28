@@ -27,7 +27,7 @@ namespace Tests.Tests
         public void CurrencyOptionsTest() =>
             OpenSettings()
                 .Currency.Options
-                    .Should.BeEquivalent("$ - US dollar", "€ - euro", "£ - Great Britain Pound");
+                    .Should.BeEquivalent("$ - US dollar", "€ - euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia");
 
         [TestCase("123,456,789.00", "127,397.26", "27,397.26")]
         [TestCase("123.456.789,00", "127.397,26", "27.397,26")]
@@ -54,6 +54,7 @@ namespace Tests.Tests
         [TestCase("$", "$ - US dollar")]
         [TestCase("€", "€ - euro")]
         [TestCase("£", "£ - Great Britain Pound")]
+        [TestCase("₴", "₴ - Ukrainian hryvnia")]
         public void ChangeCurrencyTest(string symbol, string currency) =>
             OpenSettings()
                 .Currency.Set(currency).Save()

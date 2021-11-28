@@ -46,7 +46,7 @@ namespace Tests.Tests
         [Test]
         public void StartDateYearsTest()
         {
-            var expectedYears = Enumerable.Range(2010, 16).Select(x => x.ToString());
+            var expectedYears = Enumerable.Range(2010, 20).Select(x => x.ToString());
 
             OpenDepositPage()
                 .Year.Options
