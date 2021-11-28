@@ -1,5 +1,5 @@
 ﻿clear = function () {
-    var data = document.getElementsByClassName("data");
+    var data = document.getElementsByClassName('data-td');
     while (data[0])
         data[0].parentNode.removeChild(data[0]);
 
@@ -25,7 +25,7 @@ show = function () {
 
 addRow = function (row, type) {
     var tr = document.createElement('tr');
-    tr.className = 'data';
+    tr.className = 'data-' + type;
 
     for (i = 0; i < row.length; i++) {
         var cell = document.createElement(type);
