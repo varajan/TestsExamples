@@ -2,10 +2,13 @@ package test.java.pages;
 
 import java.util.List;
 
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import test.java.data.Constants;
 
 public class SettingsPage extends BasePage {
@@ -60,6 +63,11 @@ public class SettingsPage extends BasePage {
 	
 	public DepositPage save() {
 		save.click();
+		new WebDriverWait(driver, Constants.WaitTimeout)
+				.ignoring(NoAlertPresentException.class)
+				.until(ExpectedConditions.alertIsPresent());
+
+		driver.switchTo().alert().accept();
 		return new DepositPage(driver);
 	}
 	

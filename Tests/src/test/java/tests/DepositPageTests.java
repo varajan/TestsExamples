@@ -70,7 +70,7 @@ public class DepositPageTests extends BaseTest {
 	@Test
 	public void verifyYearValuesTest() {
 		List<String> years = new ArrayList<String>();
-		for (int year = 2010; year <= 2025; year++) {
+		for (int year = 2010; year < 2030; year++) {
 			years.add(String.valueOf(year));
 		}
 		

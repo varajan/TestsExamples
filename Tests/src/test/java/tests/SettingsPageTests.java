@@ -37,7 +37,7 @@ public class SettingsPageTests extends BaseTest {
 	public void verifyDropdownValues() {
 		List<String> dateFormats   = Lists.newArrayList("dd/MM/yyyy", "dd-MM-yyyy", "MM/dd/yyyy", "MM dd yyyy");
 		List<String> numberFormats = Lists.newArrayList("123,456,789.00", "123.456.789,00", "123 456 789.00", "123 456 789,00");
-		List<String> currencies    = Lists.newArrayList("$ - US dollar", "€ - euro", "£ - Great Britain Pound");
+		List<String> currencies    = Lists.newArrayList("$ - US dollar", "€ - euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia");
 
 		Assertions.assertAll(
 			() -> Assert.assertEquals(dateFormats, settingsPage.getDateFormats()),
@@ -48,9 +48,10 @@ public class SettingsPageTests extends BaseTest {
 
 	static Stream<Arguments> currencies(){
 	    return Stream.of(
-	       Arguments.of("$", "$ - US dollar"),
-	       Arguments.of("€", "€ - euro"),
-	       Arguments.of("£", "£ - Great Britain Pound")
+			Arguments.of("$", "$ - US dollar"),
+			Arguments.of("€", "€ - euro"),
+			Arguments.of("£", "£ - Great Britain Pound"),
+			Arguments.of("₴", "₴ - Ukrainian hryvnia")
 	    );
 	}
 
