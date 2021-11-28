@@ -1,47 +1,37 @@
-﻿var dateFormat = document.getElementById('dateFormat');
-var numberFormat = document.getElementById('numberFormat');
-var currency = document.getElementById('currency');
-
-function Save() {
+﻿function Save() {
     $.ajax({
         type: 'POST',
         url: 'api/settings/save',
-        dataType: 'application/json',
         contentType: 'application/json',
         data: JSON.stringify({
             'login': getCookie('login'),
-            'dateFormat': dateFormat.options[dateFormat.selectedIndex].textContent,
-            'numberFormat': numberFormat.options[numberFormat.selectedIndex].textContent,
-            'currency': currency.options[currency.selectedIndex].textContent
+            'dateFormat': document.getElementById('dateFormat').selectedIndex,
+            'numberFormat': document.getElementById('numberFormat').selectedIndex,
+            'currency': document.getElementById('currency').selectedIndex
         }),
         success: function (response) {
             alert('Changes are saved!');
+            window.location = 'Calculator';
         }
     });
 }
 
-function Select(dropdown, value) {
-    for (var i = 0; i < dropdown.options.length; i++) {
-        if (dropdown.options[i].text === value) {
-            dropdown.selectedIndex = i;
-            break;
-        }
-    }
+function Cancel() {
+    window.location = 'Calculator';
 }
 
 function Get() {
     $.ajax({
         type: 'POST',
         url: 'api/settings',
-        dataType: 'application/json',
         contentType: 'application/json',
         data: JSON.stringify({
             'login': getCookie('login')
         }),
         success: function (response) {
-            Select(dateFormat, response.DateFormat);
-            Select(numberFormat, response.NumberFormat);
-            Select(currency, response.Currency);
+            SetDropdownValuesFromValues('dateFormat',   response.dateFormat);
+            SetDropdownValuesFromValues('numberFormat', response.numberFormat);
+            SetDropdownValuesFromValues('currency',     response.currency);
         }
     });
 }
