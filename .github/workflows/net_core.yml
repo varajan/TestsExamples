@@ -5,23 +5,35 @@ on: pull_request
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
         dotnet-version: ['5.0.x' ]
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v1.7.2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+
       - name: WebSite - restore dependencies
         run: dotnet restore WebSite.sln
-
+        
       - name: WebSite - Build
-        run: dotnet build WebSite.sln --configuration Release --no-restore 
-
+        run: dotnet build WebSite.sln --configuration Release --no-restore
+        
       - name: WebSite - Launch
-        run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
+        run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
+        
+      - name: Tests
+        run: mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
