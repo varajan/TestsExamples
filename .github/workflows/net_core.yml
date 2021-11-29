@@ -26,12 +26,14 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      - name: WebSite
-        run: |
-          dotnet restore WebSite.sln && 
-          dotnet build WebSite.sln --configuration Release --no-restore &&
-          cd ./WebSite/bin/Release/net5.0 &&
-          dotnet WebSite.dll &
-
+- name: WebSite - restore dependencies
+        run: dotnet restore WebSite.sln
+        
+      - name: WebSite - Build
+        run: dotnet build WebSite.sln --configuration Release --no-restore
+        
+      - name: WebSite - Launch
+        run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &
+        
       - name: Tests
         run: mvn -B package --file ./Tests/pom.xml -DBaseUrl=https://localhost:5001/
