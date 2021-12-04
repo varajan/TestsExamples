@@ -9,7 +9,7 @@ from pages.DepositPage import DepositPage
 class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver.get(Constants.URL + "/Login")
+        self.driver.get(Constants.URL)
         sleep(1)
 
     def open_registration(self):

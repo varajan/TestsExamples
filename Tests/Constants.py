@@ -1,5 +1,5 @@
 class Constants:
-    URL = "http://localhost:64177"
+    URL = "https://localhost:5001"
     LOGIN = "test"
     PASSWORD = "newyork1"
 

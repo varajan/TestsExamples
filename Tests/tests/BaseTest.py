@@ -11,8 +11,12 @@ class BaseTestCase(unittest.TestCase):
         API.Users.delete_all()
         API.Users.create(Constants.LOGIN)
 
-        self.service = Service("./../chromedriver.exe")
-        self.driver = webdriver.Chrome(service=self.service)
+        options = webdriver.ChromeOptions()
+        options.add_argument('ignore-certificate-errors')
+
+        service = Service("./../chromedriver.exe")
+        # self.driver = webdriver.Chrome(service=service, profile=profile)
+        self.driver = webdriver.Chrome(service=service, chrome_options=options)
 
     def tearDown(self) -> None:
         self.driver.quit()
