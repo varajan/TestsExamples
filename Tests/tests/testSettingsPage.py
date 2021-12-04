@@ -27,7 +27,7 @@ class SettingsPageTests(BaseTestCase):
         self.assertEqual(formats, self.settings_page.get_number_format_options())
 
     def test_currency_options(self):
-        currencies = ["$ - US dollar", "€ - euro", "£ - Great Britain Pound"]
+        currencies = ["$ - US dollar", "€ - euro", "£ - Great Britain Pound", "₴ - Ukrainian hryvnia"]
         self.assertEqual(currencies, self.settings_page.get_currency_options())
 
     def test_change_number_format_1(self): self.change_number_format("123.456.789,00", "127.397,26", "27.397,26")
@@ -56,6 +56,7 @@ class SettingsPageTests(BaseTestCase):
     def test_change_currency_1(self): self.change_currency("$", "$ - US dollar")
     def test_change_currency_2(self): self.change_currency("€", "€ - euro")
     def test_change_currency_3(self): self.change_currency("£", "£ - Great Britain Pound")
+    def test_change_currency_4(self): self.change_currency("₴", "₴ - Ukrainian hryvnia")
 
     def change_currency(self, symbol, currency):
         deposit_page = self.settings_page.set_currency(currency).save()

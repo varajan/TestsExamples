@@ -35,6 +35,7 @@ class SettingsPage(BasePage):
     def save(self):
         from pages.DepositPage import DepositPage
         self.find_element(By.ID, "save").click()
+        self.wait_for_alert(3).accept()
         return DepositPage(self.driver)
 
     def cancel(self):

@@ -28,7 +28,7 @@ class RegisterPageTests(BaseTestCase):
                            "User with this email is already registered.")
 
     def test_password_mismatch(self):
-        self.negative_test("User", "password", "passwort", "some-email@test.com", "Passwords are different!")
+        self.negative_test("User", "password", "passwort", "some-email@test.com", "Passwords are different.")
 
     def test_invalid_email_1(self):
         self.negative_test("User", "password", "password", "@test.com", "Invalid email.")
