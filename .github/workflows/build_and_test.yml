@@ -24,7 +24,7 @@ jobs:
         run: dotnet build WebSite.sln --configuration Release --no-restore 
 
       - name: WebSite - Launch
-        run: cd ./WebSite/bin/Release/net5.0; dotnet WebSite.dll &      
+        run: cd ./WebSite/bin/Release/net5.0 && dotnet WebSite.dll &      
 
       - name: Install Python 3
         uses: actions/setup-python@v1
