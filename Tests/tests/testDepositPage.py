@@ -47,7 +47,7 @@ class DepositPageTests(BaseTestCase):
         self.assertEqual(actual_values, expected_values)
 
     def test_start_date_years(self):
-        expected_values = [str(i) for i in range(2010, 2026)]
+        expected_values = [str(i) for i in range(2010, 2030)]
         actual_values = self.deposit_page.get_start_date_years()
 
         self.assertEqual(actual_values, expected_values)
