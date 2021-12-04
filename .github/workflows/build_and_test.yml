@@ -35,4 +35,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r Tests/requirements.pip
       - name: Tests
-        run: python -m unittest discover ./Tests/tests
+        run: cd Tests; python -m unittest discover ./tests
