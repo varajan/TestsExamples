@@ -1,4 +1,6 @@
 import unittest
+import os
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -18,6 +20,7 @@ class BaseTestCase(unittest.TestCase):
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument("--log-level=3")
 
+        os.environ['WDM_LOG_LEVEL'] = '0'
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
 
     def tearDown(self) -> None:
