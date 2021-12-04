@@ -14,8 +14,9 @@ class BaseTestCase(unittest.TestCase):
         options = webdriver.ChromeOptions()
         options.add_argument('ignore-certificate-errors')
 
-        service = Service("./../chromedriver.exe")
+        # service = Service("./../chromedriver.exe")
         # self.driver = webdriver.Chrome(service=service, profile=profile)
+        service = Service("./../chromedriver")
         self.driver = webdriver.Chrome(service=service, chrome_options=options)
 
     def tearDown(self) -> None:
