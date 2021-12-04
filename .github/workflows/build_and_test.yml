@@ -5,7 +5,7 @@ on: pull_request
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['5.0.x' ]
@@ -25,3 +25,14 @@ jobs:
 
       - name: WebSite - Launch
         run: cd ./WebSite/bin/Release/net5.0 && start WebSite.exe      
+
+      - name: Install Python 3
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r Tests/requirements.pip
+      - name: Tests
+        run: pytest 
